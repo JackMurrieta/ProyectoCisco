@@ -4,10 +4,16 @@
  */
 package DAOs;
 
+import DTOs.AlumnoConCarreraDTO;
 import Entidades.AlumnoEntidad;
+import Entidades.CarreraEntidad;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -34,4 +40,50 @@ public class AlumnoDAO {
     public void cerrar() {
         emf.close();
     }
+    public void guardarAlumnoConCarreraPorID(AlumnoConCarreraDTO dto) {
+    EntityManagerFactory fabrica = Persistence.createEntityManagerFactory("CISCO_PU");
+    EntityManager entityManager = fabrica.createEntityManager();
+
+    try {
+        entityManager.getTransaction().begin();
+
+        //  Usamos CriteriaBuilder para buscar la carrera por ID
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CarreraEntidad> query = cb.createQuery(CarreraEntidad.class);
+        Root<CarreraEntidad> root = query.from(CarreraEntidad.class);
+        query.select(root).where(cb.equal(root.get("id"), dto.getIdCarrera()));
+
+        CarreraEntidad carrera = entityManager.createQuery(query).getSingleResult();
+
+        if (carrera == null) {
+            System.out.println(" Error: No se encontró la carrera con ID " + dto.getIdCarrera());
+            entityManager.getTransaction().rollback();
+            return;
+        }
+
+        //  Crear el nuevo alumno con la carrera obtenida
+        AlumnoEntidad alumno = new AlumnoEntidad();
+        alumno.setNombres(dto.getNombres());
+        alumno.setApellidoP(dto.getApellidoP());
+        alumno.setApellidoM(dto.getApellidoM());
+        alumno.setContrasenia(dto.getContrasenia());
+        alumno.setEstatus(dto.isEstatus());
+        alumno.setCarrera(carrera);
+
+        entityManager.persist(alumno);
+        entityManager.getTransaction().commit();
+        System.out.println(" Alumno guardado en la carrera '" + carrera.getNombre() + "'.");
+
+    } catch (Exception e) {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
+        e.printStackTrace();
+    } finally {
+        entityManager.close();
+        fabrica.close();
+    }
+}
+
+
 }
