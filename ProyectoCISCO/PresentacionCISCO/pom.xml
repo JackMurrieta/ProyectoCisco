@@ -13,4 +13,21 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>com.mycompany.presentacioncisco.PresentacionCISCO</exec.mainClass>
     </properties>
+    <build>
+    <resources>
+        <resource>
+            <directory>src/main/resources</directory>
+            <includes>
+                <include>**/*</include>
+            </includes>
+        </resource>
+    </resources>
+</build>
+    <dependencies>
+        <dependency>
+            <groupId>org.netbeans.external</groupId>
+            <artifactId>AbsoluteLayout</artifactId>
+            <version>RELEASE220</version>
+        </dependency>
+    </dependencies>
 </project>
