@@ -21,7 +21,7 @@ import javax.swing.SwingConstants;
 public class JPanelColumnas extends javax.swing.JPanel {
 
     private GridBagConstraints gbc;
-    private int fila = 0, columna = 0, columnasMax = 3; // Número de columnas dinámicas
+    private int fila = 0, columna = 0, columnasMax = 4; // Número de columnas dinámicas
 
     public JPanelColumnas() {
         setLayout(new GridBagLayout());
@@ -57,14 +57,14 @@ public class JPanelColumnas extends javax.swing.JPanel {
         repaint();
     }
     
-    public void agregarBtnsPC(){
-        JPanelPCRecomendado pc = new JPanelPCRecomendado(Color.CYAN, 170, 140);
-        // Configurar posición en el GridBagLayout
+    public void agregarBtnsPC(String numero) {
+        JPanelBtnPC panelPC = new JPanelBtnPC(Color.CYAN, numero);
+        panelPC.setPreferredSize(new Dimension(100, 113)); // Tamaño fijo
+
         gbc.gridx = columna;
         gbc.gridy = fila;
-        add(pc, gbc);
+        add(panelPC, gbc);
 
-        // Ajustar la posición para la próxima etiqueta
         columna++;
         if (columna >= columnasMax) {
             columna = 0;
@@ -89,8 +89,7 @@ public class JPanelColumnas extends javax.swing.JPanel {
 
         // Agregar 10 labels de prueba
         for (int i = 1; i <= 10; i++) {
-            
-            panel.agregarBtnsPC();
+            panel.agregarBtnsPC(String.format("%03d", i)); // Números 001, 002, ...
         }
 
 

@@ -26,51 +26,22 @@ import javax.swing.SwingUtilities;
  */
 public class JPanelBtnPC extends JPanel {
 
-    private JButton transparentButton;
     private int anchoPanel;
     private int largoPanel;
     private Color color;
+    private String numero;
 
     public JPanelBtnPC(Color color, String numero) {
-        // Configurar layout principal como Overlay para superponer el botón
-        setLayout(new OverlayLayout(this));
-        
-        // Panel principal con BorderLayout para organizar los componentes
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setOpaque(false);  // Hacerlo transparente para el Overlay
+        this.numero= numero;
+        this.color = color;
+        initComponents();
+        btnPC.setOpaque(false); // No opaco
+        btnPC.setContentAreaFilled(false); // No relleno
+        btnPC.setBorderPainted(false); // Sin borde
+        btnPC.setFocusPainted(false); // Evita que se muestre resaltado al hacer clic
+        btnPC.setBackground(new Color(0, 0, 0, 0)); // Color completamente transparente
 
-        // 1. Panel central (JPanelPCRecomendado)
-        JpnlBase = new JPanelPCRecomendado(color, 100, 80);
-        mainPanel.add(JpnlBase, BorderLayout.CENTER);
-
-        // 2. Etiqueta en la parte inferior
-        lblNumPC = new JLabel(numero, JLabel.CENTER);
-        lblNumPC.setFont(new Font("Dialog", Font.BOLD, 24));
-        mainPanel.add(lblNumPC, BorderLayout.SOUTH);
-
-        // Agregar el panel principal al contenedor Overlay
-        add(mainPanel);
-
-        // 3. Botón transparente que cubre todo el panel
-        transparentButton = new JButton();
-        transparentButton.setOpaque(false);
-        transparentButton.setContentAreaFilled(false);
-        transparentButton.setBorderPainted(false);
-        transparentButton.setAlignmentX(0.5f);
-        transparentButton.setAlignmentY(0.5f);
-        transparentButton.setPreferredSize(new Dimension(150, 155));
-        transparentButton.setBounds(0, 0, getWidth(), getHeight());
-        add(transparentButton);
-
-        // Listener de ejemplo para el botón
-        transparentButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Botón clickeado - PC: " + numero);
-            }
-        });
     }
-
     /**
      * @param args the command line arguments
      */
@@ -116,49 +87,38 @@ public class JPanelBtnPC extends JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JpnlBase = new JPanelPCRecomendado(this.color, this.anchoPanel, this.largoPanel);
         lblNumPC = new javax.swing.JLabel();
+        JpanelPCRecomendado = new JPanelPCRecomendado(color, 100, 80);
+        btnPC = new javax.swing.JButton();
 
-        JpnlBase.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentMoved(java.awt.event.ComponentEvent evt) {
-                JpnlBaseComponentMoved(evt);
+        setLayout(new java.awt.BorderLayout());
+
+        lblNumPC = new JLabel(numero, JLabel.CENTER);
+        lblNumPC.setFont(new Font("Dialog", Font.BOLD, 24));
+        lblNumPC.setText(numero);
+        add(lblNumPC, java.awt.BorderLayout.PAGE_END);
+
+        JpanelPCRecomendado.setLayout(new java.awt.BorderLayout());
+
+        btnPC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPCActionPerformed(evt);
             }
         });
+        JpanelPCRecomendado.add(btnPC, java.awt.BorderLayout.CENTER);
 
-        lblNumPC.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblNumPC.setText("001");
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JpnlBase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(lblNumPC)
-                .addContainerGap(77, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(JpnlBase, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblNumPC, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
-        );
+        add(JpanelPCRecomendado, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JpnlBaseComponentMoved(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_JpnlBaseComponentMoved
+    private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_JpnlBaseComponentMoved
+        System.out.println("BOTON CLIKEADO"+ numero);
+    }//GEN-LAST:event_btnPCActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel JpnlBase;
+    private javax.swing.JPanel JpanelPCRecomendado;
+    private javax.swing.JButton btnPC;
     private javax.swing.JLabel lblNumPC;
     // End of variables declaration//GEN-END:variables
 }

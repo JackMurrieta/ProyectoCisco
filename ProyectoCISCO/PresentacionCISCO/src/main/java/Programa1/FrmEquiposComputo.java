@@ -5,6 +5,7 @@
 package Programa1;
 
 
+import Utilerias.JPanelPCRecomendado;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -25,9 +26,8 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
      * @param color
      */
     public FrmEquiposComputo(Color color) {
-        initComponents();
-        
         this.colorPCRecomendado = color;
+        initComponents();
         this.setTitle("Numero Equipo De Computo");
 
 
@@ -79,9 +79,11 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         lblTiempo = new javax.swing.JLabel();
         spnnerTiempo = new javax.swing.JSpinner();
+        lblCarreras = new javax.swing.JLabel();
+        JpanelPCRecomendado = new JPanelPCRecomendado(colorPCRecomendado, 150, 130);
+        JscrollPCs = new javax.swing.JScrollPane();
         lblEquipoRecomendado = new javax.swing.JLabel();
-        JpanelBtnPC = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        JscrollCarreras = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -94,30 +96,38 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
         lblTiempo.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
         lblTiempo.setForeground(new java.awt.Color(30, 47, 86));
         lblTiempo.setText("limite de tiempo");
-        getContentPane().add(lblTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, -1, 62));
+        getContentPane().add(lblTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, 62));
 
         spnnerTiempo.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         spnnerTiempo.setModel(new javax.swing.SpinnerNumberModel());
-        getContentPane().add(spnnerTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 180, 103, 48));
+        getContentPane().add(spnnerTiempo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 103, 48));
+
+        lblCarreras.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
+        lblCarreras.setForeground(new java.awt.Color(30, 47, 86));
+        lblCarreras.setText("Carreras");
+        getContentPane().add(lblCarreras, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 120, -1, 35));
+
+        JpanelPCRecomendado.setBackground(colorPCRecomendado);
+
+        javax.swing.GroupLayout JpanelPCRecomendadoLayout = new javax.swing.GroupLayout(JpanelPCRecomendado);
+        JpanelPCRecomendado.setLayout(JpanelPCRecomendadoLayout);
+        JpanelPCRecomendadoLayout.setHorizontalGroup(
+            JpanelPCRecomendadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 150, Short.MAX_VALUE)
+        );
+        JpanelPCRecomendadoLayout.setVerticalGroup(
+            JpanelPCRecomendadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(JpanelPCRecomendado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, 150, 130));
+        getContentPane().add(JscrollPCs, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 1090, 350));
 
         lblEquipoRecomendado.setFont(new java.awt.Font("Menlo", 1, 24)); // NOI18N
         lblEquipoRecomendado.setForeground(new java.awt.Color(30, 47, 86));
         lblEquipoRecomendado.setText("Equipo recomendado");
-        getContentPane().add(lblEquipoRecomendado, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 140, -1, 35));
-
-        javax.swing.GroupLayout JpanelBtnPCLayout = new javax.swing.GroupLayout(JpanelBtnPC);
-        JpanelBtnPC.setLayout(JpanelBtnPCLayout);
-        JpanelBtnPCLayout.setHorizontalGroup(
-            JpanelBtnPCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
-        );
-        JpanelBtnPCLayout.setVerticalGroup(
-            JpanelBtnPCLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(JpanelBtnPC, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 180, 170, 150));
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 1090, 350));
+        getContentPane().add(lblEquipoRecomendado, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 130, -1, 35));
+        getContentPane().add(JscrollCarreras, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 160, 360, 170));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -160,8 +170,10 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel JpanelBtnPC;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel JpanelPCRecomendado;
+    private javax.swing.JScrollPane JscrollCarreras;
+    private javax.swing.JScrollPane JscrollPCs;
+    private javax.swing.JLabel lblCarreras;
     private javax.swing.JLabel lblEquipoRecomendado;
     private javax.swing.JLabel lblTiempo;
     private javax.swing.JLabel lblTitulo;
