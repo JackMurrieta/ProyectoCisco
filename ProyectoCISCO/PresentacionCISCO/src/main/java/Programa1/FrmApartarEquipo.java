@@ -4,7 +4,6 @@
  */
 package Programa1;
 
-import Utilerias.FrmBotonPC;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -55,25 +54,25 @@ public class FrmApartarEquipo extends javax.swing.JFrame {
         
        
     }
-    private void llenarJscrollPane(){
-        // Crear el panel con grid layout para filas y columnas
-        jPanelBtnPC = new JPanel(new GridLayout(0, 4, 10, 10)); // 4 columnas y filas dinámicas
-
-        // Agregar componentes FrmBotonPC al panel
-        for (int i = 0; i < 20; i++) { // Agregar 20 botones de prueba
-            jPanelBtnPC.add(new FrmBotonPC(color));
-        }
-
-        // Envolver en un JScrollPane
-        scrollPane = new JScrollPane(jPanelBtnPC);
-        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBounds(50, 150, 800, 300);
-
-        // Agregar el JScrollPane al JFrame
-        getContentPane().setLayout(null);
-        getContentPane().add(scrollPane);
-    }
+//    private void llenarJscrollPane(){
+//        // Crear el panel con grid layout para filas y columnas
+//        jPanelBtnPC = new JPanel(new GridLayout(0, 4, 10, 10)); // 4 columnas y filas dinámicas
+//
+//        // Agregar componentes FrmBotonPC al panel
+//        for (int i = 0; i < 20; i++) { // Agregar 20 botones de prueba
+//            jPanelBtnPC.add(new FrmBotonPC(color));
+//        }
+//
+//        // Envolver en un JScrollPane
+//        scrollPane = new JScrollPane(jPanelBtnPC);
+//        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+//        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//        scrollPane.setBounds(50, 150, 800, 300);
+//
+//        // Agregar el JScrollPane al JFrame
+//        getContentPane().setLayout(null);
+//        getContentPane().add(scrollPane);
+//    }
     
 
     /**
