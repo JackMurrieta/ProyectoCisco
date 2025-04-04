@@ -6,6 +6,9 @@ package Entidades;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -41,9 +45,59 @@ public class LaboratorioEntidad implements Serializable {
     private LocalDate fechaFin;
     
     @ManyToOne
-    @JoinColumn(name = "idInstituto", nullable = false)
+    @JoinColumn(name = "idInstituto", referencedColumnName = "idInstituto", nullable = false)
     private InstitutoEntidad instituto;
+    
+    @OneToMany(mappedBy ="laboratorio", cascade = CascadeType.PERSIST)
+    private List<ComputadoraEntidad> computadoras = new ArrayList<>();
+    
+    //relacion con apartadosPorDIa
+    @OneToMany(mappedBy = "laboratorio",cascade = CascadeType.PERSIST)
+    private List<ApartadoPorDiaEntidad> apartadosPorDia = new ArrayList<>();
 
+    public LaboratorioEntidad() {
+    }
+
+    public LaboratorioEntidad(Long id, String nombreLab, String contrasenaMaestra, LocalDate fechaInicio, LocalDate fechaFin, InstitutoEntidad instituto, List<ComputadoraEntidad> computadoras, List<ApartadoPorDiaEntidad> apartadosPorDia) {
+        this.id = id;
+        this.nombreLab = nombreLab;
+        this.contrasenaMaestra = contrasenaMaestra;
+        this.fechaInicio = fechaInicio;
+        this.fechaFin = fechaFin;
+        this.instituto = instituto;
+        this.computadoras = computadoras;
+        this.apartadosPorDia = apartadosPorDia;
+    }
+
+    public String getNombreLab() {
+        return nombreLab;
+    }
+
+    public String getContrasenaMaestra() {
+        return contrasenaMaestra;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public LocalDate getFechaFin() {
+        return fechaFin;
+    }
+
+    public InstitutoEntidad getInstituto() {
+        return instituto;
+    }
+
+    public List<ComputadoraEntidad> getComputadoras() {
+        return computadoras;
+    }
+
+    public List<ApartadoPorDiaEntidad> getApartadosPorDia() {
+        return apartadosPorDia;
+    }
+   
+    
     public Long getId() {
         return id;
     }

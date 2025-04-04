@@ -6,6 +6,10 @@
     <class>Entidades.AlumnoEntidad</class>
     <class>Entidades.LaboratorioEntidad</class>
     <class>Entidades.InstitutoEntidad</class>
+    <class>Entidades.ComputadoraEntidad</class>
+    <class>Entidades.SoftwareEntidad</class>
+    <class>Entidades.SoftwareEnComputadoraEntidad</class>
+    <class>Entidades.ApartadoPorDiaEntidad</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CISCO?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

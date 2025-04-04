@@ -48,6 +48,10 @@ public class AlumnoEntidad implements Serializable {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "idCarrera", nullable = true)
     private CarreraEntidad carrera;
+    
+    //Relacion con apartado
+    
+    //Relacion con bloqueos
 
     public Long getId() {
         return id;

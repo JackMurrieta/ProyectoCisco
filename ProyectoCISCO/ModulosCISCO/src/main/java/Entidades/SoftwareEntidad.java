@@ -21,45 +21,45 @@ import javax.persistence.Table;
  * @author Jack Murrieta
  */
 @Entity
-@Table(name = "tblInstituto")
-public class InstitutoEntidad implements Serializable {
+@Table(name = "tblSoftware")
+public class SoftwareEntidad implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idInstituto")
+    @Column(name = "idSoftware")
     private Long id;
     
-    @Column(name = "nombreOficial", length = 35 , nullable =false)
-    private String nombreOficial;
+    @Column(name = "nombre", length = 25, nullable = false)
+    private String nombre;
     
-    @Column(name ="nombreAbreviado",length = 15, nullable = true)
-    private String nombreAbreviado;
+    @Column(name = "descripcion", length = 100, nullable = false)
+    private String descripcion;
     
-    @OneToMany(mappedBy = "instituto", cascade = CascadeType.PERSIST)
-    private List<LaboratorioEntidad> laboratorios = new ArrayList<>();
+    //Relacion tabla intermediaria de software con computadoras
+    @OneToMany(mappedBy ="software",cascade = CascadeType.PERSIST)
+    private List<SoftwareEnComputadoraEntidad> softwareEnComputadora = new ArrayList<>();
 
-    public InstitutoEntidad() {
+    public SoftwareEntidad() {
     }
 
-    public InstitutoEntidad(String nombreOficial, String nombreAbreviado, List<LaboratorioEntidad> laboratorios) {
-        this.nombreOficial = nombreOficial;
-        this.nombreAbreviado = nombreAbreviado;
-        this.laboratorios = laboratorios;
+    public SoftwareEntidad(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
-    public String getNombreOficial() {
-        return nombreOficial;
+    public String getNombre() {
+        return nombre;
     }
 
-    public String getNombreAbreviado() {
-        return nombreAbreviado;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public List<LaboratorioEntidad> getLaboratorios() {
-        return laboratorios;
+    public List<SoftwareEnComputadoraEntidad> getSoftwareEnComputadora() {
+        return softwareEnComputadora;
     }
     
-    
+
     public Long getId() {
         return id;
     }
@@ -78,10 +78,10 @@ public class InstitutoEntidad implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof InstitutoEntidad)) {
+        if (!(object instanceof SoftwareEntidad)) {
             return false;
         }
-        InstitutoEntidad other = (InstitutoEntidad) object;
+        SoftwareEntidad other = (SoftwareEntidad) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -90,7 +90,7 @@ public class InstitutoEntidad implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.InstitutoEntidad[ id=" + id + " ]";
+        return "Entidades.SoftwareEntidad[ id=" + id + " ]";
     }
     
 }

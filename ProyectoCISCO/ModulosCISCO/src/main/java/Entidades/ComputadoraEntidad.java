@@ -5,16 +5,22 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
  *
- * @author Jack Tadeo
+ * @author Jack Murrieta
  * 
  */
 @Entity
@@ -34,7 +40,55 @@ public class ComputadoraEntidad implements Serializable {
     
     @Column(name = "estatus", nullable = false)
     private boolean estatus;
+    
+    //Relacion con laboratorio
+    @ManyToOne
+    @JoinColumn(name = "idLaboratorio", referencedColumnName ="idLaboratorio", nullable = false )
+    private LaboratorioEntidad laboratorio;
+    
+    //relacion con TablaIntermediaria de softwares en computadoras
+    @OneToMany(mappedBy="computadora", cascade = CascadeType.PERSIST)
+    private List<SoftwareEnComputadoraEntidad> softwareInstalados = new ArrayList<>();
+    
+    //relacion con apartados
+    @OneToMany(mappedBy = "computadora", cascade = CascadeType.PERSIST)
+    private List<ApartadoEntidad> apartados = new ArrayList<>();
 
+    public ComputadoraEntidad() {
+    }
+
+    public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio) {
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.laboratorio = laboratorio;
+    }
+
+    public String getDireccionIp() {
+        return direccionIp;
+    }
+
+    public String getNumComputadora() {
+        return numComputadora;
+    }
+
+    public boolean isEstatus() {
+        return estatus;
+    }
+
+    public LaboratorioEntidad getLaboratorio() {
+        return laboratorio;
+    }
+
+    public List<SoftwareEnComputadoraEntidad> getSoftwareInstalados() {
+        return softwareInstalados;
+    }
+
+    public List<ApartadoEntidad> getApartados() {
+        return apartados;
+    }
+    
+   
     public Long getId() {
         return id;
     }
