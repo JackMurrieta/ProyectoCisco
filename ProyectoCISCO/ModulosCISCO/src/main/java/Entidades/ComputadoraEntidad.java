@@ -54,6 +54,12 @@ public class ComputadoraEntidad implements Serializable {
     @OneToMany(mappedBy = "computadora", cascade = CascadeType.PERSIST)
     private List<ApartadoEntidad> apartados = new ArrayList<>();
 
+    //Relacion con carreras
+    @ManyToOne
+    @JoinColumn(name = "idCarrera", referencedColumnName = "idCarrera", nullable = false)
+    private CarreraEntidad carrera;
+    
+    
     public ComputadoraEntidad() {
     }
 

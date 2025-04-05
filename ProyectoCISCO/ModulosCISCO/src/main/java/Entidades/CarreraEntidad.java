@@ -40,7 +40,11 @@ public class CarreraEntidad implements Serializable {
 
     @OneToMany(mappedBy = "carrera", cascade = {CascadeType.PERSIST})
     private List<AlumnoEntidad> alumnos;
-
+    
+    //Relacion con carreras
+    @OneToMany(mappedBy = "carrera", cascade = {CascadeType.PERSIST})
+    private List<ComputadoraEntidad> computadoras;
+    
     public Long getId() {
         return id;
     }
