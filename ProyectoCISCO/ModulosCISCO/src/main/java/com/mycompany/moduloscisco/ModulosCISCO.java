@@ -4,6 +4,10 @@
 
 package com.mycompany.moduloscisco;
 
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -11,6 +15,8 @@ package com.mycompany.moduloscisco;
 public class ModulosCISCO {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("CISCO_PU");
+        JOptionPane.showMessageDialog(null,"Conexión establecida y tablas creadas");
+        emf.close();
     }
 }

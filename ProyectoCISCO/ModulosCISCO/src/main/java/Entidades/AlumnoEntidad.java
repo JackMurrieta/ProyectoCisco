@@ -5,6 +5,8 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,9 +52,34 @@ public class AlumnoEntidad implements Serializable {
     private CarreraEntidad carrera;
     
     //Relacion con apartado
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.PERSIST)
+    private List<ApartadoEntidad> apartados = new ArrayList<>();
     
     //Relacion con bloqueos
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.PERSIST)
+    private List<BloqueoEntidad> bloqueos = new ArrayList<>();
 
+    public AlumnoEntidad() {
+    }
+
+    public AlumnoEntidad(String nombres, String apellidoP, String apellidoM, String contrasenia, boolean estatus, CarreraEntidad carrera) {
+        this.nombres = nombres;
+        this.apellidoP = apellidoP;
+        this.apellidoM = apellidoM;
+        this.contrasenia = contrasenia;
+        this.estatus = estatus;
+        this.carrera = carrera;
+    }
+
+    public List<ApartadoEntidad> getApartados() {
+        return apartados;
+    }
+
+    public List<BloqueoEntidad> getBloqueos() {
+        return bloqueos;
+    }
+
+    
     public Long getId() {
         return id;
     }

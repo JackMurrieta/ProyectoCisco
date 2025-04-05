@@ -10,6 +10,8 @@
     <class>Entidades.SoftwareEntidad</class>
     <class>Entidades.SoftwareEnComputadoraEntidad</class>
     <class>Entidades.ApartadoPorDiaEntidad</class>
+    <class>Entidades.BloqueoEntidad</class>
+    <class>Entidades.ApartadoEntidad</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/CISCO?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
