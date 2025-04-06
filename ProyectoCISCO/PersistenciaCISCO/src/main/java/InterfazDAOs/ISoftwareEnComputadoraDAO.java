@@ -5,17 +5,18 @@
 package InterfazDAOs;
 
 import Entidades.SoftwareEnComputadoraEntidad;
-import Entidades.SoftwareEntidad;
 import java.util.List;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public interface ISoftwareEnComputadoraDAO {
     
+    public void agregarSoftwareComputadora(SoftwareEnComputadoraEntidad instalados);
+    
     public void eliminarSoftware(SoftwareEnComputadoraEntidad instalados);
     
-    public List<SoftwareEntidad> obtenerInstaladosEnComputadora(SoftwareEnComputadoraEntidad idComputadora);
+    public List<SoftwareEnComputadoraEntidad> obtenerInstaladosEnComputadora(SoftwareEnComputadoraEntidad idComputadora);
     
 }

@@ -36,10 +36,20 @@ public class SoftwareEnComputadoraEntidad implements Serializable {
     @JoinColumn(name ="idSoftware", referencedColumnName ="idSoftware", nullable = false )
     private SoftwareEntidad software;
 
+    public SoftwareEnComputadoraEntidad() {
+    }
+
+    public SoftwareEnComputadoraEntidad(ComputadoraEntidad computadora, SoftwareEntidad software) {
+        this.computadora = computadora;
+        this.software = software;
+    }
+
+    
     public ComputadoraEntidad getComputadora() {
         return computadora;
     }
 
+    
     public SoftwareEntidad getSoftware() {
         return software;
     }
