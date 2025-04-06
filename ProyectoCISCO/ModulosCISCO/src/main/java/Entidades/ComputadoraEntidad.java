@@ -70,6 +70,40 @@ public class ComputadoraEntidad implements Serializable {
         this.laboratorio = laboratorio;
     }
 
+    public void setDireccionIp(String direccionIp) {
+        this.direccionIp = direccionIp;
+    }
+
+    public void setNumComputadora(String numComputadora) {
+        this.numComputadora = numComputadora;
+    }
+
+    public void setEstatus(boolean estatus) {
+        this.estatus = estatus;
+    }
+
+    public void setLaboratorio(LaboratorioEntidad laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    public void setSoftwareInstalados(List<SoftwareEnComputadoraEntidad> softwareInstalados) {
+        this.softwareInstalados = softwareInstalados;
+    }
+
+    public void setApartados(List<ApartadoEntidad> apartados) {
+        this.apartados = apartados;
+    }
+    
+
+    public CarreraEntidad getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(CarreraEntidad carrera) {
+        this.carrera = carrera;
+    }
+    
+
     public String getDireccionIp() {
         return direccionIp;
     }

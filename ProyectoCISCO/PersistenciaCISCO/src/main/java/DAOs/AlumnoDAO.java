@@ -21,6 +21,8 @@ import javax.persistence.criteria.Root;
  */
 public class AlumnoDAO {
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("CISCO_PU");
+    
+    //HAZLE UNA INTERFAZ Y QUE ESTA CLASE LA IMPLEMENTE
 
     public void guardarAlumno(AlumnoEntidad alumno) {
         EntityManager em = emf.createEntityManager();

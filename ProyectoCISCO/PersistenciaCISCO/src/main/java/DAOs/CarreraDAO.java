@@ -16,6 +16,8 @@ import javax.persistence.Persistence;
  */
 public class CarreraDAO {
   private EntityManagerFactory emf = Persistence.createEntityManagerFactory("CISCO_PU");
+  
+  //HAZLE UNA INTERFAZ Y QUE ESTA CLASE LA IMPLEMENTE
 
     public void guardarCarrera(CarreraEntidad carrera) {
         EntityManager em = emf.createEntityManager();
@@ -24,6 +26,7 @@ public class CarreraDAO {
             em.persist(carrera);
             em.getTransaction().commit();
             System.out.println("Carrera guardada exitosamente.");
+            //AGREGALE LA EXCEPCION DE PERSISTENCIA
         } catch (Exception e) {
             em.getTransaction().rollback();
             System.err.println("Error al guardar la carrera: " + e.getMessage());
