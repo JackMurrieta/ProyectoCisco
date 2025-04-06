@@ -9,6 +9,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.List;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -22,40 +23,44 @@ public class JPanelColumnas extends javax.swing.JPanel {
 
     private GridBagConstraints gbc;
     private int fila = 0, columna = 0, columnasMax = 4; // Número de columnas dinámicas
+    private list<ComputadoraDTO> computadoras;
 
-    public JPanelColumnas() {
+    public JPanelColumnas(List<ComputadoraDTO> listaComputadoras) {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
-
-        // Configuración del GridBagConstraints
         gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5); // Espaciado entre labels
-    }
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-    /**
-     * Agrega un JLabel dinámicamente en columnas flexibles.
-     */
-    public void agregarLabel(String texto, Color color) {
-        JLabel label = new JLabel(texto, SwingConstants.CENTER);
-        label.setOpaque(true);
-        label.setBackground(color);
-        label.setPreferredSize(new Dimension(300, 30));
-
-        // Configurar posición en el GridBagLayout
-        gbc.gridx = columna;
-        gbc.gridy = fila;
-        add(label, gbc);
-
-        // Ajustar la posición para la próxima etiqueta
-        columna++;
-        if (columna >= columnasMax) {
-            columna = 0;
-            fila++;
+        for (ComputadoraEntidad compu : listaComputadoras) {
+            agregarBtnsPC(compu.getNumeroSerie()); // o getId(), según tu modelo
         }
 
-        revalidate();
-        repaint();
     }
+
+//    /**
+//     * Agrega un JLabel dinámicamente en columnas flexibles.
+//     */
+//    public void agregarLabel(String texto, Color color) {
+//        JLabel label = new JLabel(texto, SwingConstants.CENTER);
+//        label.setOpaque(true);
+//        label.setBackground(color);
+//        label.setPreferredSize(new Dimension(300, 30));
+//
+//        // Configurar posición en el GridBagLayout
+//        gbc.gridx = columna;
+//        gbc.gridy = fila;
+//        add(label, gbc);
+//
+//        // Ajustar la posición para la próxima etiqueta
+//        columna++;
+//        if (columna >= columnasMax) {
+//            columna = 0;
+//            fila++;
+//        }
+//
+//        revalidate();
+//        repaint();
+//    }
     
     public void agregarBtnsPC(String numero) {
         JPanelBtnPC panelPC = new JPanelBtnPC(Color.CYAN, numero);

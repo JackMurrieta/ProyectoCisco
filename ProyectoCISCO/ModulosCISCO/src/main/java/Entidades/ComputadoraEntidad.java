@@ -56,12 +56,23 @@ public class ComputadoraEntidad implements Serializable {
 
     //Relacion con carreras
     @ManyToOne
-    @JoinColumn(name = "idCarrera", referencedColumnName = "idCarrera", nullable = false)
+    @JoinColumn(name = "idCarrera", referencedColumnName = "idCarrera", nullable = true)
     private CarreraEntidad carrera;
     
     
     public ComputadoraEntidad() {
     }
+
+    public ComputadoraEntidad(Long id, String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio, CarreraEntidad carrera) {
+        this.id = id;
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.laboratorio = laboratorio;
+        this.carrera = carrera;
+    }
+    
+    
 
     public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio) {
         this.direccionIp = direccionIp;

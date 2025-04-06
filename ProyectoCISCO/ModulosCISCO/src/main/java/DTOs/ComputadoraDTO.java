@@ -14,6 +14,7 @@ public class ComputadoraDTO {
     private String numComputadora;
     private boolean estatus;
     private long idCarrera;
+    private String color;
 
     public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, long idCarrera) {
         this.direccionIp = direccionIp;
