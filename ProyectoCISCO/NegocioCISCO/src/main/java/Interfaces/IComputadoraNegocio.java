@@ -5,6 +5,7 @@
 package Interfaces;
 
 import DTOs.ComputadoraDTO;
+import Entidades.ComputadoraEntidad;
 import ExcepcionNegocio.NegocioException;
 import java.util.List;
 
@@ -15,16 +16,16 @@ import java.util.List;
 public interface IComputadoraNegocio {
     
     //adaptador para crearEntidad y pasarela a persistencia
-    public void convertirComputadoraEntidad(ComputadoraDTO pc);
+    public ComputadoraEntidad convertirComputadoraEntidad(ComputadoraDTO pc);
     
     public void validarDatosComputadora(ComputadoraDTO pc)throws NegocioException ;
     
-    public ComputadoraDTO guardarComputadora(ComputadoraDTO pc);
-    public ComputadoraDTO eliminarComputadora(long id);
+    public void guardarComputadora(ComputadoraDTO pc);
+    public void eliminarComputadora(Long id);
     //editarComputadora
-    public ComputadoraDTO editarComputadora(ComputadoraDTO pc);
+    public void editarComputadora(ComputadoraDTO pc);
     //obtener computadras en una DTO
-    public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(long id);
+    public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id);
     
     public ComputadoraDTO obtenerComputadora(String numComputadora);
     

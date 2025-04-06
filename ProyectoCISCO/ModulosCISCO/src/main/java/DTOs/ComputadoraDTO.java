@@ -13,8 +13,9 @@ public class ComputadoraDTO {
     private String direccionIp;
     private String numComputadora;
     private boolean estatus;
-    private long idCarrera;
+    private Long idCarrera;
     private String color;
+    private Long idLab;
 
     public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, long idCarrera) {
         this.direccionIp = direccionIp;
@@ -22,6 +23,23 @@ public class ComputadoraDTO {
         this.estatus = estatus;
         this.idCarrera = idCarrera;
     }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public Long getIdLab() {
+        return idLab;
+    }
+
+    public void setIdLab(Long idLab) {
+        this.idLab = idLab;
+    }
+    
 
     public String getDireccionIp() {
         return direccionIp;
@@ -47,7 +65,7 @@ public class ComputadoraDTO {
         this.estatus = estatus;
     }
 
-    public long getIdCarrera() {
+    public Long getIdCarrera() {
         return idCarrera;
     }
 

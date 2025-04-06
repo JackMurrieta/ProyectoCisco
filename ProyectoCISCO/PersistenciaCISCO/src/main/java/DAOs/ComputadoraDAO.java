@@ -4,7 +4,10 @@
  */
 package DAOs;
 
+import DTOs.ComputadoraDTO;
+import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
+import Entidades.LaboratorioEntidad;
 import InterfazDAOs.IComputadoraDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -41,7 +44,7 @@ public class ComputadoraDAO implements IComputadoraDAO {
     }
 
     @Override
-    public void eliminarComputadora(long id) {
+    public void eliminarComputadora(Long id) {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         ComputadoraEntidad pc = em.find(ComputadoraEntidad.class,id);
@@ -55,7 +58,7 @@ public class ComputadoraDAO implements IComputadoraDAO {
     }
 
     @Override
-    public List<ComputadoraEntidad> obtenerComputadorasPorLaboratorio(long id) {
+    public List<ComputadoraEntidad> obtenerComputadorasPorLaboratorio(Long id) {
         EntityManager em = emf.createEntityManager();
         List<ComputadoraEntidad> computadoras = null;
 
@@ -72,17 +75,21 @@ public class ComputadoraDAO implements IComputadoraDAO {
         return computadoras;
     }
 
-    //Por id
     @Override
-    public ComputadoraEntidad obtenerComputadoraPorId(long id) {
+    public ComputadoraEntidad obtenerComputadoraPorNum(String num) {
         EntityManager em = emf.createEntityManager();
-        ComputadoraEntidad pc = em.find(ComputadoraEntidad.class, id);
+        ComputadoraEntidad pc;
 
-        if (pc != null) {
-            em.close();
+        try {
+            pc = em.find(ComputadoraEntidad.class, num);
+
+            if (pc == null) {
+                throw new PersistenceException("Computadora no encontrada");
+            }
+
             return pc;
-        } else {
-            throw new PersistenceException("Computadora No encontrada");
+        } finally {
+            em.close(); // Asegura el cierre del EntityManager incluso si hay error
         }
 
     }

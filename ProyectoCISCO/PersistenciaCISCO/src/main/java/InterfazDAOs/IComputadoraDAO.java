@@ -4,6 +4,7 @@
  */
 package InterfazDAOs;
 
+import DTOs.ComputadoraDTO;
 import Entidades.ComputadoraEntidad;
 import java.util.List;
 
@@ -17,13 +18,15 @@ public interface IComputadoraDAO {
     public void guardarComputadora(ComputadoraEntidad pc);
     
     //EliminarComputadora
-    public void eliminarComputadora(long idComputadora);
+    public void eliminarComputadora(Long idComputadora);
     
     //btener computadoras por labratorio
-    public List<ComputadoraEntidad> obtenerComputadorasPorLaboratorio(long idLabratorio);
+    public List<ComputadoraEntidad> obtenerComputadorasPorLaboratorio(Long idLabratorio);
     
-    public ComputadoraEntidad obtenerComputadoraPorId(long id);
+    public ComputadoraEntidad obtenerComputadoraPorNum(String num);
     //editar informacion de una computadora
     
     public void editarComputadora(ComputadoraEntidad pc);
+    
+    
 }

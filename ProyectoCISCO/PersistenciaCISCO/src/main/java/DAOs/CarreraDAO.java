@@ -38,4 +38,9 @@ public class CarreraDAO {
     public void cerrar() {
         emf.close();
     }
+    
+    public CarreraEntidad obtenerCarreraPorId(Long id){
+        CarreraEntidad encontrado = null;
+        return encontrado;
+    }
 }

@@ -4,18 +4,30 @@
  */
 package Negocio;
 
+import Adaptadores.ComputadoraAdapter;
+import DAOs.ComputadoraDAO;
 import DTOs.ComputadoraDTO;
+import Entidades.ComputadoraEntidad;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IComputadoraNegocio;
+import InterfazDAOs.IComputadoraDAO;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jack Murrieta
  */
 public class ComputadoraNegocio implements IComputadoraNegocio {
+    private  IComputadoraDAO pcDAO;
+    ComputadoraAdapter convertidor;
+    
 
     public ComputadoraNegocio() {
+        pcDAO = new ComputadoraDAO();
+        convertidor = new ComputadoraAdapter();
     }
     
 
@@ -23,6 +35,7 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     public void validarDatosComputadora(ComputadoraDTO pc) throws NegocioException {
         validarDireccionIp(pc.getDireccionIp());
         validarNumComputadora(pc.getNumComputadora());
+        //validarCarrera
     }
     
     private void validarDireccionIp(String direccionIp) throws NegocioException{
@@ -46,33 +59,50 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
 
     @Override
-    public ComputadoraDTO guardarComputadora(ComputadoraDTO pc) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void guardarComputadora(ComputadoraDTO pc) {
+        
+        pcDAO.guardarComputadora(convertirComputadoraEntidad(pc));
     }
 
     @Override
-    public ComputadoraDTO eliminarComputadora(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void eliminarComputadora(Long id) {
+        pcDAO.eliminarComputadora(id);
     }
 
     @Override
-    public ComputadoraDTO editarComputadora(ComputadoraDTO pc) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void editarComputadora(ComputadoraDTO pc) {
+        pcDAO.editarComputadora(convertirComputadoraEntidad(pc));
     }
 
     @Override
-    public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id) {
+        List<ComputadoraEntidad> computadorasBD = pcDAO.obtenerComputadorasPorLaboratorio(id);
+        List<ComputadoraDTO> computadorasDTO = new ArrayList<>();
+        for (ComputadoraEntidad pcEntidad : computadorasBD) {
+            ComputadoraDTO pcDTO = convertidor.convertirComputadoraDTO(pcEntidad);
+            computadorasDTO.add(pcDTO);
+            
+        }
+        return computadorasDTO;
     }
 
     @Override
     public ComputadoraDTO obtenerComputadora(String numComputadora) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        try {
+            validarNumComputadora(numComputadora);
+            return convertidor.convertirComputadoraDTO(pcDAO.obtenerComputadoraPorNum(numComputadora));
+            
+            
+        } catch (NegocioException ex) {
+            Logger.getLogger(ComputadoraNegocio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+        
     }
 
     @Override
-    public void convertirComputadoraEntidad(ComputadoraDTO pc) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public ComputadoraEntidad convertirComputadoraEntidad(ComputadoraDTO pc){
+        return convertidor.convertirComputadoraEntidad(pc);
+            
     }
-    
 }

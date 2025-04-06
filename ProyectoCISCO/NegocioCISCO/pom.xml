@@ -14,6 +14,11 @@
             <artifactId>ModulosCISCO</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>PersistenciaCISCO</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
