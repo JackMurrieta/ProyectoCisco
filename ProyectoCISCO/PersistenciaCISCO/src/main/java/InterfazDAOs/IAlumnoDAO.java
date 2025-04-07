@@ -6,6 +6,7 @@ package InterfazDAOs;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,6 @@ public interface IAlumnoDAO {
     void guardarAlumnoConCarreraPorID(AlumnoConCarreraDTO dto);
     
     AlumnoDTO buscarAlumnoPorId(Long id);
+    
+    List<AlumnoDTO> obtenerAlumnos();
 }

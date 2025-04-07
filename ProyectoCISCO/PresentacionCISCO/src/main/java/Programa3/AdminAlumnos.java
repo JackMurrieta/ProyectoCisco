@@ -9,6 +9,7 @@ import DTOs.AlumnoDTO;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IAlumnoNegocio;
 import Negocio.AlumnoNegocio;
+import Utilerias.RenderTabla;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ public class AdminAlumnos extends javax.swing.JPanel {
     public AdminAlumnos() {
         initComponents();
         this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
+        llenarTablaAlumnos();
     }
 
     public void mostrarPanel(JPanel p) {
@@ -39,12 +41,40 @@ public class AdminAlumnos extends javax.swing.JPanel {
         frame.setVisible(true);
     }
 
-    private void llenarTablaAlumnoPorId(Long idAlumno) {
+    private JButton[] generarBotones(Long alumnoid) {
 
-        AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(idAlumno);
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.setName("M");
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setName("E");
 
-        if (alumno == null) {
-            JOptionPane.showMessageDialog(this, "Alumno no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+        return new JButton[]{btnEditar, btnEliminar};
+    }
+
+    private void obtenerDatos(AlumnoDTO alumno) {
+        //esto llena los datos del buscar
+        DefaultTableModel modelo = (DefaultTableModel) jTable2.getModel();
+        modelo.setRowCount(0);
+
+        JButton[] botones = generarBotones(alumno.getId());
+
+        modelo.addRow(new Object[]{
+            alumno.getId(),
+            alumno.getNombre(),
+            alumno.getApellidoP(),
+            alumno.getApellidoM(),
+            alumno.isEstatus(),
+            alumno.getCarreraNombre(),
+            botones[0],
+            botones[1]
+        });
+    }
+
+    private void llenarTablaAlumnos() {
+
+        List<AlumnoDTO> alumnos = alumnoNegocio.obtenerAlumnos();
+        if (alumnos == null || alumnos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron alumnos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -54,23 +84,28 @@ public class AdminAlumnos extends javax.swing.JPanel {
             }
         };
 
-        modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Apellido Paterno", "Apellido Materno", "Estatus inscripcion", "Carrera", "Editar", "Eliminar"});
+        modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Apellido Paterno", "Apellido Materno", "Estatus Inscripcion", "Carrera", "Editar", "Eliminar"});
 
-        modelo.addRow(new Object[]{
-            alumno.getId(), // ID del alumno
-            alumno.getNombre(), // Nombre
-            alumno.getApellidoP(), // Apellido Paterno
-            alumno.getApellidoM(), // Apellido Materno
-            alumno.isEstatus(), // Fecha de Nacimiento
-            alumno.getCarreraNombre(), // Botón Editar
-        // Botón Eliminar
-        });
+        for (AlumnoDTO alumno : alumnos) {
+            JButton[] btn = generarBotones(alumno.getId());
 
+            modelo.addRow(new Object[]{
+                alumno.getId(),
+                alumno.getNombre(),
+                alumno.getApellidoP(),
+                alumno.getApellidoM(),
+                alumno.isEstatus(),
+                alumno.getCarreraNombre(),
+                btn[0], // Botón Editar
+                btn[1] // Botón Eliminar
+            });
+        }
+        // Asignar el modelo de la tabla
         jTable2.setModel(modelo);
 
         // Asignar los renderizadores de botones para las columnas de Editar y Eliminar
-        // jTableClientes.getColumn("Editar").setCellRenderer(new RenderTabla());
-        //jTableClientes.getColumn("Eliminar").setCellRenderer(new RenderTabla());
+         jTable2.getColumn("Editar").setCellRenderer(new RenderTabla());
+        jTable2.getColumn("Eliminar").setCellRenderer(new RenderTabla());
     }
 
     /**
@@ -114,6 +149,11 @@ public class AdminAlumnos extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jTable2);
@@ -189,14 +229,15 @@ public class AdminAlumnos extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAlumnoActionPerformed
         try {
             Long idAlumno = Long.parseLong(tfBuscar.getText().trim());
-            llenarTablaAlumnoPorId(idAlumno);
+            AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(idAlumno);
+            obtenerDatos(alumno);
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -213,6 +254,48 @@ public class AdminAlumnos extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnNuevoAlumnoActionPerformed
 
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+       int column = this.jTable2.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / this.jTable2.getRowHeight();
+
+        if (row < this.jTable2.getRowCount() && row >= 0 && column < this.jTable2.getColumnCount() && column >= 0) {
+            Object value = this.jTable2.getValueAt(row, column);
+
+            if (value instanceof JButton) {
+                JButton boton = (JButton) value;
+                Long alumnoid = (Long) this.jTable2.getValueAt(row, 0);
+
+                if (boton.getText().equals("Editar")) {
+                    editarAlumno(alumnoid);
+                } else if (boton.getText().equals("Eliminar")) {
+                    eliminarAlumno(alumnoid);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+        
+   private void editarAlumno(Long alumnoid) {
+    AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
+    if (alumno != null) {
+        // Crear el formulario de edición
+        crearAlumno p = new crearAlumno();
+
+        p.cargarDatosAlumno(alumno);
+
+        // Mostrar el formulario
+        mostrarPanel(p);
+    } else {
+        JOptionPane.showMessageDialog(this, "No se encontró el alumno.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+     
+     private void eliminarAlumno(Long alumnoid){
+         
+     }
+    
+   
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarAlumno;

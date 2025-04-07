@@ -6,6 +6,7 @@ package Interfaces;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import java.util.List;
 
 /**
  *
@@ -15,4 +16,6 @@ public interface IAlumnoNegocio {
     void registrarAlumno(AlumnoConCarreraDTO dto);
     
     AlumnoDTO buscarAlumnoPorId(Long id);
+    
+     List<AlumnoDTO> obtenerAlumnos();
 }

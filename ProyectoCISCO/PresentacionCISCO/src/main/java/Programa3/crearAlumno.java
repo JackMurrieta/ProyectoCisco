@@ -7,6 +7,7 @@ package Programa3;
 import DAOs.AlumnoDAO;
 import DAOs.CarreraDAO;
 import DTOs.AlumnoConCarreraDTO;
+import DTOs.AlumnoDTO;
 import DTOs.CarreraDTO;
 import Interfaces.IAlumnoNegocio;
 import Interfaces.ICarreraNegocio;
@@ -33,6 +34,8 @@ public class crearAlumno extends javax.swing.JPanel {
         this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
         cargarCarreras();
     }
+    
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,6 +222,22 @@ public class crearAlumno extends javax.swing.JPanel {
             jComboBox2.addItem(carrera.getNombre()); 
         }
     }
+    
+  public void cargarDatosAlumno(AlumnoDTO alumno) {
+    if (alumno != null) {
+        // Cargar los datos en los campos del formulario
+        jTFnombre.setText(alumno.getNombre());
+        jTFapellidoPaterno.setText(alumno.getApellidoP());
+        jTFapellidoMaterno.setText(alumno.getApellidoM());
+        JTFcontrasenia1.setText(alumno.getContrasenia());
+
+        // Establecer el estatus
+        String estatus = alumno.isEstatus() ? "Activo" : "Inactivo";
+        jComboBox1.setSelectedItem(estatus);
+
+        
+    }
+}
 
 
     private void btnGuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoActionPerformed
@@ -237,13 +256,13 @@ public class crearAlumno extends javax.swing.JPanel {
             boolean estatus = estatusSeleccionado.equalsIgnoreCase("Activo");
 
             String carreraSeleccionada = (String) jComboBox2.getSelectedItem();
-
             Long idCarrera = carrerasMap.get(carreraSeleccionada);
 
             if (idCarrera == null) {
                 JOptionPane.showMessageDialog(this, "Selecciona una carrera.");
                 return;
             }
+            
 
             AlumnoConCarreraDTO dto = new AlumnoConCarreraDTO(
                     nombre, apellidoP, apellidoM, contrasenia, estatus, idCarrera

@@ -9,6 +9,7 @@ import DTOs.AlumnoDTO;
 import Entidades.AlumnoEntidad;
 import Entidades.CarreraEntidad;
 import InterfazDAOs.IAlumnoDAO;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -77,27 +78,17 @@ public class AlumnoDAO implements IAlumnoDAO {
     @Override
     public AlumnoDTO buscarAlumnoPorId(Long id) {
         try {
-            // Crear CriteriaBuilder
+          
             CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-            
-            // Crear CriteriaQuery para AlumnoEntidad
             CriteriaQuery<AlumnoEntidad> cq = cb.createQuery(AlumnoEntidad.class);
-            
-            // Crear Root para la entidad Alumno
             Root<AlumnoEntidad> alumnoRoot = cq.from(AlumnoEntidad.class);
-            
-            // Crear condición WHERE id = :id
             cq.select(alumnoRoot).where(cb.equal(alumnoRoot.get("id"), id));
             
-            // Ejecutar la consulta
             AlumnoEntidad alumno = entityManager.createQuery(cq).getSingleResult();
             
-            // Si el alumno fue encontrado, se mapean los datos
             if (alumno != null) {
-                // Obtener nombre de la carrera (si existe)
                 String carreraNombre = (alumno.getCarrera() != null) ? alumno.getCarrera().getNombre() : "Desconocida";
 
-                // Crear y devolver el DTO
                 return new AlumnoDTO(
                         alumno.getId(),
                         alumno.getNombres(),
@@ -115,5 +106,44 @@ public class AlumnoDAO implements IAlumnoDAO {
             return null;
         }
     }
+    @Override
+public List<AlumnoDTO> obtenerAlumnos() {
+    List<AlumnoDTO> alumnosDTO = new ArrayList<>();
+
+    try {
+      
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<AlumnoEntidad> cq = cb.createQuery(AlumnoEntidad.class);
+        Root<AlumnoEntidad> alumnoRoot = cq.from(AlumnoEntidad.class);
+        
+       
+        cq.select(alumnoRoot);
+
+      
+        List<AlumnoEntidad> alumnos = entityManager.createQuery(cq).getResultList();
+
+        
+        for (AlumnoEntidad alumno : alumnos) {
+            String carreraNombre = (alumno.getCarrera() != null) ? alumno.getCarrera().getNombre() : "Desconocida";
+            
+            AlumnoDTO alumnoDTO = new AlumnoDTO(
+                alumno.getId(),
+                alumno.getNombres(),
+                alumno.getApellidoP(),
+                alumno.getApellidoM(),
+                alumno.isEstatus(),
+                carreraNombre
+            );
+            alumnosDTO.add(alumnoDTO);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return alumnosDTO;
+}
+
+    
 
 }

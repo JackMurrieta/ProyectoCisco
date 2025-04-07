@@ -8,6 +8,8 @@ import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
 import Interfaces.IAlumnoNegocio;
 import InterfazDAOs.IAlumnoDAO;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -28,5 +30,11 @@ public class AlumnoNegocio implements IAlumnoNegocio {
     @Override
     public AlumnoDTO buscarAlumnoPorId(Long id) {
         return alumnoDAO.buscarAlumnoPorId(id);
+    }
+    @Override
+    public List<AlumnoDTO> obtenerAlumnos() {
+        
+            return alumnoDAO.obtenerAlumnos();  
+      
     }
 }
