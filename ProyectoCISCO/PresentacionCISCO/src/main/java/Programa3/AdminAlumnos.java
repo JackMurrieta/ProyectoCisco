@@ -70,11 +70,12 @@ public class AdminAlumnos extends javax.swing.JPanel {
         });
     }
 
-    private void llenarTablaAlumnos() {
+    public void llenarTablaAlumnos() {
 
+        try {
+        
         List<AlumnoDTO> alumnos = alumnoNegocio.obtenerAlumnos();
         if (alumnos == null || alumnos.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No se encontraron alumnos", "Aviso", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
 
@@ -106,6 +107,10 @@ public class AdminAlumnos extends javax.swing.JPanel {
         // Asignar los renderizadores de botones para las columnas de Editar y Eliminar
          jTable2.getColumn("Editar").setCellRenderer(new RenderTabla());
         jTable2.getColumn("Eliminar").setCellRenderer(new RenderTabla());
+        
+         }  catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al obtener los alumnos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -217,8 +222,8 @@ public class AdminAlumnos extends javax.swing.JPanel {
                         .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(283, 283, 283))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(200, 200, 200))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -229,7 +234,7 @@ public class AdminAlumnos extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -281,7 +286,7 @@ public class AdminAlumnos extends javax.swing.JPanel {
         crearAlumno p = new crearAlumno();
 
         p.cargarDatosAlumno(alumno);
-
+           
         // Mostrar el formulario
         mostrarPanel(p);
     } else {
@@ -290,9 +295,27 @@ public class AdminAlumnos extends javax.swing.JPanel {
 }
 
      
-     private void eliminarAlumno(Long alumnoid){
-         
-     }
+     private void eliminarAlumno(Long alumnoid) {
+    AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
+    if (alumno != null) {
+        int opcion = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de que desea eliminar al cliente " + alumno.getNombre() + "?",
+                "Confirmación de eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            alumnoNegocio.eliminarAlumno(alumnoid);
+            JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            llenarTablaAlumnos();
+        } else {
+            JOptionPane.showMessageDialog(this, "Eliminación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Cliente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
     
    
  

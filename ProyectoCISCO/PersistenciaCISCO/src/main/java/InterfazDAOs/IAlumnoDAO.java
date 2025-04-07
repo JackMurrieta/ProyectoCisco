@@ -18,4 +18,8 @@ public interface IAlumnoDAO {
     AlumnoDTO buscarAlumnoPorId(Long id);
     
     List<AlumnoDTO> obtenerAlumnos();
+    
+    void editarAlumnoPorId(AlumnoConCarreraDTO dto);
+    
+    void eliminarAlumnoPorId(Long id);
 }

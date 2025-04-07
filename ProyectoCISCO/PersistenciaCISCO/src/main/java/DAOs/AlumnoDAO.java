@@ -33,7 +33,7 @@ public class AlumnoDAO implements IAlumnoDAO {
     }
 
     public void guardarAlumnoConCarreraPorID(AlumnoConCarreraDTO dto) {
-
+        
         try {
             entityManager.getTransaction().begin();
 
@@ -69,10 +69,7 @@ public class AlumnoDAO implements IAlumnoDAO {
                 entityManager.getTransaction().rollback();
             }
             e.printStackTrace();
-        } finally {
-            entityManager.close();
-            fabrica.close();
-        }
+        } 
     }
     
     @Override
@@ -143,6 +140,79 @@ public List<AlumnoDTO> obtenerAlumnos() {
 
     return alumnosDTO;
 }
+
+@Override
+public void editarAlumnoPorId(AlumnoConCarreraDTO dto) {
+    try {
+        entityManager.getTransaction().begin();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<AlumnoEntidad> cq = cb.createQuery(AlumnoEntidad.class);
+        Root<AlumnoEntidad> root = cq.from(AlumnoEntidad.class);
+        cq.select(root).where(cb.equal(root.get("id"), dto.getIdAlumno()));
+
+        AlumnoEntidad alumno = entityManager.createQuery(cq).getSingleResult();
+
+        if (alumno != null) {
+            alumno.setNombres(dto.getNombres());
+            alumno.setApellidoP(dto.getApellidoP());
+            alumno.setApellidoM(dto.getApellidoM());
+            alumno.setContrasenia(dto.getContrasenia());
+            alumno.setEstatus(dto.isEstatus());
+
+            // Buscar la nueva carrera por ID
+            CriteriaQuery<CarreraEntidad> carreraQuery = cb.createQuery(CarreraEntidad.class);
+            Root<CarreraEntidad> carreraRoot = carreraQuery.from(CarreraEntidad.class);
+            carreraQuery.select(carreraRoot).where(cb.equal(carreraRoot.get("id"), dto.getIdCarrera()));
+            CarreraEntidad nuevaCarrera = entityManager.createQuery(carreraQuery).getSingleResult();
+
+            alumno.setCarrera(nuevaCarrera);
+
+            entityManager.merge(alumno);
+            entityManager.getTransaction().commit();
+            System.out.println(" Alumno actualizado correctamente.");
+        } else {
+            System.out.println(" Alumno no encontrado.");
+            entityManager.getTransaction().rollback();
+        }
+    } catch (Exception e) {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
+        e.printStackTrace();
+    } 
+}
+
+@Override
+public void eliminarAlumnoPorId(Long id) {
+    try {
+        entityManager.getTransaction().begin();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<AlumnoEntidad> cq = cb.createQuery(AlumnoEntidad.class);
+        Root<AlumnoEntidad> root = cq.from(AlumnoEntidad.class);
+        cq.select(root).where(cb.equal(root.get("id"), id));
+
+        AlumnoEntidad alumno = entityManager.createQuery(cq).getSingleResult();
+
+        if (alumno != null) {
+            entityManager.remove(alumno);
+            entityManager.getTransaction().commit();
+            System.out.println(" Alumno eliminado correctamente.");
+        } else {
+            System.out.println(" Alumno no encontrado.");
+            entityManager.getTransaction().rollback();
+        }
+
+    } catch (Exception e) {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
+        e.printStackTrace();
+    } 
+}
+
+
 
     
 

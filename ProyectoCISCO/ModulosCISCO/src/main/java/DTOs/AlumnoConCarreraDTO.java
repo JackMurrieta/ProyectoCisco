@@ -9,7 +9,8 @@ package DTOs;
  * @author Oribiel
  */
 public class AlumnoConCarreraDTO {
-
+    
+    private Long idAlumno;
     private String nombres;
     private String apellidoP;
     private String apellidoM;
@@ -77,6 +78,14 @@ public class AlumnoConCarreraDTO {
 
     public void setIdCarrera(Long idCarrera) {
         this.idCarrera = idCarrera;
+    }
+
+    public Long getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(Long idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
     
