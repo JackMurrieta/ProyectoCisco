@@ -5,6 +5,7 @@
 package Negocio;
 
 import DTOs.AlumnoConCarreraDTO;
+import DTOs.AlumnoDTO;
 import Interfaces.IAlumnoNegocio;
 import InterfazDAOs.IAlumnoDAO;
 
@@ -22,5 +23,10 @@ public class AlumnoNegocio implements IAlumnoNegocio {
     @Override
     public void registrarAlumno(AlumnoConCarreraDTO dto) {
         alumnoDAO.guardarAlumnoConCarreraPorID(dto);
+    }
+    
+    @Override
+    public AlumnoDTO buscarAlumnoPorId(Long id) {
+        return alumnoDAO.buscarAlumnoPorId(id);
     }
 }
