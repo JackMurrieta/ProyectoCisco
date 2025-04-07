@@ -133,7 +133,7 @@ public class AdminCarreras extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCarreraActionPerformed
-        crearAlumno p= new crearAlumno();
+    
       
 
     }//GEN-LAST:event_btnNuevaCarreraActionPerformed

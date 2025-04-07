@@ -18,17 +18,17 @@ public class Prueba {
      */
     public static void main(String[] args) {
     
-        Integer idCarrera = 1; 
-
- 
-        AlumnoConCarreraDTO nuevoAlumno = new AlumnoConCarreraDTO(
-            "Ori", "Arr", "Belt",
-            "123", true, idCarrera
-        );
-
-    
-        AlumnoDAO alumnoDAO = new AlumnoDAO();
-        alumnoDAO.guardarAlumnoConCarreraPorID(nuevoAlumno);
+//        Integer idCarrera = 1; 
+//
+// 
+//        AlumnoConCarreraDTO nuevoAlumno = new AlumnoConCarreraDTO(
+//            "Ori", "Arr", "Belt",
+//            "123", true, idCarrera
+//        );
+//
+//    
+//        AlumnoDAO alumnoDAO = new AlumnoDAO();
+//        alumnoDAO.guardarAlumnoConCarreraPorID(nuevoAlumno);
     }
     }
     

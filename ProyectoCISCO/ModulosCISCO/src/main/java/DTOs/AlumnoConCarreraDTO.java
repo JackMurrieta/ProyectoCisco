@@ -15,12 +15,12 @@ public class AlumnoConCarreraDTO {
     private String apellidoM;
     private String contrasenia;
     private boolean estatus;
-    private Integer idCarrera;
+    private Long idCarrera;
 
     public AlumnoConCarreraDTO() {
     }
 
-    public AlumnoConCarreraDTO(String nombres, String apellidoP, String apellidoM, String contrasenia, boolean estatus, Integer idCarrera) {
+    public AlumnoConCarreraDTO(String nombres, String apellidoP, String apellidoM, String contrasenia, boolean estatus, Long idCarrera) {
         this.nombres = nombres;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
@@ -71,13 +71,15 @@ public class AlumnoConCarreraDTO {
         this.estatus = estatus;
     }
 
-    public Integer getIdCarrera() {
+    public Long getIdCarrera() {
         return idCarrera;
     }
 
-    public void setIdCarrera(Integer idCarrera) {
+    public void setIdCarrera(Long idCarrera) {
         this.idCarrera = idCarrera;
     }
+
+    
 
 
     

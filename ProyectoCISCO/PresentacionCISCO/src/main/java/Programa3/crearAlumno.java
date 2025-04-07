@@ -4,17 +4,34 @@
  */
 package Programa3;
 
+import DAOs.AlumnoDAO;
+import DAOs.CarreraDAO;
+import DTOs.AlumnoConCarreraDTO;
+import DTOs.CarreraDTO;
+import Interfaces.IAlumnoNegocio;
+import Interfaces.ICarreraNegocio;
+import Negocio.AlumnoNegocio;
+import Negocio.CarreraNegocio;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Oribiel
  */
 public class crearAlumno extends javax.swing.JPanel {
 
-    /**
-     * Creates new form crearAlumno
-     */
+    private IAlumnoNegocio alumnoNegocio;
+    private ICarreraNegocio carreraNegocio;
+    private Map<String, Long> carrerasMap = new HashMap<>();
+
     public crearAlumno() {
         initComponents();
+        this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
+        this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
+        cargarCarreras();
     }
 
     /**
@@ -43,7 +60,7 @@ public class crearAlumno extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnGuardarAlumno = new javax.swing.JButton();
 
         jButton2.setText("jButton2");
 
@@ -75,7 +92,12 @@ public class crearAlumno extends javax.swing.JPanel {
 
         btnRegresar.setText("Regresar");
 
-        jButton3.setText("Guardar alumno");
+        btnGuardarAlumno.setText("Guardar alumno");
+        btnGuardarAlumno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarAlumnoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,7 +117,7 @@ public class crearAlumno extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTFnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -112,8 +134,7 @@ public class crearAlumno extends javax.swing.JPanel {
                                             .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(6, 6, 6)
-                                            .addComponent(jLabel7)
-                                            .addGap(13, 13, 13)))
+                                            .addComponent(jLabel7)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addGap(22, 22, 22))))))
@@ -167,7 +188,7 @@ public class crearAlumno extends javax.swing.JPanel {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnGuardarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26))
         );
 
@@ -178,12 +199,61 @@ public class crearAlumno extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFapellidoPaternoActionPerformed
 
+    private void cargarCarreras() {
+        jComboBox2.removeAllItems();
+
+        List<CarreraDTO> carreras = carreraNegocio.obtenerCarreras();
+
+        for (CarreraDTO carrera : carreras) {
+            carrerasMap.put(carrera.getNombre(), carrera.getId());
+            jComboBox2.addItem(carrera.getNombre()); 
+        }
+    }
+
+
+    private void btnGuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoActionPerformed
+        try {
+            String nombre = jTFnombre.getText().trim();
+            String apellidoP = jTFapellidoPaterno.getText().trim();
+            String apellidoM = jTFapellidoMaterno.getText().trim();
+            String contrasenia = JTFcontrasenia1.getText().trim();
+
+            if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || contrasenia.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
+                return;
+            }
+
+            String estatusSeleccionado = (String) jComboBox1.getSelectedItem();
+            boolean estatus = estatusSeleccionado.equalsIgnoreCase("Activo");
+
+            String carreraSeleccionada = (String) jComboBox2.getSelectedItem();
+
+            Long idCarrera = carrerasMap.get(carreraSeleccionada);
+
+            if (idCarrera == null) {
+                JOptionPane.showMessageDialog(this, "Selecciona una carrera.");
+                return;
+            }
+
+            AlumnoConCarreraDTO dto = new AlumnoConCarreraDTO(
+                    nombre, apellidoP, apellidoM, contrasenia, estatus, idCarrera
+            );
+
+            alumnoNegocio.registrarAlumno(dto);
+            JOptionPane.showMessageDialog(this, "Alumno guardado correctamente.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar el alumno.");
+        }
+    }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField JTFcontrasenia1;
+    private javax.swing.JButton btnGuardarAlumno;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;

@@ -7,6 +7,7 @@ package DAOs;
 import DTOs.AlumnoConCarreraDTO;
 import Entidades.AlumnoEntidad;
 import Entidades.CarreraEntidad;
+import InterfazDAOs.IAlumnoDAO;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,7 +20,7 @@ import javax.persistence.criteria.Root;
  *
  * @author Oribiel
  */
-public class AlumnoDAO {
+public class AlumnoDAO implements IAlumnoDAO{
     private EntityManagerFactory emf = Persistence.createEntityManagerFactory("CISCO_PU");
     
     //HAZLE UNA INTERFAZ Y QUE ESTA CLASE LA IMPLEMENTE

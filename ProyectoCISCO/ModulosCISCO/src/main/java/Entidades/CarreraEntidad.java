@@ -87,6 +87,11 @@ public class CarreraEntidad implements Serializable {
         this.alumnos = alumnos;
     }
 
+    @Override
+    public String toString() {
+        return "CarreraEntidad{" + "nombre=" + nombre + '}';
+    }
+
     
     
 }

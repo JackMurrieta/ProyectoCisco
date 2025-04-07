@@ -39,6 +39,10 @@
             <artifactId>flatlaf-intellij-themes</artifactId>
             <version>3.4</version> 
         </dependency>
-
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>NegocioCISCO</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>
