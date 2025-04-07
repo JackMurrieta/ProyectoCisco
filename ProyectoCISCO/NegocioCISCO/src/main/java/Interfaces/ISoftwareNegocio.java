@@ -15,13 +15,10 @@ import java.util.List;
 public interface ISoftwareNegocio {
     
     // Metodos de validacion
-    public void validarNombreSoftware(String nombre) throws NegocioException ;
-    public void validarDescripcion(String descripcion)throws NegocioException ;
-    public void validarExistencia(String nombre) throws NegocioException ;
     public boolean validarGuardarSoftware(SoftwareDTO sw)throws NegocioException ;
     
     //Metodos de sistemas
-    public void guardarSoftware(SoftwareDTO sw);
+    public void guardarSoftware(SoftwareDTO sw)throws NegocioException ;
     public List<SoftwareDTO> obtenerSoftwares();
     
     
