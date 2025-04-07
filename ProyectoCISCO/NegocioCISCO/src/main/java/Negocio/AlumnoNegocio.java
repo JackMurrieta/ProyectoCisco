@@ -6,6 +6,7 @@ package Negocio;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import ExcepcionNegocio.NegocioException;
 import Interfaces.IAlumnoNegocio;
 import InterfazDAOs.IAlumnoDAO;
 import java.util.ArrayList;
@@ -32,9 +33,19 @@ public class AlumnoNegocio implements IAlumnoNegocio {
         return alumnoDAO.buscarAlumnoPorId(id);
     }
     @Override
-    public List<AlumnoDTO> obtenerAlumnos() {
+    public List<AlumnoDTO> obtenerAlumnos() throws NegocioException{
         
             return alumnoDAO.obtenerAlumnos();  
       
     }
+   @Override
+    public void editarAlumno(AlumnoConCarreraDTO dto) {
+        alumnoDAO.editarAlumnoPorId(dto);
+    }
+    
+    @Override
+    public void eliminarAlumno(Long id){
+        alumnoDAO.eliminarAlumnoPorId(id);
+    }
+  
 }

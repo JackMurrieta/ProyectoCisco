@@ -6,6 +6,7 @@ package Interfaces;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import ExcepcionNegocio.NegocioException;
 import java.util.List;
 
 /**
@@ -15,7 +16,11 @@ import java.util.List;
 public interface IAlumnoNegocio {
     void registrarAlumno(AlumnoConCarreraDTO dto);
     
-    AlumnoDTO buscarAlumnoPorId(Long id);
+    AlumnoDTO buscarAlumnoPorId(Long id) ;
     
-     List<AlumnoDTO> obtenerAlumnos();
+     List<AlumnoDTO> obtenerAlumnos() throws NegocioException;
+     
+     void editarAlumno(AlumnoConCarreraDTO dto);
+     
+     void eliminarAlumno(Long id);
 }

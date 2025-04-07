@@ -27,15 +27,18 @@ public class crearAlumno extends javax.swing.JPanel {
     private IAlumnoNegocio alumnoNegocio;
     private ICarreraNegocio carreraNegocio;
     private Map<String, Long> carrerasMap = new HashMap<>();
+    private Long idAlumnoEditando = null;
+ 
+  
 
     public crearAlumno() {
         initComponents();
         this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
         this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
         cargarCarreras();
-    }
-    
+       
  
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,6 +107,11 @@ public class crearAlumno extends javax.swing.JPanel {
         jLabel7.setText("Confirmar contrasenia");
 
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         btnGuardarAlumno.setText("Guardar alumno");
         btnGuardarAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -219,25 +227,26 @@ public class crearAlumno extends javax.swing.JPanel {
 
         for (CarreraDTO carrera : carreras) {
             carrerasMap.put(carrera.getNombre(), carrera.getId());
-            jComboBox2.addItem(carrera.getNombre()); 
+            jComboBox2.addItem(carrera.getNombre());
         }
     }
-    
-  public void cargarDatosAlumno(AlumnoDTO alumno) {
-    if (alumno != null) {
-        // Cargar los datos en los campos del formulario
+
+    public void cargarDatosAlumno(AlumnoDTO alumno) {
         jTFnombre.setText(alumno.getNombre());
         jTFapellidoPaterno.setText(alumno.getApellidoP());
         jTFapellidoMaterno.setText(alumno.getApellidoM());
         JTFcontrasenia1.setText(alumno.getContrasenia());
 
-        // Establecer el estatus
-        String estatus = alumno.isEstatus() ? "Activo" : "Inactivo";
-        jComboBox1.setSelectedItem(estatus);
+        if (alumno.isEstatus()) {
+            jComboBox1.setSelectedItem("Activo");
+        } else {
+            jComboBox1.setSelectedItem("Inactivo");
+        }
 
-        
+        jComboBox2.setSelectedItem(alumno.getCarreraNombre());
+
+        this.idAlumnoEditando = alumno.getId();
     }
-}
 
 
     private void btnGuardarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarAlumnoActionPerformed
@@ -262,20 +271,39 @@ public class crearAlumno extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Selecciona una carrera.");
                 return;
             }
-            
 
             AlumnoConCarreraDTO dto = new AlumnoConCarreraDTO(
                     nombre, apellidoP, apellidoM, contrasenia, estatus, idCarrera
             );
 
-            alumnoNegocio.registrarAlumno(dto);
-            JOptionPane.showMessageDialog(this, "Alumno guardado correctamente.");
+            if (idAlumnoEditando != null) {
+                dto.setIdAlumno(idAlumnoEditando);
+                alumnoNegocio.editarAlumno(dto);
+                JOptionPane.showMessageDialog(this, "Alumno editado correctamente.");
+                idAlumnoEditando = null;
+                
+               
+                
+            } else {
+                alumnoNegocio.registrarAlumno(dto);
+                JOptionPane.showMessageDialog(this, "Alumno guardado correctamente.");
+                
+            }
+           
+            
+        
+        
+      
 
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al guardar el alumno.");
         }
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
