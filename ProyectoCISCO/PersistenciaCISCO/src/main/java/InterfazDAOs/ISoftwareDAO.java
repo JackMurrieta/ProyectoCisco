@@ -5,6 +5,7 @@
 package InterfazDAOs;
 
 import Entidades.SoftwareEntidad;
+import java.util.List;
 
 
 /**
@@ -13,5 +14,9 @@ import Entidades.SoftwareEntidad;
  */
 public interface ISoftwareDAO {
     
-    public void agregarSoftware(SoftwareEntidad software);        
+    public void agregarSoftware(SoftwareEntidad software);
+    
+    public List<SoftwareEntidad> obtenerSoftwares();
+
+    
 }

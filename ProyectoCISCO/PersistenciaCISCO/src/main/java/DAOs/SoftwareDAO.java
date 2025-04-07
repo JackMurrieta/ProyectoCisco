@@ -4,7 +4,6 @@
  */
 package DAOs;
 
-import Entidades.ComputadoraEntidad;
 import Entidades.SoftwareEntidad;
 import InterfazDAOs.ISoftwareDAO;
 import java.util.List;
@@ -12,7 +11,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
-import javax.persistence.TypedQuery;
 
 /**
  *
@@ -41,6 +39,23 @@ public class SoftwareDAO implements ISoftwareDAO {
             em.close();
         }
         
+    }
+
+    @Override
+    public List<SoftwareEntidad> obtenerSoftwares() {
+        EntityManager em = emf.createEntityManager();
+        List<SoftwareEntidad> lista;
+
+        try {
+            String jpql = "SELECT s FROM SoftwareEntidad s";
+            lista = em.createQuery(jpql, SoftwareEntidad.class).getResultList();
+        } catch (Exception e) {
+            throw new PersistenceException("Error al obtener la lista de softwares: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+
+        return lista;
     }
 
 }

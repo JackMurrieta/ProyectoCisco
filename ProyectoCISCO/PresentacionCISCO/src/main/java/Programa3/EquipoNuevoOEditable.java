@@ -8,12 +8,12 @@ package Programa3;
  *
  * @author Jack Murrieta
  */
-public class EquipoSeleccionado extends javax.swing.JPanel {
+public class EquipoNuevoOEditable extends javax.swing.JPanel {
 
     /**
      * Creates new form EquipoSeleccionado
      */
-    public EquipoSeleccionado() {
+    public EquipoNuevoOEditable() {
         initComponents();
     }
 
@@ -72,7 +72,7 @@ public class EquipoSeleccionado extends javax.swing.JPanel {
         lblTitulo1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         lblTitulo1.setForeground(new java.awt.Color(30, 47, 86));
         lblTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo1.setText("Equipo de Computo");
+        lblTitulo1.setText("Equipo de computo");
         add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 28, 464, 81));
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 1, 0, 30));
