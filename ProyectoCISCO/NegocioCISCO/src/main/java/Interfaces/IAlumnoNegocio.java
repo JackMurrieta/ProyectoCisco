@@ -5,6 +5,7 @@
 package Interfaces;
 
 import DTOs.AlumnoConCarreraDTO;
+import DTOs.AlumnoDTO;
 
 /**
  *
@@ -12,4 +13,6 @@ import DTOs.AlumnoConCarreraDTO;
  */
 public interface IAlumnoNegocio {
     void registrarAlumno(AlumnoConCarreraDTO dto);
+    
+    AlumnoDTO buscarAlumnoPorId(Long id);
 }

@@ -35,9 +35,6 @@ public class PersistenciaCISCO {
         alumno.setCarrera(carrera);
         alumno.setContrasenia("1234");
 
-        alumnoDAO.guardarAlumno(alumno);
-
-        alumnoDAO.cerrar();
-        carreraDAO.cerrar();
+       
     }
 }

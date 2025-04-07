@@ -5,6 +5,7 @@
 package InterfazDAOs;
 
 import DTOs.AlumnoConCarreraDTO;
+import DTOs.AlumnoDTO;
 
 /**
  *
@@ -12,4 +13,6 @@ import DTOs.AlumnoConCarreraDTO;
  */
 public interface IAlumnoDAO {
     void guardarAlumnoConCarreraPorID(AlumnoConCarreraDTO dto);
+    
+    AlumnoDTO buscarAlumnoPorId(Long id);
 }
