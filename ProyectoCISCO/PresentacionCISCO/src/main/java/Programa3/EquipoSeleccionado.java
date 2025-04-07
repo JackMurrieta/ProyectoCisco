@@ -6,7 +6,7 @@ package Programa3;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public class EquipoSeleccionado extends javax.swing.JPanel {
 
@@ -24,19 +24,106 @@ public class EquipoSeleccionado extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        jPanel1 = new javax.swing.JPanel();
+        lblIP1 = new javax.swing.JLabel();
+        lblIP2 = new javax.swing.JLabel();
+        lblIP3 = new javax.swing.JLabel();
+        lblIP = new javax.swing.JLabel();
+        lblTitulo1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        txtIP = new javax.swing.JTextField();
+        txtNumEquipo = new javax.swing.JTextField();
+        lblEstatus = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        btnGuardarCambios = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        btnDeshabilitar2 = new javax.swing.JButton();
+
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new java.awt.GridLayout(4, 1, 1, 0));
+
+        lblIP1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblIP1.setForeground(new java.awt.Color(30, 47, 86));
+        lblIP1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblIP1.setText("IP:");
+        jPanel1.add(lblIP1);
+
+        lblIP2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblIP2.setForeground(new java.awt.Color(30, 47, 86));
+        lblIP2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblIP2.setText("Numero de equipo:");
+        jPanel1.add(lblIP2);
+
+        lblIP3.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblIP3.setForeground(new java.awt.Color(30, 47, 86));
+        lblIP3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblIP3.setText("Estatus:");
+        jPanel1.add(lblIP3);
+
+        lblIP.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblIP.setForeground(new java.awt.Color(30, 47, 86));
+        lblIP.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblIP.setText("Carrera:");
+        jPanel1.add(lblIP);
+
+        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 260, 390));
+
+        lblTitulo1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        lblTitulo1.setForeground(new java.awt.Color(30, 47, 86));
+        lblTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo1.setText("Equipo de Computo");
+        add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 28, 464, 81));
+
+        jPanel2.setLayout(new java.awt.GridLayout(4, 1, 0, 30));
+
+        txtIP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIPActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtIP);
+        jPanel2.add(txtNumEquipo);
+
+        lblEstatus.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblEstatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblEstatus.setText("Habilitado");
+        jPanel2.add(lblEstatus);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(jComboBox1);
+
+        add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
+
+        btnGuardarCambios.setText("Guardar");
+        add(btnGuardarCambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 320, 50));
+
+        btnRegresar.setText("Regresar");
+        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 30));
+
+        btnDeshabilitar2.setText("Deshabilitar");
+        add(btnDeshabilitar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 180, 50));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIPActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDeshabilitar2;
+    private javax.swing.JButton btnGuardarCambios;
+    private javax.swing.JButton btnRegresar;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblEstatus;
+    private javax.swing.JLabel lblIP;
+    private javax.swing.JLabel lblIP1;
+    private javax.swing.JLabel lblIP2;
+    private javax.swing.JLabel lblIP3;
+    private javax.swing.JLabel lblTitulo1;
+    private javax.swing.JTextField txtIP;
+    private javax.swing.JTextField txtNumEquipo;
     // End of variables declaration//GEN-END:variables
 }
