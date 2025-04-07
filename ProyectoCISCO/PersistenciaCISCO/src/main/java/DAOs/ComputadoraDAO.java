@@ -4,10 +4,7 @@
  */
 package DAOs;
 
-import DTOs.ComputadoraDTO;
-import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
-import Entidades.LaboratorioEntidad;
 import InterfazDAOs.IComputadoraDAO;
 import java.util.List;
 import javax.persistence.EntityManager;

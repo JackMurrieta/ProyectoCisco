@@ -4,19 +4,25 @@
  */
 package Programa3;
 
+import DTOs.ComputadoraDTO;
 import Utilerias.JPanelColumnas;
+import java.util.List;
+import javax.swing.JScrollPane;
 
 /**
  *
  * @author Usuario
  */
 public class AdminEquiposComputo extends javax.swing.JPanel {
+    List<ComputadoraDTO> computadoras;
 
     /**
      * Creates new form AdminEquiposComputo
      */
-    public AdminEquiposComputo() {
+    public AdminEquiposComputo( List<ComputadoraDTO> computadoras) {
+        this.computadoras = computadoras;
         initComponents();
+        jpnlEquipos.add(new JScrollPane());
     }
 
     /**
@@ -31,7 +37,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
         txtComputadora = new javax.swing.JTextField();
         btnNuevoEquipo = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        jpnlEquipos = new JPanelColumnas();
+        jpnlEquipos = new JPanelColumnas(computadoras);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));

@@ -18,7 +18,7 @@ public interface IComputadoraNegocio {
     //adaptador para crearEntidad y pasarela a persistencia
     public ComputadoraEntidad convertirComputadoraEntidad(ComputadoraDTO pc);
     
-    public void validarDatosComputadora(ComputadoraDTO pc)throws NegocioException ;
+    public ComputadoraDTO validarDatosComputadora(ComputadoraDTO pc)throws NegocioException ;
     
     public void guardarComputadora(ComputadoraDTO pc);
     public void eliminarComputadora(Long id);

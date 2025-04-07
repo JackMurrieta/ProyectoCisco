@@ -32,10 +32,17 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     
 
     @Override
-    public void validarDatosComputadora(ComputadoraDTO pc) throws NegocioException {
+    public ComputadoraDTO validarDatosComputadora(ComputadoraDTO pc) throws NegocioException {
         validarDireccionIp(pc.getDireccionIp());
         validarNumComputadora(pc.getNumComputadora());
-        //validarCarrera
+        if(pc.getIdCarrera() == null){
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getIdLab());
+            return pcValidada;
+        }
+        else{
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(),pc.getIdCarrera(), pc.getIdLab());
+            return pcValidada;
+        }
     }
     
     private void validarDireccionIp(String direccionIp) throws NegocioException{

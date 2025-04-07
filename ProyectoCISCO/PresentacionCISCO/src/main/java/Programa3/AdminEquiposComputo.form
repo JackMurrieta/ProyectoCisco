@@ -110,7 +110,7 @@
     </Component>
     <Container class="javax.swing.JPanel" name="jpnlEquipos">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JPanelColumnas()"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JPanelColumnas(computadoras)"/>
       </AuxValues>
 
       <Layout>
