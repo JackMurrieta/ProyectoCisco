@@ -72,23 +72,22 @@ public class ComputadoraDAO implements IComputadoraDAO {
         return computadoras;
     }
 
+    //Hacer metodo por columna Num
     @Override
     public ComputadoraEntidad obtenerComputadoraPorNum(String num) {
         EntityManager em = emf.createEntityManager();
-        ComputadoraEntidad pc;
-
         try {
-            pc = em.find(ComputadoraEntidad.class, num);
-
-            if (pc == null) {
-                throw new PersistenceException("Computadora no encontrada");
-            }
-
-            return pc;
+            TypedQuery<ComputadoraEntidad> query = em.createQuery(
+                    "SELECT c FROM ComputadoraEntidad c WHERE c.numComputadora = :num",
+                    ComputadoraEntidad.class
+            );
+            query.setParameter("num", num);
+            return query.getSingleResult();
+        } catch (PersistenceException e) {
+            throw new PersistenceException("Computadora no encontrada");
         } finally {
-            em.close(); // Asegura el cierre del EntityManager incluso si hay error
+            em.close();
         }
-
     }
 
     @Override

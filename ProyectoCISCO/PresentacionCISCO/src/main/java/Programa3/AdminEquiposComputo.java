@@ -39,13 +39,18 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JButton();
         jpnlEquipos = new JPanelColumnas(computadoras);
 
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(30, 47, 86));
         jLabel1.setText("Buscar equipo:");
+        add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(116, 120, -1, 43));
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(30, 47, 86));
         jLabel2.setText("Administracion de equipos de computo");
+        add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(215, 32, 464, 81));
+        add(txtComputadora, new org.netbeans.lib.awtextra.AbsoluteConstraints(267, 122, 273, 43));
 
         btnNuevoEquipo.setText("Nuevo equipo");
         btnNuevoEquipo.addActionListener(new java.awt.event.ActionListener() {
@@ -53,8 +58,10 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
                 btnNuevoEquipoActionPerformed(evt);
             }
         });
+        add(btnNuevoEquipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 177, 162, 35));
 
         btnBuscar.setText("Buscar");
+        add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 126, 162, 35));
 
         javax.swing.GroupLayout jpnlEquiposLayout = new javax.swing.GroupLayout(jpnlEquipos);
         jpnlEquipos.setLayout(jpnlEquiposLayout);
@@ -67,50 +74,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
             .addGap(0, 295, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(116, 116, 116)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtComputadora, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnNuevoEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jpnlEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(32, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(215, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 464, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(209, 209, 209)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtComputadora, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnNuevoEquipo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jpnlEquipos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(32, 32, 32)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(459, Short.MAX_VALUE)))
-        );
+        add(jpnlEquipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 247, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEquipoActionPerformed

@@ -5,11 +5,14 @@
 package ControlNavegacion;
 
 import DTOs.ComputadoraDTO;
+import DTOs.InstitutoDTO;
 import DTOs.SoftwareDTO;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IComputadoraNegocio;
+import Interfaces.IInstitutoNegocio;
 import Interfaces.ISoftwareNegocio;
 import Negocio.ComputadoraNegocio;
+import Negocio.InstitutoNegocio;
 import Negocio.SoftwareNegocio;
 import Programa3.AdminEquiposComputo;
 import Programa3.AsignarSoftwares;
@@ -27,9 +30,11 @@ import java.util.logging.Logger;
 public class ControlNavegacion {
     
     //Aqui van Las interfaces de negocio
+    private static IInstitutoNegocio institutoNegocio;
     private static IComputadoraNegocio pcNegocio;
     private static ISoftwareNegocio swNegocio;
     private static Long idLab;
+    private static Long idInstituto;
     
     
     // Los paneles y Frames como static
@@ -39,11 +44,20 @@ public class ControlNavegacion {
     private static AdminEquiposComputo panelAdminPc;
     
 
-    public ControlNavegacion(Long idLab) {
+    public ControlNavegacion(Long idLab, Long idInstituto) {
         this.idLab = idLab;
+        this.idInstituto = idInstituto;
         pcNegocio = new ComputadoraNegocio();
         swNegocio = new SoftwareNegocio();
+        institutoNegocio = new InstitutoNegocio();
     }
+    
+    public static InstitutoDTO obtenerInstitutoNombre(String nombre){
+        return institutoNegocio.obtenerInstituto(nombre);
+    }
+    
+    //ObtenerLaboratoriosPorID
+    
     
     //Los metodos acrear seran staticos
     public static void guardarSoftware(String nombreSw, String descripcionSw){
