@@ -13,10 +13,12 @@ import Interfaces.IAlumnoNegocio;
 import Interfaces.ICarreraNegocio;
 import Negocio.AlumnoNegocio;
 import Negocio.CarreraNegocio;
+import java.awt.Window;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -28,16 +30,13 @@ public class crearAlumno extends javax.swing.JPanel {
     private ICarreraNegocio carreraNegocio;
     private Map<String, Long> carrerasMap = new HashMap<>();
     private Long idAlumnoEditando = null;
- 
-  
 
     public crearAlumno() {
         initComponents();
         this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
         this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
         cargarCarreras();
-       
- 
+
     }
 
     /**
@@ -281,19 +280,12 @@ public class crearAlumno extends javax.swing.JPanel {
                 alumnoNegocio.editarAlumno(dto);
                 JOptionPane.showMessageDialog(this, "Alumno editado correctamente.");
                 idAlumnoEditando = null;
-                
-               
-                
+
             } else {
                 alumnoNegocio.registrarAlumno(dto);
                 JOptionPane.showMessageDialog(this, "Alumno guardado correctamente.");
-                
+
             }
-           
-            
-        
-        
-      
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -302,7 +294,11 @@ public class crearAlumno extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarAlumnoActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
+
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
 

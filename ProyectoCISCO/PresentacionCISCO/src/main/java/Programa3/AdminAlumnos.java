@@ -73,6 +73,7 @@ public class AdminAlumnos extends javax.swing.JPanel {
     public void llenarTablaAlumnos() {
 
         try {
+          
             List<AlumnoDTO> alumnos = alumnoNegocio.obtenerAlumnos();
             if (alumnos == null || alumnos.isEmpty()) {
                 return;
@@ -103,6 +104,7 @@ public class AdminAlumnos extends javax.swing.JPanel {
             // Asignar los renderizadores de botones para las columnas de Editar y Eliminar
             jTable2.getColumn("Editar").setCellRenderer(new RenderTabla());
             jTable2.getColumn("Eliminar").setCellRenderer(new RenderTabla());
+
 
         } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, "Error al obtener los alumnos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -212,14 +214,14 @@ public class AdminAlumnos extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNuevoAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnNuevoAlumno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBuscarAlumno, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(27, 27, 27)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(200, 200, 200))
+                .addGap(77, 77, 77))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -278,11 +280,11 @@ public class AdminAlumnos extends javax.swing.JPanel {
     private void editarAlumno(Long alumnoid) {
         AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
         if (alumno != null) {
-            
+
             crearAlumno p = new crearAlumno();
             p.cargarDatosAlumno(alumno);
             mostrarPanel(p);
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "No se encontró el alumno.", "Error", JOptionPane.ERROR_MESSAGE);
         }

@@ -10,6 +10,7 @@ import ExcepcionNegocio.NegocioException;
 import Excepciones.PersistenciaException;
 import Interfaces.ICarreraNegocio;
 import Negocio.CarreraNegocio;
+import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -141,42 +142,42 @@ public class crearCarrera extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-    
+        Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGuardarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCarreraActionPerformed
-        
+
         try {
-        String nombre = jTFNombreCarrera.getText().trim();
-        String color = jTFcolor.getText().trim();
-        String tiempoLimiteTexto = jTFtiempoLimite.getText().trim();
+            String nombre = jTFNombreCarrera.getText().trim();
+            String color = jTFcolor.getText().trim();
+            String tiempoLimiteTexto = jTFtiempoLimite.getText().trim();
 
-        if (nombre.isEmpty() || color.isEmpty() || tiempoLimiteTexto.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos.");
-            return;
-        }
+            if (nombre.isEmpty() || color.isEmpty() || tiempoLimiteTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Todos los campos deben estar llenos.");
+                return;
+            }
 
-        int tiempoLimite = Integer.parseInt(tiempoLimiteTexto);
-        CarreraDTO dto = new CarreraDTO();
-        dto.setNombre(nombre);
-        dto.setColor(color);
-        dto.setTiempoLimite(tiempoLimite);
-       if (idCarreraEditando != null) {
+            int tiempoLimite = Integer.parseInt(tiempoLimiteTexto);
+            CarreraDTO dto = new CarreraDTO();
+            dto.setNombre(nombre);
+            dto.setColor(color);
+            dto.setTiempoLimite(tiempoLimite);
+            if (idCarreraEditando != null) {
                 dto.setId(idCarreraEditando);
                 carreraNegocio.editarCarreraPorId(dto);
                 JOptionPane.showMessageDialog(this, "Carrera editada correctamente.");
                 idCarreraEditando = null;
-                
-               
-                
+
             } else {
                 carreraNegocio.guardarCarrera(dto);
                 JOptionPane.showMessageDialog(this, "Carrera guardado correctamente.");
-                
+
             }
 
-       
-         } catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al guardar la carrera.");
         }
