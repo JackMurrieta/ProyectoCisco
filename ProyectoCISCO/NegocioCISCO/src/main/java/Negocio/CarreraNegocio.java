@@ -5,9 +5,13 @@
 package Negocio;
 
 import DTOs.CarreraDTO;
+import ExcepcionNegocio.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.ICarreraNegocio;
 import InterfazDAOs.ICarreraDAO;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -23,5 +27,13 @@ public class CarreraNegocio implements ICarreraNegocio{
     @Override
     public List<CarreraDTO> obtenerCarreras() {
         return carreraDAO.obtenerCarreras();
+    }
+    @Override
+    public void guardarCarrera(CarreraDTO dto) throws NegocioException{
+        try {
+            carreraDAO.guardarCarrera(dto);
+        }catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
 }

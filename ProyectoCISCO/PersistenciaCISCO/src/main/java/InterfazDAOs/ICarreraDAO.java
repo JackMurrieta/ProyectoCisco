@@ -5,6 +5,7 @@
 package InterfazDAOs;
 
 import DTOs.CarreraDTO;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface ICarreraDAO {
     List<CarreraDTO> obtenerCarreras();
+    
+    void guardarCarrera(CarreraDTO dto) throws PersistenciaException;
 }

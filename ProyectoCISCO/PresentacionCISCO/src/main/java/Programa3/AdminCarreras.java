@@ -4,17 +4,32 @@
  */
 package Programa3;
 
+import DAOs.CarreraDAO;
+import Interfaces.ICarreraNegocio;
+import Negocio.CarreraNegocio;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Oribiel
  */
 public class AdminCarreras extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AdminCarreras
-     */
+ICarreraNegocio carreraNegocio;
     public AdminCarreras() {
         initComponents();
+          this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
+    }
+    
+        public void mostrarPanel(JPanel p) {
+
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(385, 400);
+        frame.setLocationRelativeTo(null);
+        frame.add(p);
+        frame.setVisible(true);
     }
 
     /**
@@ -134,7 +149,8 @@ public class AdminCarreras extends javax.swing.JPanel {
 
     private void btnNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCarreraActionPerformed
     
-      
+      crearCarrera p = new crearCarrera();
+      mostrarPanel(p);
 
     }//GEN-LAST:event_btnNuevaCarreraActionPerformed
 

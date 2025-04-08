@@ -5,6 +5,7 @@
 package Interfaces;
 
 import DTOs.CarreraDTO;
+import ExcepcionNegocio.NegocioException;
 import java.util.List;
 
 /**
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface ICarreraNegocio {
      List<CarreraDTO> obtenerCarreras();
+     
+     void guardarCarrera(CarreraDTO dto) throws NegocioException;
 }

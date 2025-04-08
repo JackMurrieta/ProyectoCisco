@@ -24,7 +24,7 @@ public class PersistenciaCISCO {
         carrera.setColor("Verde");
         carrera.setTiempoLimite(180);
 
-        carreraDAO.guardarCarrera(carrera);
+   //     carreraDAO.guardarCarrera(carrera);
 
         AlumnoEntidad alumno = new AlumnoEntidad();
         
