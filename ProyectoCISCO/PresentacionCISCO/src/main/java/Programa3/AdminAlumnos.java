@@ -73,42 +73,38 @@ public class AdminAlumnos extends javax.swing.JPanel {
     public void llenarTablaAlumnos() {
 
         try {
-        
-        List<AlumnoDTO> alumnos = alumnoNegocio.obtenerAlumnos();
-        if (alumnos == null || alumnos.isEmpty()) {
-            return;
-        }
-
-        DefaultTableModel modelo = new DefaultTableModel() {
-            public boolean isCellEditable(int row, int column) {
-                return false;
+            List<AlumnoDTO> alumnos = alumnoNegocio.obtenerAlumnos();
+            if (alumnos == null || alumnos.isEmpty()) {
+                return;
             }
-        };
+            DefaultTableModel modelo = new DefaultTableModel() {
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+            modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Apellido Paterno", "Apellido Materno", "Estatus Inscripcion", "Carrera", "Editar", "Eliminar"});
+            for (AlumnoDTO alumno : alumnos) {
+                JButton[] btn = generarBotones(alumno.getId());
 
-        modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Apellido Paterno", "Apellido Materno", "Estatus Inscripcion", "Carrera", "Editar", "Eliminar"});
+                modelo.addRow(new Object[]{
+                    alumno.getId(),
+                    alumno.getNombre(),
+                    alumno.getApellidoP(),
+                    alumno.getApellidoM(),
+                    alumno.isEstatus(),
+                    alumno.getCarreraNombre(),
+                    btn[0], // Botón Editar
+                    btn[1] // Botón Eliminar
+                });
+            }
+            // Asignar el modelo de la tabla
+            jTable2.setModel(modelo);
 
-        for (AlumnoDTO alumno : alumnos) {
-            JButton[] btn = generarBotones(alumno.getId());
+            // Asignar los renderizadores de botones para las columnas de Editar y Eliminar
+            jTable2.getColumn("Editar").setCellRenderer(new RenderTabla());
+            jTable2.getColumn("Eliminar").setCellRenderer(new RenderTabla());
 
-            modelo.addRow(new Object[]{
-                alumno.getId(),
-                alumno.getNombre(),
-                alumno.getApellidoP(),
-                alumno.getApellidoM(),
-                alumno.isEstatus(),
-                alumno.getCarreraNombre(),
-                btn[0], // Botón Editar
-                btn[1] // Botón Eliminar
-            });
-        }
-        // Asignar el modelo de la tabla
-        jTable2.setModel(modelo);
-
-        // Asignar los renderizadores de botones para las columnas de Editar y Eliminar
-         jTable2.getColumn("Editar").setCellRenderer(new RenderTabla());
-        jTable2.getColumn("Eliminar").setCellRenderer(new RenderTabla());
-        
-         }  catch (NegocioException ex) {
+        } catch (NegocioException ex) {
             JOptionPane.showMessageDialog(this, "Error al obtener los alumnos: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -260,7 +256,7 @@ public class AdminAlumnos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnNuevoAlumnoActionPerformed
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-       int column = this.jTable2.getColumnModel().getColumnIndexAtX(evt.getX());
+        int column = this.jTable2.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / this.jTable2.getRowHeight();
 
         if (row < this.jTable2.getRowCount() && row >= 0 && column < this.jTable2.getColumnCount() && column >= 0) {
@@ -278,47 +274,41 @@ public class AdminAlumnos extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_jTable2MouseClicked
-        
-   private void editarAlumno(Long alumnoid) {
-    AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
-    if (alumno != null) {
-        // Crear el formulario de edición
-        crearAlumno p = new crearAlumno();
 
-        p.cargarDatosAlumno(alumno);
-           
-        // Mostrar el formulario
-        mostrarPanel(p);
-    } else {
-        JOptionPane.showMessageDialog(this, "No se encontró el alumno.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-}
-
-     
-     private void eliminarAlumno(Long alumnoid) {
-    AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
-    if (alumno != null) {
-        int opcion = JOptionPane.showConfirmDialog(this,
-                "¿Está seguro de que desea eliminar al cliente " + alumno.getNombre() + "?",
-                "Confirmación de eliminación",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-
-        if (opcion == JOptionPane.YES_OPTION) {
-            alumnoNegocio.eliminarAlumno(alumnoid);
-            JOptionPane.showMessageDialog(this, "Cliente eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            llenarTablaAlumnos();
+    private void editarAlumno(Long alumnoid) {
+        AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
+        if (alumno != null) {
+            
+            crearAlumno p = new crearAlumno();
+            p.cargarDatosAlumno(alumno);
+            mostrarPanel(p);
+            
         } else {
-            JOptionPane.showMessageDialog(this, "Eliminación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se encontró el alumno.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Cliente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-}
 
-    
-   
- 
+    private void eliminarAlumno(Long alumnoid) {
+        AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(alumnoid);
+        if (alumno != null) {
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea eliminar al alumno " + alumno.getNombre() + "?",
+                    "Confirmación de eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                alumnoNegocio.eliminarAlumno(alumnoid);
+                JOptionPane.showMessageDialog(this, "Alumno eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                llenarTablaAlumnos();
+            } else {
+                JOptionPane.showMessageDialog(this, "Eliminación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarAlumno;

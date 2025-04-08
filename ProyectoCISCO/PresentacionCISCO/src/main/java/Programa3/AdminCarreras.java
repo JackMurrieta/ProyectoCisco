@@ -5,10 +5,17 @@
 package Programa3;
 
 import DAOs.CarreraDAO;
+import DTOs.CarreraDTO;
+import ExcepcionNegocio.NegocioException;
 import Interfaces.ICarreraNegocio;
 import Negocio.CarreraNegocio;
+import Utilerias.RenderTabla;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,13 +23,15 @@ import javax.swing.JPanel;
  */
 public class AdminCarreras extends javax.swing.JPanel {
 
-ICarreraNegocio carreraNegocio;
+    ICarreraNegocio carreraNegocio;
+
     public AdminCarreras() {
         initComponents();
-          this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
+        this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
+        llenarTablaCarreras();
     }
-    
-        public void mostrarPanel(JPanel p) {
+
+    public void mostrarPanel(JPanel p) {
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,21 +64,26 @@ ICarreraNegocio carreraNegocio;
         jTable2.setForeground(new java.awt.Color(0, 0, 0));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "Tiempo limite", "Color", "Editar", "Eliminar"
+                "ID", "Nombre", "Tiempo limite", "Color", "Editar", "Eliminar"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(jTable2);
@@ -143,14 +157,14 @@ ICarreraNegocio carreraNegocio;
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 410, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaCarreraActionPerformed
-    
-      crearCarrera p = new crearCarrera();
-      mostrarPanel(p);
+
+        crearCarrera p = new crearCarrera();
+        mostrarPanel(p);
 
     }//GEN-LAST:event_btnNuevaCarreraActionPerformed
 
@@ -159,8 +173,135 @@ ICarreraNegocio carreraNegocio;
     }//GEN-LAST:event_tfBuscarActionPerformed
 
     private void btnBuscarAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarAlumnoActionPerformed
+        try {
+            String nombreCarrera = tfBuscar.getText().trim();
+            CarreraDTO carrera = carreraNegocio.buscarCarreraPorNombre(nombreCarrera);
 
+            if (carrera != null) {
+                obtenerDatos(carrera);
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese una carrera válida.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Ocurrió un error al buscar la carrera.", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace(); // Opcional: útil para depurar
+        }
     }//GEN-LAST:event_btnBuscarAlumnoActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        int column = this.jTable2.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / this.jTable2.getRowHeight();
+
+        if (row < this.jTable2.getRowCount() && row >= 0 && column < this.jTable2.getColumnCount() && column >= 0) {
+            Object value = this.jTable2.getValueAt(row, column);
+
+            if (value instanceof JButton) {
+                JButton boton = (JButton) value;
+                Long carreraid = (Long) this.jTable2.getValueAt(row, 0);
+
+                if (boton.getText().equals("Editar")) {
+                    editarCarrera(carreraid);
+                } else if (boton.getText().equals("Eliminar")) {
+                    eliminarCarrera(carreraid);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void editarCarrera(Long carreraid) {
+        CarreraDTO carrera = carreraNegocio.buscarCarreraPorId(carreraid);
+        if (carrera != null) {
+
+            crearCarrera p = new crearCarrera();
+            p.cargarDatosCarrera(carrera);
+            mostrarPanel(p);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontro la carrera.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void eliminarCarrera(Long carreraid) {
+        CarreraDTO carrera = carreraNegocio.buscarCarreraPorId(carreraid);
+        if (carrera != null) {
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea eliminar la carrera " + carrera.getNombre() + "?",
+                    "Confirmación de eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                carreraNegocio.eliminarCarreraPorId(carreraid);
+                JOptionPane.showMessageDialog(this, "Carrera eliminada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                llenarTablaCarreras();
+            } else {
+                JOptionPane.showMessageDialog(this, "Eliminación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Carrera no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void obtenerDatos(CarreraDTO carrera) {
+        //esto llena los datos del buscar
+        DefaultTableModel modelo = (DefaultTableModel) jTable2.getModel();
+        modelo.setRowCount(0);
+
+        JButton[] botones = generarBotones(carrera.getId());
+
+        modelo.addRow(new Object[]{
+            carrera.getId(),
+            carrera.getNombre(),
+            carrera.getTiempoLimite(),
+            carrera.getColor(),
+            botones[0],
+            botones[1]
+        });
+    }
+
+    private JButton[] generarBotones(Long alumnoid) {
+
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.setName("M");
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setName("E");
+
+        return new JButton[]{btnEditar, btnEliminar};
+    }
+
+    public void llenarTablaCarreras() {
+
+        List<CarreraDTO> carreras = carreraNegocio.obtenerCarrerasTabla();
+        if (carreras == null || carreras.isEmpty()) {
+            return;
+        }
+        DefaultTableModel modelo = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "TiempoLimite", "Color", "Editar", "Eliminar"});
+        for (CarreraDTO carrera : carreras) {
+            JButton[] btn = generarBotones(carrera.getId());
+
+            modelo.addRow(new Object[]{
+                carrera.getId(),
+                carrera.getNombre(),
+                carrera.getTiempoLimite(),
+                carrera.getColor(),
+                btn[0], // Botón Editar
+                btn[1] // Botón Eliminar
+            });
+        }
+    
+        jTable2.setModel(modelo);
+
+        jTable2.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable2.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        jTable2.getColumn("Editar").setCellRenderer(new RenderTabla());
+        jTable2.getColumn("Eliminar").setCellRenderer(new RenderTabla());
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

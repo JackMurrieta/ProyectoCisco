@@ -36,4 +36,28 @@ public class CarreraNegocio implements ICarreraNegocio{
             throw new NegocioException(ex.getMessage());
         }
     }
+     @Override
+    public List<CarreraDTO> obtenerCarrerasTabla() {
+        return carreraDAO.obtenerCarreraTabla();
+        
+    }
+    @Override
+    public  CarreraDTO buscarCarreraPorNombre(String nombreCarrera){
+   
+   return carreraDAO.buscarCarreraPorNombre(nombreCarrera);
+        
+}
+    @Override
+    public void eliminarCarreraPorId(Long id){
+        carreraDAO.eliminarCarreraPorId(id);
+    }
+    @Override
+    public void editarCarreraPorId(CarreraDTO dto){
+        carreraDAO.editarCarreraPorId(dto);
+    }
+    @Override
+    public CarreraDTO buscarCarreraPorId(Long id){
+        return carreraDAO.buscarCarreraPorId(id);
+    }
+    
 }
