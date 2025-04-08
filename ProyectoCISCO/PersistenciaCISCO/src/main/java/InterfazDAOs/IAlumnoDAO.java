@@ -22,4 +22,6 @@ public interface IAlumnoDAO {
     void editarAlumnoPorId(AlumnoConCarreraDTO dto);
     
     void eliminarAlumnoPorId(Long id);
+    
+    
 }

@@ -16,4 +16,14 @@ public interface ICarreraDAO {
     List<CarreraDTO> obtenerCarreras();
     
     void guardarCarrera(CarreraDTO dto) throws PersistenciaException;
+    
+    List<CarreraDTO> obtenerCarreraTabla();
+    
+    CarreraDTO buscarCarreraPorNombre(String nombreCarrera);
+    
+    void editarCarreraPorId(CarreraDTO dto);
+    
+    void eliminarCarreraPorId(Long id);
+    
+    CarreraDTO buscarCarreraPorId(Long id);
 }

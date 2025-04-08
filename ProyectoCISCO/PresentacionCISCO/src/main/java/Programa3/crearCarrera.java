@@ -12,7 +12,9 @@ import Interfaces.ICarreraNegocio;
 import Negocio.CarreraNegocio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -21,6 +23,7 @@ import javax.swing.JOptionPane;
 public class crearCarrera extends javax.swing.JPanel {
 
     ICarreraNegocio carreraNegocio;
+    private Long idCarreraEditando = null;
 
     public crearCarrera() {
         initComponents();
@@ -138,10 +141,12 @@ public class crearCarrera extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-
+    
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnGuardarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCarreraActionPerformed
+        
+        try {
         String nombre = jTFNombreCarrera.getText().trim();
         String color = jTFcolor.getText().trim();
         String tiempoLimiteTexto = jTFtiempoLimite.getText().trim();
@@ -156,18 +161,37 @@ public class crearCarrera extends javax.swing.JPanel {
         dto.setNombre(nombre);
         dto.setColor(color);
         dto.setTiempoLimite(tiempoLimite);
-        try {
-            carreraNegocio.guardarCarrera(dto);
-        } catch (NegocioException ex) {
-            Logger.getLogger(crearCarrera.class.getName()).log(Level.SEVERE, null, ex);
+       if (idCarreraEditando != null) {
+                dto.setId(idCarreraEditando);
+                carreraNegocio.editarCarreraPorId(dto);
+                JOptionPane.showMessageDialog(this, "Carrera editada correctamente.");
+                idCarreraEditando = null;
+                
+               
+                
+            } else {
+                carreraNegocio.guardarCarrera(dto);
+                JOptionPane.showMessageDialog(this, "Carrera guardado correctamente.");
+                
+            }
+
+       
+         } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar la carrera.");
         }
-        JOptionPane.showMessageDialog(this, "Carrera guardada exitosamente.");
 
         jTFNombreCarrera.setText("");
         jTFcolor.setText("");
         jTFtiempoLimite.setText("");
     }//GEN-LAST:event_btnGuardarCarreraActionPerformed
+    public void cargarDatosCarrera(CarreraDTO carrera) {
+        jTFNombreCarrera.setText(carrera.getNombre());
+        jTFcolor.setText(carrera.getColor());
+        jTFtiempoLimite.setText(Integer.toString(carrera.getTiempoLimite()));
 
+        this.idCarreraEditando = carrera.getId();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarCarrera;

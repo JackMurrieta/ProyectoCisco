@@ -13,10 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 /**
@@ -28,48 +30,166 @@ public class CarreraDAO implements ICarreraDAO {
     private EntityManagerFactory fabrica;
     private EntityManager entityManager;
 
-    public CarreraDAO()  {
+    public CarreraDAO() {
 
         fabrica = Persistence.createEntityManagerFactory("CISCO_PU");
         entityManager = fabrica.createEntityManager();
     }
+
+    @Override
+    public void guardarCarrera(CarreraDTO dto) throws PersistenciaException {
+        try {
+            entityManager.getTransaction().begin();
+
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<CarreraEntidad> cq = cb.createQuery(CarreraEntidad.class);
+            Root<CarreraEntidad> root = cq.from(CarreraEntidad.class);
+            cq.select(root).where(cb.equal(root.get("nombre"), dto.getNombre()));
+
+            List<CarreraEntidad> existentes = entityManager.createQuery(cq).getResultList();
+            if (!existentes.isEmpty()) {
+                entityManager.getTransaction().rollback();
+                throw new PersistenciaException("Ya existe una carrera con el nombre: " + dto.getNombre());
+            }
+
+            CarreraEntidad carrera = new CarreraEntidad();
+            carrera.setNombre(dto.getNombre());
+            carrera.setTiempoLimite(dto.getTiempoLimite());
+            carrera.setColor(dto.getColor());
+
+            entityManager.persist(carrera);
+            entityManager.getTransaction().commit();
+            System.out.println("Carrera guardada exitosamente.");
+
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            throw new PersistenciaException("Error al guardar la carrera: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<CarreraDTO> obtenerCarreraTabla() {
+        List<CarreraDTO> carrerasDTO = new ArrayList<>();
+
+        try {
+
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<CarreraEntidad> cq = cb.createQuery(CarreraEntidad.class);
+            Root<CarreraEntidad> carreraRoot = cq.from(CarreraEntidad.class);
+
+            cq.select(carreraRoot);
+
+            List<CarreraEntidad> carreras = entityManager.createQuery(cq).getResultList();
+
+            for (CarreraEntidad carrera : carreras) {
+
+                CarreraDTO carreraDTO = new CarreraDTO(
+                        carrera.getId(),
+                        carrera.getNombre(),
+                        carrera.getColor(),
+                        carrera.getTiempoLimite()
+                );
+                carrerasDTO.add(carreraDTO);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return carrerasDTO;
+    }
+
+    @Override
+    public CarreraDTO buscarCarreraPorNombre(String nombreCarrera) {
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<CarreraEntidad> cq = cb.createQuery(CarreraEntidad.class);
+            Root<CarreraEntidad> root = cq.from(CarreraEntidad.class);
+
+            Predicate condicion = cb.like(cb.lower(root.get("nombre")), "%" + nombreCarrera.toLowerCase() + "%");
+
+            cq.select(root).where(cb.equal(root.get("nombre"), nombreCarrera));
+
+            CarreraEntidad carrera = entityManager.createQuery(cq).getSingleResult();
+
+            if (carrera != null) {
+                return new CarreraDTO(
+                        carrera.getNombre(),
+                        carrera.getColor(),
+                        carrera.getTiempoLimite()
+                );
+            }
+
+            return null;
+        } catch (NoResultException e) {
+            return null;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+    }
     
-     @Override
-public void guardarCarrera(CarreraDTO dto) throws PersistenciaException {
+    @Override
+public void editarCarreraPorId(CarreraDTO dto) {
     try {
-        // Inicia la transacción
         entityManager.getTransaction().begin();
-        
-        // Usamos CriteriaBuilder para validar que no exista otra carrera con el mismo nombre
+
+        // Buscar la carrera por ID
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<CarreraEntidad> cq = cb.createQuery(CarreraEntidad.class);
         Root<CarreraEntidad> root = cq.from(CarreraEntidad.class);
-        cq.select(root).where(cb.equal(root.get("nombre"), dto.getNombre()));
-        
-        List<CarreraEntidad> existentes = entityManager.createQuery(cq).getResultList();
-        if (!existentes.isEmpty()) {
-            entityManager.getTransaction().rollback();
-            throw new PersistenciaException("Ya existe una carrera con el nombre: " + dto.getNombre());
+        cq.select(root).where(cb.equal(root.get("id"), dto.getId()));
+
+        CarreraEntidad carrera = entityManager.createQuery(cq).getSingleResult();
+
+        if (carrera != null) {
+            carrera.setNombre(dto.getNombre());
+            carrera.setColor(dto.getColor());
+            carrera.setTiempoLimite(dto.getTiempoLimite());
+
+            entityManager.merge(carrera);
+            entityManager.getTransaction().commit();
+
+            System.out.println("Carrera actualizada correctamente.");
+        } else {
+            System.out.println("Carrera no encontrada.");
+         
         }
-        
-        // Convertir el DTO en la entidad correspondiente
-        CarreraEntidad carrera = new CarreraEntidad();
-        carrera.setNombre(dto.getNombre());
-        carrera.setTiempoLimite(dto.getTiempoLimite());
-        carrera.setColor(dto.getColor()); // Se espera que dto.getColor() retorne una cadena en formato hexadecimal
-        
-        // Persistir la entidad
-        entityManager.persist(carrera);
-        entityManager.getTransaction().commit();
-        System.out.println("Carrera guardada exitosamente.");
-        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+
+@Override
+public void eliminarCarreraPorId(Long id) {
+    try {
+        entityManager.getTransaction().begin();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<CarreraEntidad> cq = cb.createQuery(CarreraEntidad.class);
+        Root<CarreraEntidad> root = cq.from(CarreraEntidad.class);
+        cq.select(root).where(cb.equal(root.get("id"), id));
+
+        CarreraEntidad carrera = entityManager.createQuery(cq).getSingleResult();
+
+        if (carrera != null) {
+            entityManager.remove(carrera);
+            entityManager.getTransaction().commit();
+            System.out.println(" Alumno eliminado correctamente.");
+        } else {
+            System.out.println(" Alumno no encontrado.");
+            entityManager.getTransaction().rollback();
+        }
+
     } catch (Exception e) {
         if (entityManager.getTransaction().isActive()) {
             entityManager.getTransaction().rollback();
         }
-        throw new PersistenciaException("Error al guardar la carrera: " + e.getMessage() );
-    }
- }
+        e.printStackTrace();
+    } 
+}
 
 
     public CarreraEntidad obtenerCarreraPorId(Long id) {
@@ -83,9 +203,38 @@ public void guardarCarrera(CarreraDTO dto) throws PersistenciaException {
             throw new PersistenceException("laboratrio no encontrado");
         }
     }
+    
+        @Override
+    public CarreraDTO buscarCarreraPorId(Long id) {
+        try {
+          
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<CarreraEntidad> cq = cb.createQuery(CarreraEntidad.class);
+            Root<CarreraEntidad> carreraRoot = cq.from(CarreraEntidad.class);
+            cq.select(carreraRoot).where(cb.equal(carreraRoot.get("id"), id));
+            
+            CarreraEntidad carrera = entityManager.createQuery(cq).getSingleResult();
+            
+            if (carrera != null) {
+            
+
+                return new CarreraDTO(
+                        carrera.getId(),
+                        carrera.getNombre(),
+                        carrera.getColor(),
+                        carrera.getTiempoLimite()
+                );
+            }
+
+            return null; 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
-    public List<CarreraDTO> obtenerCarreras() {;
+    public List<CarreraDTO> obtenerCarreras() {
         List<CarreraDTO> listaCarreras = new ArrayList<>();
 
         try {

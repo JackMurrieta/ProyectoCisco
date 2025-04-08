@@ -18,6 +18,13 @@ public class CarreraDTO {
     public CarreraDTO() {
     }
 
+    public CarreraDTO(Long id, String nombre, String color, Integer tiempoLimite) {
+        this.id = id;
+        this.nombre = nombre;
+        this.color = color;
+        this.tiempoLimite = tiempoLimite;
+    }
+    
     public CarreraDTO(String nombre, String color, Integer tiempoLimite) {
         this.nombre = nombre;
         this.color = color;
