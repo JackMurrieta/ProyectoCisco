@@ -30,19 +30,24 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         convertidor = new ComputadoraAdapter();
     }
     
-
+//DTO CON CARRERA Y IDLAB
     @Override
     public ComputadoraDTO validarDatosComputadora(ComputadoraDTO pc) throws NegocioException {
         validarDireccionIp(pc.getDireccionIp());
         validarNumComputadora(pc.getNumComputadora());
-        if(pc.getIdCarrera() == null){
+        //Revisar este Codigo
+        //Construye DTO dependiendo de si tiene Carrera o no
+        return validarCarrera(pc);
+    }
+    private ComputadoraDTO validarCarrera(ComputadoraDTO pc){
+        if (pc.getIdCarrera() == null) {
             ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getIdLab());
             return pcValidada;
-        }
-        else{
-            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(),pc.getIdCarrera(), pc.getIdLab());
+        } else {
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getIdCarrera(), pc.getIdLab());
             return pcValidada;
         }
+
     }
     
     private void validarDireccionIp(String direccionIp) throws NegocioException{
@@ -66,9 +71,10 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
 
     @Override
-    public void guardarComputadora(ComputadoraDTO pc) {
-        
-        pcDAO.guardarComputadora(convertirComputadoraEntidad(pc));
+    public void guardarComputadora(ComputadoraDTO pc) throws NegocioException {
+        ComputadoraDTO pcValidada= validarDatosComputadora(pc);
+        ComputadoraEntidad pcEntidad = convertidor.convertirComputadoraEntidad(pcValidada);
+        pcDAO.guardarComputadora(pcEntidad);
     }
 
     @Override
@@ -76,9 +82,12 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         pcDAO.eliminarComputadora(id);
     }
 
+    //Checar editar Metodo
     @Override
-    public void editarComputadora(ComputadoraDTO pc) {
-        pcDAO.editarComputadora(convertirComputadoraEntidad(pc));
+    public void editarComputadora(ComputadoraDTO pc) throws NegocioException {
+        ComputadoraDTO pcValidada= validarDatosComputadora(pc);
+        ComputadoraEntidad pcEntidad=convertidor.convertirComputadoraEntidad(pcValidada);
+        pcDAO.editarComputadora(pcEntidad);
     }
 
     @Override
@@ -105,11 +114,5 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         }
         return null;
         
-    }
-
-    @Override
-    public ComputadoraEntidad convertirComputadoraEntidad(ComputadoraDTO pc){
-        return convertidor.convertirComputadoraEntidad(pc);
-            
     }
 }

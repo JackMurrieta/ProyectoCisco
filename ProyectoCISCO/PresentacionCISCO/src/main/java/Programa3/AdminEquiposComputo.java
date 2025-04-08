@@ -115,6 +115,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
 
     private void btnNuevoEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEquipoActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnNuevoEquipoActionPerformed
 
 

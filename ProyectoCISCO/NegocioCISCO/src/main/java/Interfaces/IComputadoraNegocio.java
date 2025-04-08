@@ -15,15 +15,13 @@ import java.util.List;
  */
 public interface IComputadoraNegocio {
     
-    //adaptador para crearEntidad y pasarela a persistencia
-    public ComputadoraEntidad convertirComputadoraEntidad(ComputadoraDTO pc);
     
     public ComputadoraDTO validarDatosComputadora(ComputadoraDTO pc)throws NegocioException ;
     
-    public void guardarComputadora(ComputadoraDTO pc);
+    public void guardarComputadora(ComputadoraDTO pc)throws NegocioException;
     public void eliminarComputadora(Long id);
     //editarComputadora
-    public void editarComputadora(ComputadoraDTO pc);
+    public void editarComputadora(ComputadoraDTO pc)throws NegocioException;
     //obtener computadras en una DTO
     public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id);
     

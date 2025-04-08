@@ -292,6 +292,9 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnAdminUsoEquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsoEquiposActionPerformed
         // TODO add your handling code here:
+        
+        //SETEAR EL IDLABRATORIO AQUI
+        ControlNavegacion.ControlNavegacion.mostrarAdminPc();
     }//GEN-LAST:event_btnAdminUsoEquiposActionPerformed
 
     private void btnAdminLaboratoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLaboratoriosActionPerformed

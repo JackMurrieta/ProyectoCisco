@@ -13,6 +13,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -44,9 +45,17 @@ public class CarreraDAO implements ICarreraDAO{
     }
     
     public CarreraEntidad obtenerCarreraPorId(Long id){
-        CarreraEntidad encontrado = null;
-        return encontrado;
+       EntityManager em = emf.createEntityManager();
+        CarreraEntidad carrera = em.find(CarreraEntidad.class, id);
+
+        if (carrera != null) {
+            em.close();
+            return carrera;
+        } else {
+            throw new PersistenceException("laboratrio no encontrado");
+        }
     }
+    
     @Override
     public List<CarreraDTO> obtenerCarreras() {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("CISCO_PU");

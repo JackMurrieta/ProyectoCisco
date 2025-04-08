@@ -63,13 +63,35 @@ public class NuevoSoftware extends javax.swing.JPanel {
         jPanel2.add(txtDescripcionSw);
 
         btnGuardarCambios.setText("Guardar Software");
+        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnGuardarCambios);
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
 
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+        // TODO add your handling code here:
+        String nombreSw = txtNombreSw.getText().trim();
+        String descripcion = txtDescripcionSw.getText().trim();
+        ControlNavegacion.ControlNavegacion.guardarSoftware(nombreSw, descripcion);
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        ControlNavegacion.ControlNavegacion.mostrarAsignarSoftwares();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

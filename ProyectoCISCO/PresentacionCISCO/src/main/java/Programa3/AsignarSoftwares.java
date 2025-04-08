@@ -4,17 +4,26 @@
  */
 package Programa3;
 
+import DTOs.SoftwareDTO;
+import java.util.List;
+
 /**
  *
  * @author Jack Murrieta
  */
 public class AsignarSoftwares extends javax.swing.JPanel {
+    
 
     /**
      * Creates new form EquipoSeleccionado
      */
-    public AsignarSoftwares() {
+    public AsignarSoftwares(List<SoftwareDTO> softwares) {
         initComponents();
+        //LLenar el checkbox con la lista 
+        comboxSoftwares.removeAllItems();
+        for (SoftwareDTO software : softwares) {
+            comboxSoftwares.addItem(software.getNombreSoftware());
+        }
     }
 
     /**
@@ -30,7 +39,7 @@ public class AsignarSoftwares extends javax.swing.JPanel {
         lblTitulo1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         txtNumEquipo = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        comboxSoftwares = new javax.swing.JComboBox<>();
         btnAgregarSw = new javax.swing.JButton();
         btnGuardarCambios = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
@@ -62,27 +71,46 @@ public class AsignarSoftwares extends javax.swing.JPanel {
         jPanel2.setLayout(new java.awt.GridLayout(4, 1, 0, 30));
         jPanel2.add(txtNumEquipo);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox2);
+        comboxSoftwares.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(comboxSoftwares);
 
         btnAgregarSw.setText("Agregar nuevo softare");
         jPanel2.add(btnAgregarSw);
 
         btnGuardarCambios.setText("Guardar Software");
+        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnGuardarCambios);
 
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
 
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 30));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarSw;
     private javax.swing.JButton btnGuardarCambios;
     private javax.swing.JButton btnRegresar;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> comboxSoftwares;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblIP2;
