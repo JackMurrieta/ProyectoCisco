@@ -6,16 +6,21 @@ package ControlNavegacion;
 
 import DTOs.ComputadoraDTO;
 import DTOs.InstitutoDTO;
+import DTOs.LaboratorioDTO;
 import DTOs.SoftwareDTO;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IComputadoraNegocio;
 import Interfaces.IInstitutoNegocio;
+import Interfaces.ILaboratorioNegocio;
 import Interfaces.ISoftwareNegocio;
 import Negocio.ComputadoraNegocio;
 import Negocio.InstitutoNegocio;
+import Negocio.LaboratorioNegocio;
 import Negocio.SoftwareNegocio;
 import Programa3.AdminEquiposComputo;
 import Programa3.AsignarSoftwares;
+import Programa3.FrmAgregarLaboratorio;
+import Programa3.FrmLoginInstituto;
 import Programa3.Menu;
 import Programa3.NuevoSoftware;
 import java.awt.Color;
@@ -29,8 +34,11 @@ import java.util.logging.Logger;
  */
 public class ControlNavegacion {
     
+    private static InstitutoDTO instituto;
+    private static LaboratorioDTO lab;
     //Aqui van Las interfaces de negocio
     private static IInstitutoNegocio institutoNegocio;
+    private static ILaboratorioNegocio labNegocio;
     private static IComputadoraNegocio pcNegocio;
     private static ISoftwareNegocio swNegocio;
     private static Long idLab;
@@ -38,19 +46,66 @@ public class ControlNavegacion {
     
     
     // Los paneles y Frames como static
+    private static FrmLoginInstituto login;
+    private static FrmAgregarLaboratorio frmAgregarLab;
     private static Menu menu;
     private static AsignarSoftwares panelAsignarSoftwares;
     private static NuevoSoftware panelNuevoSw;
     private static AdminEquiposComputo panelAdminPc;
     
 
-    public ControlNavegacion(Long idLab, Long idInstituto) {
+    public ControlNavegacion() {
         this.idLab = idLab;
         this.idInstituto = idInstituto;
+        labNegocio = new LaboratorioNegocio(ControlNavegacion.idInstituto);
         pcNegocio = new ComputadoraNegocio();
         swNegocio = new SoftwareNegocio();
         institutoNegocio = new InstitutoNegocio();
     }
+    //FRMS 
+    public static void mostrarLogin(){
+        //Instituto en la BD
+        instituto = institutoNegocio.obtenerInstituto("ITSON");
+        ControlNavegacion.idInstituto = instituto.getId();
+        List<LaboratorioDTO> labsDTO = labNegocio.obtenerListaLabInstituto();
+        login = new FrmLoginInstituto(instituto,labsDTO);
+        login.setVisible(true);
+    }
+    public static void mostrarAgregarLaboratorio(){
+        frmAgregarLab = new FrmAgregarLaboratorio(instituto);
+    }
+    
+    public static void agregarLaboratorio(LaboratorioDTO labDTO) {
+        try {
+            labNegocio.validarDatosLab(labDTO);
+        } catch (NegocioException ex) {
+            //Poner JOPTION
+            Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            labNegocio.guardarLabortorio(labDTO);
+        } catch (NegocioException ex) {
+            //PONERJOPTION
+            Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+        
+    
+    public static void mostrarMenu(Long idLab){
+        ControlNavegacion.idLab = idLab;
+        lab = labNegocio.obtenerLabPorId(idLab);
+        menu = new Menu();
+        menu.setVisible(true);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     
     public static InstitutoDTO obtenerInstitutoNombre(String nombre){
         return institutoNegocio.obtenerInstituto(nombre);

@@ -19,6 +19,10 @@ public class InstitutoDTO {
         this.nombreOficial = nombreOficial;
         this.alias = alias;
     }
+
+    public Long getId() {
+        return id;
+    }
     
 
     public InstitutoDTO(Long id, String nombreOficial) {

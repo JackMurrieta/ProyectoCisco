@@ -4,7 +4,10 @@
  */
 package Programa3;
 
+import DTOs.InstitutoDTO;
+import DTOs.LaboratorioDTO;
 import Utilerias.CustomSpinner;
+import java.time.LocalTime;
 
 /**
  *
@@ -15,8 +18,10 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
     /**
      * Creates new form FrmLoginInstituto
      */
-    public FrmAgregarLaboratorio() {
+    public FrmAgregarLaboratorio(InstitutoDTO instituto) {
         initComponents();
+        
+        lblNombreInstituto1.setText(instituto.getNombreOficial());
         setSize(945, 677);
         
     }
@@ -78,7 +83,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
 
         jPanel2.setLayout(new java.awt.GridLayout(2, 3, 0, 30));
 
-        inicioHora.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        inicioHora.setFont(new java.awt.Font("Dialog", 1, 36));
         jPanel2.add(inicioHora);
 
         lblHora.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
@@ -106,6 +111,11 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
 
         btnLogin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnLogin.setText("Guardar");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 540, 330, 50));
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
@@ -129,41 +139,23 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmAgregarLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        String nombre = txtNombre.getText().trim();
+        String contrasena = txtContrasena.getText().trim();
+        int horaInicio = (int) inicioHora.getValue();
+        int minutoInicio = (int) inicioMin.getValue();
+        int horaFin = (int) finHora.getValue();
+        int minutoFin = (int) finMin.getValue();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmAgregarLaboratorio().setVisible(true);
-            }
-        });
-    }
+        LocalTime apertura = LocalTime.of(horaInicio, minutoInicio);
+        LocalTime cierre = LocalTime.of(horaFin, minutoFin);
+        //LocalTime horaInicio = 
+        LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre);
+        ControlNavegacion.ControlNavegacion.agregarLaboratorio(nuevo);
+        ControlNavegacion.ControlNavegacion.mostrarLogin();
+    }//GEN-LAST:event_btnLoginActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;

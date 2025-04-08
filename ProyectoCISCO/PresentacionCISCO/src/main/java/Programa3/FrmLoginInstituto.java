@@ -4,17 +4,32 @@
  */
 package Programa3;
 
+import DTOs.InstitutoDTO;
+import DTOs.LaboratorioDTO;
+import java.util.List;
+
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public class FrmLoginInstituto extends javax.swing.JFrame {
+    private InstitutoDTO instituto;
+    private List<LaboratorioDTO> labs;
 
     /**
      * Creates new form FrmLoginInstituto
      */
-    public FrmLoginInstituto() {
+    public FrmLoginInstituto(InstitutoDTO instituto, List<LaboratorioDTO> labs) {
+        this.labs = labs;
+        this.instituto = instituto;
         initComponents();
+        setSize(801, 581);
+        lblNombreInstituto.setText(instituto.getNombreOficial());
+        comboxLaboratorios.removeAllItems();
+        for (LaboratorioDTO lab : labs) {
+            comboxLaboratorios.addItem(lab.getNombreLab());
+        }
+        
     }
 
     /**
@@ -76,6 +91,11 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
 
         btnLogin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnLogin);
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
@@ -94,43 +114,25 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
 
     private void btnAgregarLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLaboratorioActionPerformed
         // TODO add your handling code here:
-
+        //mostrarAsignarLab
+        
     }//GEN-LAST:event_btnAgregarLaboratorioActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmLoginInstituto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmLoginInstituto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmLoginInstituto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmLoginInstituto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        // TODO add your handling code here:
+        LaboratorioDTO seleccionado = (LaboratorioDTO) comboxLaboratorios.getSelectedItem();
+        String contrasena1 = txtContrasena.getText().trim();
+        String contrasena2 = txtContrasena2.getText().trim();
+        if(contrasena1.equals(contrasena2) && seleccionado.getContrasena().equals(contrasena1)){
+            //mostrarMenu PASARLE IDLABRATORIO ESCOJIDO
+            Long idLab = seleccionado.getId();
+            ControlNavegacion.ControlNavegacion.mostrarMenu(idLab);
+            this.dispose();
+        }else{
+            //JOptionPane Contraseña Incorrecta
         }
-        //</editor-fold>
+    }//GEN-LAST:event_btnLoginActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmLoginInstituto().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLaboratorio;
