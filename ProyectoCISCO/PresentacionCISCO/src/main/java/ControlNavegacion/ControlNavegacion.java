@@ -19,6 +19,7 @@ import Negocio.LaboratorioNegocio;
 import Negocio.SoftwareNegocio;
 import Programa3.AdminEquiposComputo;
 import Programa3.AsignarSoftwares;
+import Programa3.EquipoDatosSE;
 import Programa3.FrmAgregarLaboratorio;
 import Programa3.FrmLoginInstituto;
 import Programa3.Menu;
@@ -27,6 +28,8 @@ import java.awt.Color;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -44,6 +47,7 @@ public class ControlNavegacion {
     private static Long idLab;
     private static Long idInstituto;
     private static List<LaboratorioDTO> labsDTO;
+    private static List<ComputadoraDTO> computadorasDTO;
     
     
     // Los paneles y Frames como static
@@ -53,6 +57,7 @@ public class ControlNavegacion {
     private static AsignarSoftwares panelAsignarSoftwares;
     private static NuevoSoftware panelNuevoSw;
     private static AdminEquiposComputo panelAdminPc;
+    private static EquipoDatosSE panelDatosPc;
     
 
     public ControlNavegacion() {
@@ -112,13 +117,6 @@ public class ControlNavegacion {
     
     
     
-    
-    
-    
-    
-    
-    
-    
     public static InstitutoDTO obtenerInstitutoNombre(String nombre){
         return institutoNegocio.obtenerInstituto(nombre);
     }
@@ -156,39 +154,49 @@ public class ControlNavegacion {
         return pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
     }
     
-    //ConvertirColorARGB O Hexadecimal
-    public static Color convertirColorPc(ComputadoraDTO pc) {
-        String colorStr = pc.getColor().trim();
-
-        try {
-            if (colorStr.contains(",")) {
-                // Formato RGB: "255,0,170"
-                String[] partes = colorStr.split(",");
-                int r = Integer.parseInt(partes[0].trim());
-                int g = Integer.parseInt(partes[1].trim());
-                int b = Integer.parseInt(partes[2].trim());
-                return new Color(r, g, b);
-            } else {
-                // Formato Hex: "#FF00AA" o "FF00AA" o "0xFF00AA"
-                if (!colorStr.startsWith("#") && !colorStr.startsWith("0x")) {
-                    colorStr = "#" + colorStr;
-                }
-                return Color.decode(colorStr);
-            }
-        } catch (Exception e) {
-            System.err.println("Error al convertir el color: " + colorStr);
-            return Color.GRAY; // Color por defecto si hay error
-        }
-    }
-    
+        
+    //MOSTRAR COMPUTADORAS METODOS
     public static void mostrarAdminPc(){
-        panelAdminPc = new AdminEquiposComputo(obtenerComputadoras(idLab));
-        menu.mostrarPanel(panelAdminPc);
+        //obtenerLista de computos
+        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
+        panelAdminPc = new AdminEquiposComputo(computadorasDTO);
+        mostrarFrm(panelAdminPc);
     }
     
+    
+    public static void mostrarEquipoDatosSE(){
+        panelDatosPc = new EquipoDatosSE();
+        mostrarFrm(panelDatosPc);
+    }
+    
+    public static void actualizarComputadoras() {
+        computadorasDTO = obtenerComputadoras(lab.getId());
+    }
+
     //HACER EL RELACION SOFTWARE
     
     
     
     
+    //METODO DE FRM
+    public static void mostrarFrm(JPanel p) {
+        // Obtenemos el tamaño preferido del panel
+        p.setSize(p.getPreferredSize());
+
+        // Creamos un nuevo JFrame que abrirá el contenido
+        JFrame newFrame = new JFrame();
+        newFrame.setTitle(p.getName());
+        newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo el nuevo frame
+
+        // Establecemos el tamaño del JFrame igual al tamaño del panel
+        newFrame.setSize(p.getPreferredSize());
+        newFrame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+
+        // Agregamos el panel al nuevo frame
+        newFrame.add(p);
+
+        // Hacemos visible el nuevo frame
+        newFrame.setVisible(true);
+    }
 }
+

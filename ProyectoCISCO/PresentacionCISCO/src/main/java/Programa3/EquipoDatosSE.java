@@ -8,12 +8,12 @@ package Programa3;
  *
  * @author Jack Murrieta
  */
-public class EquipoNuevoOEditable extends javax.swing.JPanel {
+public class EquipoDatosSE extends javax.swing.JPanel {
 
     /**
      * Creates new form EquipoSeleccionado
      */
-    public EquipoNuevoOEditable() {
+    public EquipoDatosSE() {
         initComponents();
     }
 

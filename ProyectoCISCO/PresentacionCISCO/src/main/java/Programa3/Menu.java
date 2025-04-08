@@ -272,9 +272,11 @@ public class Menu extends javax.swing.JFrame {
         String fechaFormateada = fechaActual.format(formato);
         label.setText("Hoy es " + fechaFormateada);
     }
+    
 
     private void btnAdministrarComputadorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarComputadorasActionPerformed
         // TODO add your handling code here:
+        ControlNavegacion.ControlNavegacion.mostrarAdminPc();
     }//GEN-LAST:event_btnAdministrarComputadorasActionPerformed
 
     private void btnAdminAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminAlumnosActionPerformed
@@ -292,9 +294,6 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnAdminUsoEquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsoEquiposActionPerformed
         // TODO add your handling code here:
-        
-        //SETEAR EL IDLABRATORIO AQUI
-        ControlNavegacion.ControlNavegacion.mostrarAdminPc();
     }//GEN-LAST:event_btnAdminUsoEquiposActionPerformed
 
     private void btnAdminLaboratoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLaboratoriosActionPerformed

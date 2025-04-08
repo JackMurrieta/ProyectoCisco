@@ -6,12 +6,13 @@ package Programa3;
 
 import DTOs.ComputadoraDTO;
 import Utilerias.JPanelColumnas;
+import Utilerias.JPanelColumnasEquipos;
 import java.util.List;
 import javax.swing.JScrollPane;
 
 /**
  *
- * @author Usuario
+ * @author Jack Murrieta
  */
 public class AdminEquiposComputo extends javax.swing.JPanel {
     List<ComputadoraDTO> computadoras;
@@ -22,7 +23,9 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
     public AdminEquiposComputo( List<ComputadoraDTO> computadoras) {
         this.computadoras = computadoras;
         initComponents();
-        jpnlEquipos.add(new JScrollPane());
+        setSize(912,572);
+        JPanelColumnasEquipos panelEquipos = new JPanelColumnasEquipos(computadoras);
+        scrollPC.setViewportView(panelEquipos);
     }
 
     /**
@@ -37,7 +40,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
         txtComputadora = new javax.swing.JTextField();
         btnNuevoEquipo = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
-        jpnlEquipos = new JPanelColumnas(computadoras);
+        scrollPC = new javax.swing.JScrollPane();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -62,24 +65,12 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
 
         btnBuscar.setText("Buscar");
         add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(568, 126, 162, 35));
-
-        javax.swing.GroupLayout jpnlEquiposLayout = new javax.swing.GroupLayout(jpnlEquipos);
-        jpnlEquipos.setLayout(jpnlEquiposLayout);
-        jpnlEquiposLayout.setHorizontalGroup(
-            jpnlEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 822, Short.MAX_VALUE)
-        );
-        jpnlEquiposLayout.setVerticalGroup(
-            jpnlEquiposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 295, Short.MAX_VALUE)
-        );
-
-        add(jpnlEquipos, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 247, -1, -1));
+        add(scrollPC, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 840, 290));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEquipoActionPerformed
         // TODO add your handling code here:
-        
+        ControlNavegacion.ControlNavegacion.mostrarEquipoDatosSE();
     }//GEN-LAST:event_btnNuevoEquipoActionPerformed
 
 
@@ -88,7 +79,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
     private javax.swing.JButton btnNuevoEquipo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jpnlEquipos;
+    private javax.swing.JScrollPane scrollPC;
     private javax.swing.JTextField txtComputadora;
     // End of variables declaration//GEN-END:variables
 }
