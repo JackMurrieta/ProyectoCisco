@@ -19,15 +19,17 @@ public class LaboratorioAdapter {
     private InstitutoDAO institutoDAO;
 
     public LaboratorioAdapter(Long idInstituto) {
-        
-        this.idInstituto = idInstituto;
         institutoDAO = new InstitutoDAO();
+        this.idInstituto = idInstituto;
     }
     
     
     public LaboratorioDTO convertirDTO(LaboratorioEntidad labEntidad){
+        Long idInstituto = labEntidad.getInstituto().getId();
         LaboratorioDTO labDTO = new LaboratorioDTO(labEntidad.getId(),labEntidad.getNombreLab(), 
-                labEntidad.getContrasenaMaestra(),labEntidad.getHoraInicio(), labEntidad.getHoraFin());
+                labEntidad.getContrasenaMaestra(),
+                labEntidad.getHoraInicio(), labEntidad.getHoraFin(),
+                idInstituto);
         return labDTO;
     
     }

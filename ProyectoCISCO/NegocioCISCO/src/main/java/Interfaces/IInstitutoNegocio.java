@@ -12,5 +12,6 @@ import DTOs.InstitutoDTO;
  */
 public interface IInstitutoNegocio {
     public InstitutoDTO obtenerInstituto(String instituto);
+    public InstitutoDTO obtenerInstitutoPorID(Long idInstituto);
     
 }

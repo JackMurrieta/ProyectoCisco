@@ -4,6 +4,11 @@
 
 package com.mycompany.negociocisco;
 
+import DAOs.InstitutoDAO;
+import DTOs.InstitutoDTO;
+import Entidades.InstitutoEntidad;
+import Negocio.InstitutoNegocio;
+
 /**
  *
  * @author Usuario
@@ -11,6 +16,15 @@ package com.mycompany.negociocisco;
 public class NegocioCISCO {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        InstitutoDAO institutoDAO = new InstitutoDAO();
+        InstitutoEntidad institutoEntidad = institutoDAO.obtenerInstitutoPorNombre("ITSON");
+        InstitutoNegocio institutoNegocio = new InstitutoNegocio();
+        
+        InstitutoDTO uniDTO =institutoNegocio.obtenerInstituto("ITSON");
+        InstitutoDTO uniDTO2 = institutoNegocio.obtenerInstitutoPorID(1L);
+        System.out.println(uniDTO.toString());
+        System.out.println(uniDTO2.toString());
+        
+        
     }
 }

@@ -37,7 +37,7 @@ import javax.swing.JPanel;
  */
 public class ControlNavegacion {
     
-    private static InstitutoDTO instituto;
+    private static InstitutoDTO institutoDTO;
     private static LaboratorioDTO lab;
     //Aqui van Las interfaces de negocio
     private static IInstitutoNegocio institutoNegocio;
@@ -63,9 +63,10 @@ public class ControlNavegacion {
     public ControlNavegacion() {
         //Inicializar el menu
         institutoNegocio = new InstitutoNegocio();
-        instituto = institutoNegocio.obtenerInstituto("ITSON");
-        labNegocio = new LaboratorioNegocio(instituto.getId());
-        labsDTO = labNegocio.obtenerListaLabInstituto();
+        //institutoInicializado
+        institutoDTO = institutoNegocio.obtenerInstituto("ITSON");
+        idInstituto  =institutoDTO.getId();
+        labNegocio = new LaboratorioNegocio(idInstituto);
         pcNegocio = new ComputadoraNegocio();
         swNegocio = new SoftwareNegocio();
     }
@@ -73,32 +74,39 @@ public class ControlNavegacion {
     public static void mostrarLogin(){
         //Instituto en la BD
         actualizarListaLab();
-        login = new FrmLoginInstituto(instituto,labsDTO);
+        login = new FrmLoginInstituto(institutoDTO,labsDTO);
         login.setVisible(true);
     }
+    
     public static void mostrarAgregarLaboratorio(){
-        frmAgregarLab = new FrmAgregarLaboratorio(instituto);
+        if(institutoDTO == null){
+            institutoDTO = obtenerInstitutoNombre("ITSON");
+            idInstituto = institutoDTO.getId();
+        }
+        frmAgregarLab = new FrmAgregarLaboratorio(institutoDTO);
         frmAgregarLab.setVisible(true);
     }
     
     public static void agregarLaboratorio(LaboratorioDTO labDTO) {
-        labNegocio = new LaboratorioNegocio(ControlNavegacion.idInstituto);
+        labNegocio = new LaboratorioNegocio(idInstituto);
         try {
             labNegocio.validarDatosLab(labDTO);
         } catch (NegocioException ex) {
             //Poner JOPTION
-            Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         try {
             labNegocio.guardarLabortorio(labDTO);
         } catch (NegocioException ex) {
             //PONERJOPTION
-            Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         actualizarListaLab();
     }
 
         
+    
+    
     
     public static void mostrarMenu(LaboratorioDTO labDTO){
         ControlNavegacion.idLab = labDTO.getId();

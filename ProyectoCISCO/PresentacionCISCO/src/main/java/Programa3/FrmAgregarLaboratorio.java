@@ -14,11 +14,13 @@ import java.time.LocalTime;
  * @author Jack Murrieta
  */
 public class FrmAgregarLaboratorio extends javax.swing.JFrame {
+    private Long idInstituo;
 
     /**
      * Creates new form FrmLoginInstituto
      */
     public FrmAgregarLaboratorio(InstitutoDTO instituto) {
+        idInstituo = instituto.getId();
         initComponents();
         
         lblNombreInstituto1.setText(instituto.getNombreOficial());
@@ -49,6 +51,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         txtContrasena = new javax.swing.JTextField();
         lblNombreInstituto1 = new javax.swing.JLabel();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -132,6 +135,14 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         lblNombreInstituto1.setText("Instituto Tecnologico de Sonora");
         getContentPane().add(lblNombreInstituto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 670, 81));
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 260, 60));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -151,15 +162,22 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         LocalTime apertura = LocalTime.of(horaInicio, minutoInicio);
         LocalTime cierre = LocalTime.of(horaFin, minutoFin);
         //LocalTime horaInicio = 
-        LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre);
+        LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre,idInstituo);
         ControlNavegacion.ControlNavegacion.agregarLaboratorio(nuevo);
         ControlNavegacion.ControlNavegacion.mostrarLogin();
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        // TODO add your handling code here:
+        ControlNavegacion.ControlNavegacion.mostrarLogin();
+        this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JSpinner finHora;
     private javax.swing.JSpinner finMin;
     private javax.swing.JSpinner inicioHora;

@@ -32,5 +32,19 @@ public class InstitutoNegocio implements IInstitutoNegocio {
         }
         
     }
+
+    @Override
+    public InstitutoDTO obtenerInstitutoPorID(Long idInstituto) {
+        InstitutoEntidad instEntidad = institutoDAO.obtenerPorID(idInstituto);
+        InstitutoDTO instDTO;
+        if (instEntidad.getNombreAbreviado() == null) {
+            return instDTO = new InstitutoDTO(instEntidad.getId(), instEntidad.getNombreOficial());
+        } else {
+            return instDTO = new InstitutoDTO(instEntidad.getId(), instEntidad.getNombreOficial(), instEntidad.getNombreAbreviado());
+        }
+    }
+
+
+    
     
 }
