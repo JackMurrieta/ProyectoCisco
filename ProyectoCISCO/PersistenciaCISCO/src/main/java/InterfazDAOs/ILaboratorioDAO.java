@@ -5,6 +5,7 @@
 package InterfazDAOs;
 
 import Entidades.LaboratorioEntidad;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,10 @@ import Entidades.LaboratorioEntidad;
 public interface ILaboratorioDAO {
     
     public LaboratorioEntidad obtenerLabPorId(Long id);
+    
+    public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad);
+    
+    public List<LaboratorioEntidad> laboratoriosEnInstitutos(Long id);
+    
     
 }

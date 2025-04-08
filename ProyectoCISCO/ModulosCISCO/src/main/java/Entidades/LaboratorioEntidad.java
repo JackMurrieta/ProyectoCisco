@@ -5,7 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -37,12 +37,12 @@ public class LaboratorioEntidad implements Serializable {
     
     @Column(name ="contrasenaMaestra", length = 255, nullable = false)
     private String contrasenaMaestra;
-    
-    @Column(name = "fechaInicio", nullable = false)
-    private LocalDate fechaInicio;
-    
-    @Column(name = "fechaFin", nullable = true)
-    private LocalDate fechaFin;
+
+    @Column(name = "horaInicio", nullable = false)
+    private LocalTime horaInicio;
+
+    @Column(name = "horaFin", nullable = false)
+    private LocalTime horaFin;
     
     @ManyToOne
     @JoinColumn(name = "idInstituto", referencedColumnName = "idInstituto", nullable = false)
@@ -58,15 +58,17 @@ public class LaboratorioEntidad implements Serializable {
     public LaboratorioEntidad() {
     }
 
-    public LaboratorioEntidad(Long id, String nombreLab, String contrasenaMaestra, LocalDate fechaInicio, LocalDate fechaFin, InstitutoEntidad instituto, List<ComputadoraEntidad> computadoras, List<ApartadoPorDiaEntidad> apartadosPorDia) {
-        this.id = id;
+    public LaboratorioEntidad(String nombreLab, String contrasenaMaestra, LocalTime horaInicio, LocalTime horaFin, InstitutoEntidad instituto) {
         this.nombreLab = nombreLab;
         this.contrasenaMaestra = contrasenaMaestra;
-        this.fechaInicio = fechaInicio;
-        this.fechaFin = fechaFin;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
         this.instituto = instituto;
-        this.computadoras = computadoras;
-        this.apartadosPorDia = apartadosPorDia;
+    }
+
+    
+    public Long getId() {
+        return id;
     }
 
     public String getNombreLab() {
@@ -77,12 +79,12 @@ public class LaboratorioEntidad implements Serializable {
         return contrasenaMaestra;
     }
 
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
+    public LocalTime getHoraInicio() {
+        return horaInicio;
     }
 
-    public LocalDate getFechaFin() {
-        return fechaFin;
+    public LocalTime getHoraFin() {
+        return horaFin;
     }
 
     public InstitutoEntidad getInstituto() {
@@ -96,15 +98,7 @@ public class LaboratorioEntidad implements Serializable {
     public List<ApartadoPorDiaEntidad> getApartadosPorDia() {
         return apartadosPorDia;
     }
-   
-    
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {

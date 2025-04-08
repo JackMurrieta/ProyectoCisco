@@ -6,10 +6,12 @@ package DAOs;
 
 import Entidades.LaboratorioEntidad;
 import InterfazDAOs.ILaboratorioDAO;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -36,5 +38,43 @@ public class LaboratorioDAO implements ILaboratorioDAO {
 
     }
 
+    @Override
+    public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad) {
+        
+        EntityManager em = emf.createEntityManager();
+        try {
+
+            em.getTransaction().begin();
+            em.persist(labEntidad);
+            em.getTransaction().commit();
+            System.out.println("Laboratorio guardado exitosamente.");
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+            throw new PersistenceException("Error al guardar el Laboratorio: " + e.getMessage());
+        } finally {
+            em.close();
+        }
+  
+    }
+
+    @Override
+    public List<LaboratorioEntidad> laboratoriosEnInstitutos(Long id) {
+        EntityManager em = emf.createEntityManager();
+        List<LaboratorioEntidad> laboratorios = null;
+
+        try {
+            TypedQuery<LaboratorioEntidad> query = em.createQuery(
+                    "SELECT l FROM LaboratorioEntidad l WHERE l.instituto.id = :idInstituto",
+                    LaboratorioEntidad.class
+            );
+            query.setParameter("idInstituto", id);
+            laboratorios = query.getResultList();
+        } finally {
+            em.close();
+        }
+        return laboratorios;
+    }
+
 }
+
 

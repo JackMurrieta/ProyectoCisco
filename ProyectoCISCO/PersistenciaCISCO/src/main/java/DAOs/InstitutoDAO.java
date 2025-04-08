@@ -40,5 +40,16 @@ public class InstitutoDAO implements IInstitutoDAO{
         }
     }
     
+    public InstitutoEntidad obtenerPorID(Long id){
+        EntityManager em = emf.createEntityManager();
+        InstitutoEntidad instituto = em.find(InstitutoEntidad.class, id);
+        if (instituto != null) {
+            return instituto;
+        } else {
+            throw new PersistenceException("Instituto no encontrado");
+        }
+        
+    }
+    
     
 }

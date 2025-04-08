@@ -12,4 +12,5 @@ import Entidades.InstitutoEntidad;
  */
 public interface IInstitutoDAO {
     public InstitutoEntidad obtenerInstitutoPorNombre(String nombre);
+    public InstitutoEntidad obtenerPorID(Long id);
 }
