@@ -4,6 +4,8 @@
 
 package com.mycompany.presentacioncisco;
 
+import ControlNavegacion.ControlNavegacion;
+
 /**
  *
  * @author Usuario
@@ -11,6 +13,7 @@ package com.mycompany.presentacioncisco;
 public class PresentacionCISCO {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        ControlNavegacion controlnav = new ControlNavegacion();
+        controlnav.mostrarLogin();
     }
 }

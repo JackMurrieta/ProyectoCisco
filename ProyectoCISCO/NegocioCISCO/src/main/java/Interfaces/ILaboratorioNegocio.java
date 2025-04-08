@@ -18,5 +18,6 @@ public interface ILaboratorioNegocio {
     public boolean validarDatosLab(LaboratorioDTO labDTO)throws NegocioException;
     public LaboratorioDTO obtenerLabPorId(Long idLab);
     public List<LaboratorioDTO> obtenerListaLabInstituto();
+    public LaboratorioDTO obtenerLabPorNombre(String nombre);
     
 }

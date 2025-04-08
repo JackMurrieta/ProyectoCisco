@@ -20,9 +20,9 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
      * Creates new form FrmLoginInstituto
      */
     public FrmLoginInstituto(InstitutoDTO instituto, List<LaboratorioDTO> labs) {
+        initComponents();
         this.labs = labs;
         this.instituto = instituto;
-        initComponents();
         setSize(801, 581);
         lblNombreInstituto.setText(instituto.getNombreOficial());
         comboxLaboratorios.removeAllItems();
@@ -115,18 +115,20 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
     private void btnAgregarLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLaboratorioActionPerformed
         // TODO add your handling code here:
         //mostrarAsignarLab
+        ControlNavegacion.ControlNavegacion.mostrarAgregarLaboratorio();
+        this.dispose();
         
     }//GEN-LAST:event_btnAgregarLaboratorioActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        LaboratorioDTO seleccionado = (LaboratorioDTO) comboxLaboratorios.getSelectedItem();
+        String seleccionado = (String) comboxLaboratorios.getSelectedItem();
+        LaboratorioDTO labSeleccionado = ControlNavegacion.ControlNavegacion.obtenerLabPorNombre(seleccionado);
         String contrasena1 = txtContrasena.getText().trim();
         String contrasena2 = txtContrasena2.getText().trim();
-        if(contrasena1.equals(contrasena2) && seleccionado.getContrasena().equals(contrasena1)){
+        if(contrasena1.equals(contrasena2) && labSeleccionado.getContrasena().equals(contrasena1)){
             //mostrarMenu PASARLE IDLABRATORIO ESCOJIDO
-            Long idLab = seleccionado.getId();
-            ControlNavegacion.ControlNavegacion.mostrarMenu(idLab);
+            ControlNavegacion.ControlNavegacion.mostrarMenu(labSeleccionado);
             this.dispose();
         }else{
             //JOptionPane Contraseña Incorrecta

@@ -29,7 +29,17 @@ public class LaboratorioDTO {
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
     }
+    
+    
 
+    public LaboratorioDTO(Long id, String nombreLab, String contrasena, LocalTime horaInicio, LocalTime horaFin) {
+        this.id = id;
+        this.nombreLab = nombreLab;
+        this.contrasena = contrasena;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
+    
     public LocalTime getHoraInicio() {
         return horaInicio;
     }
@@ -65,6 +75,11 @@ public class LaboratorioDTO {
 
     public String getContrasena() {
         return contrasena;
+    }
+
+    @Override
+    public String toString() {
+        return nombreLab;
     }
     
     

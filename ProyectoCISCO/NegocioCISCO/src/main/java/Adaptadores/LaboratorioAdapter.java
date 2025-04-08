@@ -26,7 +26,7 @@ public class LaboratorioAdapter {
     
     
     public LaboratorioDTO convertirDTO(LaboratorioEntidad labEntidad){
-        LaboratorioDTO labDTO = new LaboratorioDTO(labEntidad.getNombreLab(), 
+        LaboratorioDTO labDTO = new LaboratorioDTO(labEntidad.getId(),labEntidad.getNombreLab(), 
                 labEntidad.getContrasenaMaestra(),labEntidad.getHoraInicio(), labEntidad.getHoraFin());
         return labDTO;
     

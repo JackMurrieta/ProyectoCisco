@@ -92,5 +92,8 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
         }
         return labsDTO;
     }
-    
+    public LaboratorioDTO obtenerLabPorNombre(String nombre){
+        LaboratorioEntidad labEntidad = labDAO.obtenerPorNombre(nombre);
+        return convertidor.convertirDTO(labEntidad);
+    }
 }

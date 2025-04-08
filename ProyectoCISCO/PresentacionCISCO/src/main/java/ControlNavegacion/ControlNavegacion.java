@@ -43,6 +43,7 @@ public class ControlNavegacion {
     private static ISoftwareNegocio swNegocio;
     private static Long idLab;
     private static Long idInstituto;
+    private static List<LaboratorioDTO> labsDTO;
     
     
     // Los paneles y Frames como static
@@ -55,27 +56,28 @@ public class ControlNavegacion {
     
 
     public ControlNavegacion() {
-        this.idLab = idLab;
-        this.idInstituto = idInstituto;
-        labNegocio = new LaboratorioNegocio(ControlNavegacion.idInstituto);
+        //Inicializar el menu
+        institutoNegocio = new InstitutoNegocio();
+        instituto = institutoNegocio.obtenerInstituto("ITSON");
+        labNegocio = new LaboratorioNegocio(instituto.getId());
+        labsDTO = labNegocio.obtenerListaLabInstituto();
         pcNegocio = new ComputadoraNegocio();
         swNegocio = new SoftwareNegocio();
-        institutoNegocio = new InstitutoNegocio();
     }
     //FRMS 
     public static void mostrarLogin(){
         //Instituto en la BD
-        instituto = institutoNegocio.obtenerInstituto("ITSON");
-        ControlNavegacion.idInstituto = instituto.getId();
-        List<LaboratorioDTO> labsDTO = labNegocio.obtenerListaLabInstituto();
+        actualizarListaLab();
         login = new FrmLoginInstituto(instituto,labsDTO);
         login.setVisible(true);
     }
     public static void mostrarAgregarLaboratorio(){
         frmAgregarLab = new FrmAgregarLaboratorio(instituto);
+        frmAgregarLab.setVisible(true);
     }
     
     public static void agregarLaboratorio(LaboratorioDTO labDTO) {
+        labNegocio = new LaboratorioNegocio(ControlNavegacion.idInstituto);
         try {
             labNegocio.validarDatosLab(labDTO);
         } catch (NegocioException ex) {
@@ -88,16 +90,26 @@ public class ControlNavegacion {
             //PONERJOPTION
             Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+        actualizarListaLab();
     }
 
         
     
-    public static void mostrarMenu(Long idLab){
-        ControlNavegacion.idLab = idLab;
+    public static void mostrarMenu(LaboratorioDTO labDTO){
+        ControlNavegacion.idLab = labDTO.getId();
         lab = labNegocio.obtenerLabPorId(idLab);
         menu = new Menu();
         menu.setVisible(true);
     }
+    //ActualizarLista
+    public static void actualizarListaLab(){
+        labsDTO = labNegocio.obtenerListaLabInstituto();
+    }
+    
+    public static LaboratorioDTO obtenerLabPorNombre(String nombre){
+        return labNegocio.obtenerLabPorNombre(nombre);
+    }
+    
     
     
     

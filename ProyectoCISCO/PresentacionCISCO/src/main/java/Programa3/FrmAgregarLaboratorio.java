@@ -154,6 +154,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre);
         ControlNavegacion.ControlNavegacion.agregarLaboratorio(nuevo);
         ControlNavegacion.ControlNavegacion.mostrarLogin();
+        this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
 

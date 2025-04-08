@@ -27,15 +27,32 @@ public class LaboratorioDAO implements ILaboratorioDAO {
     @Override
     public LaboratorioEntidad obtenerLabPorId(Long id) {
         EntityManager em = emf.createEntityManager();
-        LaboratorioEntidad lab = em.find(LaboratorioEntidad.class, id);
-
-        if (lab != null) {
+        try {
+            LaboratorioEntidad lab = em.find(LaboratorioEntidad.class, id);
+            if (lab != null) {
+                return lab;
+            } else {
+                throw new PersistenceException("Laboratorio no encontrado con ID: " + id);
+            }
+        } finally {
             em.close();
-            return lab;
-        } else {
-            throw new PersistenceException("laboratrio no encontrado");
         }
+    }
 
+    public LaboratorioEntidad obtenerPorNombre(String nombre){
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<LaboratorioEntidad> query = em.createQuery(
+                    "SELECT l FROM LaboratorioEntidad l WHERE l.nombreLab = :nombre",
+                    LaboratorioEntidad.class
+            );
+            query.setParameter("nombre", nombre);
+            return query.getSingleResult();
+        } catch (PersistenceException e) {
+            throw new PersistenceException("Laboratorio no encontrado");
+        } finally {
+            em.close();
+        }
     }
 
     @Override
