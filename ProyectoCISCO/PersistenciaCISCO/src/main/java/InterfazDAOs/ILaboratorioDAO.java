@@ -20,6 +20,7 @@ public interface ILaboratorioDAO {
     public List<LaboratorioEntidad> laboratoriosEnInstitutos(Long id);
     
     public LaboratorioEntidad obtenerPorNombre(String nombre);
+    public boolean verificarContrasena(LaboratorioEntidad lab, String passwordIngresada);
     
     
 }

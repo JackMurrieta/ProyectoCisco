@@ -96,4 +96,9 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
         LaboratorioEntidad labEntidad = labDAO.obtenerPorNombre(nombre);
         return convertidor.convertirDTO(labEntidad);
     }
+    public boolean validarPasswordEncriptada(String nombreLab,String password){
+        LaboratorioEntidad labEntity = labDAO.obtenerPorNombre(nombreLab);
+        return labDAO.verificarContrasena(labEntity, password);
+        
+    }
 }

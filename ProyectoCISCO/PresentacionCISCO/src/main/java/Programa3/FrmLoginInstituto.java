@@ -43,11 +43,9 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         lblLab = new javax.swing.JLabel();
         lblPassword = new javax.swing.JLabel();
-        lblPassword2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         comboxLaboratorios = new javax.swing.JComboBox<>();
         txtContrasena = new javax.swing.JTextField();
-        txtContrasena2 = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         btnAgregarLaboratorio = new javax.swing.JButton();
 
@@ -74,12 +72,6 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         lblPassword.setText("Contraseña:");
         jPanel1.add(lblPassword);
 
-        lblPassword2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        lblPassword2.setForeground(new java.awt.Color(30, 47, 86));
-        lblPassword2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lblPassword2.setText("Contraseña:");
-        jPanel1.add(lblPassword2);
-
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 230, 390));
 
         jPanel2.setLayout(new java.awt.GridLayout(4, 1, 0, 30));
@@ -87,7 +79,6 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         comboxLaboratorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(comboxLaboratorios);
         jPanel2.add(txtContrasena);
-        jPanel2.add(txtContrasena2);
 
         btnLogin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         btnLogin.setText("Login");
@@ -123,14 +114,14 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
         String seleccionado = (String) comboxLaboratorios.getSelectedItem();
-        LaboratorioDTO labSeleccionado = ControlNavegacion.ControlNavegacion.obtenerLabPorNombre(seleccionado);
         String contrasena1 = txtContrasena.getText().trim();
-        String contrasena2 = txtContrasena2.getText().trim();
-        if(contrasena1.equals(contrasena2) && labSeleccionado.getContrasena().equals(contrasena1)){
+
+        if (ControlNavegacion.ControlNavegacion.verificarPassword(seleccionado, contrasena1)) {
+            LaboratorioDTO labSeleccionado = ControlNavegacion.ControlNavegacion.obtenerLabPorNombre(seleccionado);
             //mostrarMenu PASARLE IDLABRATORIO ESCOJIDO
             ControlNavegacion.ControlNavegacion.mostrarMenu(labSeleccionado);
             this.dispose();
-        }else{
+        } else {
             //JOptionPane Contraseña Incorrecta
         }
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -145,8 +136,6 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
     private javax.swing.JLabel lblLab;
     private javax.swing.JLabel lblNombreInstituto;
     private javax.swing.JLabel lblPassword;
-    private javax.swing.JLabel lblPassword2;
     private javax.swing.JTextField txtContrasena;
-    private javax.swing.JTextField txtContrasena2;
     // End of variables declaration//GEN-END:variables
 }

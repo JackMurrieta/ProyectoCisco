@@ -68,6 +68,10 @@ public class ControlNavegacion {
         login.setVisible(true);
     }
     
+    public static boolean verificarPassword(String nombreLab, String password){
+        return labNegocio.validarPasswordEncriptada(nombreLab, password);
+    }
+    
     public static void mostrarAgregarLaboratorio(){
         if(institutoDTO == null){
             institutoDTO = obtenerInstitutoNombre("ITSON");
