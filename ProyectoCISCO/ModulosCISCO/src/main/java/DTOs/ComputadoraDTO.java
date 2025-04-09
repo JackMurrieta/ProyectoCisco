@@ -95,6 +95,11 @@ public class ComputadoraDTO {
     public void setIdCarrera(long idCarrera) {
         this.idCarrera = idCarrera;
     }
+
+    @Override
+    public String toString() {
+        return "ComputadoraDTO{" + "direccionIp=" + direccionIp + ", numComputadora=" + numComputadora + ", estatus=" + estatus + ", idCarrera=" + idCarrera + ", color=" + color + ", idLab=" + idLab + '}';
+    }
     
     
     

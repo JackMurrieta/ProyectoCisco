@@ -19,6 +19,7 @@ import Entidades.LaboratorioEntidad;
 import ExcepcionNegocio.NegocioException;
 import Negocio.ComputadoraNegocio;
 import Negocio.InstitutoNegocio;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -61,6 +62,10 @@ public class NegocioCISCO {
         CarreraEntidad carrera = cDAO.obtenerCarreraPorID(1L);
         
         ComputadoraDTO pc3 = new ComputadoraDTO("100.100.13.2", "020", true, carrera.getId() ,labEntity.getId() );
+        
+        //Obtener Lista de Computadoras
+        List<ComputadoraDTO> computadoras = pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
+        System.out.println(computadoras.toString());
         //ComputadoraDTO pc4 = new ComputadoraDTO("192.168.123.4", "004", true, labEntity.getId());
         
 //        try {

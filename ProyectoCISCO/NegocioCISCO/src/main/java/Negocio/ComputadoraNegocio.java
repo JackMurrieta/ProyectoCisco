@@ -106,7 +106,7 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         List<ComputadoraEntidad> computadorasBD = pcDAO.obtenerComputadorasPorLaboratorio(id);
         List<ComputadoraDTO> computadorasDTO = new ArrayList<>();
         for (ComputadoraEntidad pcEntidad : computadorasBD) {
-            ComputadoraDTO pcDTO = convertidor.convertirComputadoraDTO(pcEntidad);
+            ComputadoraDTO pcDTO = convertidor.convertirDTO(pcEntidad);
             computadorasDTO.add(pcDTO);
             
         }
@@ -117,7 +117,7 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     public ComputadoraDTO obtenerComputadora(String numComputadora) {
         try {
             validarNumComputadora(numComputadora);
-            return convertidor.convertirComputadoraDTO(pcDAO.obtenerComputadoraPorNum(numComputadora));
+            return convertidor.convertirDTO(pcDAO.obtenerComputadoraPorNum(numComputadora));
             
             
         } catch (NegocioException ex) {

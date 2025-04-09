@@ -48,16 +48,18 @@ public class ComputadoraAdapter {
     }
     
     //convertir De entidad a DTO
-    public ComputadoraDTO convertirComputadoraDTO(ComputadoraEntidad pcEntidad){
-        //Poner el color 
-        String ip = pcEntidad.getDireccionIp();
-        String numComputadora = pcEntidad.getNumComputadora();
-        boolean estatus = pcEntidad.isEstatus();
-        Long idCarrera = pcEntidad.getCarrera().getId();
-        String color = pcEntidad.getCarrera().getColor();
-        Long idLab = pcEntidad.getLaboratorio().getId();
-        ComputadoraDTO pcDTO = new ComputadoraDTO(ip, numComputadora, estatus, idCarrera, color, idLab);
-        return pcDTO;
+    public ComputadoraDTO convertirDTO(ComputadoraEntidad pcEntidad){
+        
+        if(pcEntidad.getCarrera()==null){
+            return new ComputadoraDTO(pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
+                    pcEntidad.isEstatus(), null, null, pcEntidad.getLaboratorio().getId());
+        }else{
+            String color = pcEntidad.getCarrera().getColor();
+            return new ComputadoraDTO(pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(),
+                    pcEntidad.isEstatus(), pcEntidad.getCarrera().getId(), color, pcEntidad.getLaboratorio().getId());
+         
+        }
+    
     }
 
 }
