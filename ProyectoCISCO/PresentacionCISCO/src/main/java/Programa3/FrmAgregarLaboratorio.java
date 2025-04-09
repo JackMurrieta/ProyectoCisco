@@ -141,7 +141,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 260, 60));
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 260, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -164,13 +164,13 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         //LocalTime horaInicio = 
         LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre,idInstituo);
         ControlNavegacion.ControlNavegacion.agregarLaboratorio(nuevo);
-        ControlNavegacion.ControlNavegacion.mostrarLogin();
+
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        ControlNavegacion.ControlNavegacion.mostrarLogin();
+        
+       
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 

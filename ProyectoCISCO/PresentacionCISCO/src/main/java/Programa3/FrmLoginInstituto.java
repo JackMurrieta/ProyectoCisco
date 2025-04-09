@@ -47,7 +47,6 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         comboxLaboratorios = new javax.swing.JComboBox<>();
         txtContrasena = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
-        btnAgregarLaboratorio = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -91,25 +90,8 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
 
-        btnAgregarLaboratorio.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        btnAgregarLaboratorio.setText("+");
-        btnAgregarLaboratorio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarLaboratorioActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAgregarLaboratorio, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 140, 60, 62));
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnAgregarLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLaboratorioActionPerformed
-        // TODO add your handling code here:
-        //mostrarAsignarLab
-        ControlNavegacion.ControlNavegacion.mostrarAgregarLaboratorio();
-        this.dispose();
-        
-    }//GEN-LAST:event_btnAgregarLaboratorioActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
@@ -128,7 +110,6 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarLaboratorio;
     private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<String> comboxLaboratorios;
     private javax.swing.JPanel jPanel1;
