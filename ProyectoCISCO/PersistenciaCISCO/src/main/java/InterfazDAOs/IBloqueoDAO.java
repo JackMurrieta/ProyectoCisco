@@ -5,6 +5,7 @@
 package InterfazDAOs;
 
 import DTOs.BloqueoConAlumnoDTO;
+import java.util.List;
 
 /**
  *
@@ -12,4 +13,10 @@ import DTOs.BloqueoConAlumnoDTO;
  */
 public interface IBloqueoDAO {
     void guardarBloqueoConAlumnoPorId(BloqueoConAlumnoDTO dto);
+    
+    List<BloqueoConAlumnoDTO> obtenerAlumnosBloqueados();
+    
+    void desbloquearAlumnoPorIdBloqueo(Long idBloqueo);
+    
+    BloqueoConAlumnoDTO obtenerBloqueoPorId(Long idBloqueo);
 }

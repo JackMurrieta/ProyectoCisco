@@ -4,11 +4,21 @@
  */
 package Programa3;
 
+import DAOs.BloqueoDAO;
+import DTOs.BloqueoConAlumnoDTO;
+import ExcepcionNegocio.NegocioException;
+import Interfaces.IBloqueoNegocio;
+import Negocio.BloqueoNegocio;
+import Utilerias.RenderTabla;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,14 +26,16 @@ import javax.swing.JTable;
  */
 public class AdminUsoEquipos extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AdminUsoEquipos
-     */
+    IBloqueoNegocio bloqueoNegocio;
+
     public AdminUsoEquipos() {
+        this.bloqueoNegocio = new BloqueoNegocio(new BloqueoDAO());
         initComponents();
+        llenarTablaAlumnosBloqueados();
 
     }
-        public void mostrarPanel(JPanel p) {
+
+    public void mostrarPanel(JPanel p) {
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -32,6 +44,63 @@ public class AdminUsoEquipos extends javax.swing.JPanel {
         frame.add(p);
         frame.setVisible(true);
     }
+
+    private JButton[] generarBotones(Long bloqueoid) {
+
+        JButton btnDesbloquear = new JButton("Desbloquear");
+        btnDesbloquear.setName("D");
+
+        return new JButton[]{btnDesbloquear};
+    }
+
+    public void llenarTablaAlumnosBloqueados() {
+
+        List<BloqueoConAlumnoDTO> alumnos = bloqueoNegocio.obtenerAlumnosBloqueados();
+        if (alumnos == null || alumnos.isEmpty()) {
+            return;
+        }
+        DefaultTableModel modelo = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Apellido Paterno", "Apellido Materno", "Motivo", "Desbloquear"});
+        for (BloqueoConAlumnoDTO alumno : alumnos) {
+            JButton[] btn = generarBotones(alumno.getIdBloqueo());
+
+            modelo.addRow(new Object[]{
+                alumno.getIdBloqueo(),
+                alumno.getNombreAlumno(),
+                alumno.getApellidoP(),
+                alumno.getApellidoM(),
+                alumno.getMotivo(),
+                btn[0], // Botón desbloquear
+            });
+        }
+        jTable1.setModel(modelo);
+        jTable1.getColumn("Desbloquear").setCellRenderer(new RenderTabla());
+    }
+    
+  public void desbloquearAlumno(Long idbloqueo){
+      BloqueoConAlumnoDTO alumno = bloqueoNegocio.obtenerBloqueoPorid(idbloqueo);
+        if (alumno != null) {
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea bloquear al alumno " + alumno.getNombreAlumno() + "?",
+                    "Confirmación de eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                bloqueoNegocio.desbloquearAlumnoPorIdBloqueo(idbloqueo);
+                JOptionPane.showMessageDialog(this, "Alumno desbloqueado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                llenarTablaAlumnosBloqueados();
+            } else {
+                JOptionPane.showMessageDialog(this, "desbloqueo cancelado.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,21 +122,26 @@ public class AdminUsoEquipos extends javax.swing.JPanel {
         jTable1.setForeground(new java.awt.Color(0, 0, 0));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Desbloquear"
+                "Nombre", "ApellidoPaterno", "ApellidoMaterno", "Motivo", "Desbloquear"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -114,9 +188,27 @@ public class AdminUsoEquipos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoBloqueoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoBloqueoActionPerformed
-      crearBloqueos p1= new crearBloqueos();
-      mostrarPanel(p1);
+        crearBloqueos p1 = new crearBloqueos();
+        mostrarPanel(p1);
     }//GEN-LAST:event_btnNuevoBloqueoActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int column = this.jTable1.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / this.jTable1.getRowHeight();
+
+        if (row < this.jTable1.getRowCount() && row >= 0 && column < this.jTable1.getColumnCount() && column >= 0) {
+            Object value = this.jTable1.getValueAt(row, column);
+
+            if (value instanceof JButton) {
+                JButton boton = (JButton) value;
+                Long bloqueoid = (Long) this.jTable1.getValueAt(row, 0);
+
+                if (boton.getText().equals("Desbloquear")) {
+                    desbloquearAlumno(bloqueoid);
+                } 
+            }
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
