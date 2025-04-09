@@ -68,6 +68,23 @@ public class BloqueoEntidad implements Serializable {
         return alumno;
     }
 
+    public void setFechaInicioBloqueo(LocalDate fechaInicioBloqueo) {
+        this.fechaInicioBloqueo = fechaInicioBloqueo;
+    }
+
+    public void setFechaFinBloqueo(LocalDate fechaFinBloqueo) {
+        this.fechaFinBloqueo = fechaFinBloqueo;
+    }
+
+    public void setMotivoBloqueo(String motivoBloqueo) {
+        this.motivoBloqueo = motivoBloqueo;
+    }
+
+    public void setAlumno(AlumnoEntidad alumno) {
+        this.alumno = alumno;
+    }
+
+    
     
     public Long getId() {
         return id;
