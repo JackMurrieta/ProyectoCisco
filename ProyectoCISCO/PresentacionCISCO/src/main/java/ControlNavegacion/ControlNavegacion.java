@@ -176,7 +176,7 @@ public class ControlNavegacion {
         }
 
         // Si no, la creamos nuevamente
-        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
+        actualizarComputadoras();
         panelAdminPc = new AdminEquiposComputo(computadorasDTO);
         frmAdminEquipos = mostrarFrm(panelAdminPc);
         return frmAdminEquipos;
@@ -202,7 +202,7 @@ public class ControlNavegacion {
     
     
     public static void actualizarComputadoras() {
-        computadorasDTO = obtenerComputadoras(lab.getId());
+        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
     }
 
     //HACER EL RELACION SOFTWARE

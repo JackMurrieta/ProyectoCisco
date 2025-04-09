@@ -40,20 +40,10 @@ public class JPanelColumnasEquipos extends JPanel {
         ajustarTamanioPanel();
     }
 
-    private Color convertirStringARgb(String colorString) {
-        try {
-            String[] rgb = colorString.split(",");
-            int r = Integer.parseInt(rgb[0].trim());
-            int g = Integer.parseInt(rgb[1].trim());
-            int b = Integer.parseInt(rgb[2].trim());
-            return new Color(r, g, b);
-        } catch (Exception e) {
-            return Color.GRAY;
-        }
-    }
 
     public void agregarBtnsPC(String numero, String color) {
-        JPanelBtnPC panelPC = new JPanelBtnPC(convertirStringARgb(color), numero);
+        ColorAdapter adapter = new ColorAdapter();
+        JPanelBtnPC panelPC = new JPanelBtnPC(adapter.convertirStringAColor(color), numero);
         panelPC.setPreferredSize(new Dimension(100, 113));
 
         gbc.gridx = columna;

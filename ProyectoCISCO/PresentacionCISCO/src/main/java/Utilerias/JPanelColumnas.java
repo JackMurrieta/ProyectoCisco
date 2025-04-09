@@ -38,23 +38,11 @@ public class JPanelColumnas extends javax.swing.JPanel {
 
     }
 
-
-    private Color convertirStringARgb(String colorString) {
-        try {
-            String[] rgb = colorString.split(",");
-            int r = Integer.parseInt(rgb[0].trim());
-            int g = Integer.parseInt(rgb[1].trim());
-            int b = Integer.parseInt(rgb[2].trim());
-            return new Color(r, g, b);
-        } catch (Exception e) {
-            // Color por defecto si hay error
-            return Color.GRAY;
-        }
-    }
     public void agregarBtnsPC(String numero,String color) {
         
         //Convertir Color a rgb
-        JPanelBtnPC panelPC = new JPanelBtnPC(convertirStringARgb(color), numero);
+        ColorAdapter convertir = new ColorAdapter();
+        JPanelBtnPC panelPC = new JPanelBtnPC(convertir.convertirStringAColor(color), numero);
         panelPC.setPreferredSize(new Dimension(100, 113)); // Tamaño fijo
 
         gbc.gridx = columna;
