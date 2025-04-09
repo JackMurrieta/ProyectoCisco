@@ -241,8 +241,10 @@ public class AdminAlumnos extends javax.swing.JPanel {
             Long idAlumno = Long.parseLong(tfBuscar.getText().trim());
             AlumnoDTO alumno = alumnoNegocio.buscarAlumnoPorId(idAlumno);
             obtenerDatos(alumno);
+            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Por favor ingrese un ID válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            
         }
 
     }//GEN-LAST:event_btnBuscarAlumnoActionPerformed

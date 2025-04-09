@@ -84,7 +84,7 @@ public class Menu extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -278,6 +278,7 @@ public class Menu extends javax.swing.JFrame {
     private void btnAdministrarComputadorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarComputadorasActionPerformed
         // TODO add your handling code here:
         ControlNavegacion.ControlNavegacion.mostrarAdminPc();
+        labelTitulo.setText("Administrar equipos de computo");
     }//GEN-LAST:event_btnAdministrarComputadorasActionPerformed
 
     private void btnAdminAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminAlumnosActionPerformed
@@ -294,7 +295,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdministrarCarrerasActionPerformed
 
     private void btnAdminUsoEquiposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminUsoEquiposActionPerformed
-        // TODO add your handling code here:
+        AdminUsoEquipos p1= new AdminUsoEquipos();
+        mostrarPanel(p1);
+        labelTitulo.setText("Administrar el uso de equipos de computo");
     }//GEN-LAST:event_btnAdminUsoEquiposActionPerformed
 
     private void btnAdminLaboratoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLaboratoriosActionPerformed
