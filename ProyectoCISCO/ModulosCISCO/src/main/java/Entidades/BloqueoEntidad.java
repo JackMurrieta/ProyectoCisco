@@ -20,7 +20,7 @@ import javax.persistence.Table;
  * @author Jack Murrieta
  */
 @Entity
-@Table(name ="tblBloqueo")
+@Table(name ="Bloqueos")
 public class BloqueoEntidad implements Serializable {
 
     @Id

@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="tblComputadora")
+@Table(name="Computadoras")
 public class ComputadoraEntidad implements Serializable {
     
     @Id
@@ -41,14 +41,12 @@ public class ComputadoraEntidad implements Serializable {
     @Column(name = "estatus", nullable = false)
     private boolean estatus;
     
+    @Column(name = "tipo", length = 20 , nullable = false)
+    
     //Relacion con laboratorio
     @ManyToOne
     @JoinColumn(name = "idLaboratorio", referencedColumnName ="idLaboratorio", nullable = false )
     private LaboratorioEntidad laboratorio;
-    
-    //relacion con TablaIntermediaria de softwares en computadoras
-    @OneToMany(mappedBy="computadora", cascade = CascadeType.PERSIST)
-    private List<SoftwareEnComputadoraEntidad> softwareInstalados = new ArrayList<>();
     
     //relacion con apartados
     @OneToMany(mappedBy = "computadora", cascade = CascadeType.PERSIST)
@@ -94,10 +92,6 @@ public class ComputadoraEntidad implements Serializable {
         this.laboratorio = laboratorio;
     }
 
-    public void setSoftwareInstalados(List<SoftwareEnComputadoraEntidad> softwareInstalados) {
-        this.softwareInstalados = softwareInstalados;
-    }
-
     public void setApartados(List<ApartadoEntidad> apartados) {
         this.apartados = apartados;
     }
@@ -128,9 +122,6 @@ public class ComputadoraEntidad implements Serializable {
         return laboratorio;
     }
 
-    public List<SoftwareEnComputadoraEntidad> getSoftwareInstalados() {
-        return softwareInstalados;
-    }
 
     public List<ApartadoEntidad> getApartados() {
         return apartados;

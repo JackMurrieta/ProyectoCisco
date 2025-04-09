@@ -7,27 +7,19 @@ package ControlNavegacion;
 import DTOs.ComputadoraDTO;
 import DTOs.InstitutoDTO;
 import DTOs.LaboratorioDTO;
-import DTOs.SoftwareDTO;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IComputadoraNegocio;
 import Interfaces.IInstitutoNegocio;
 import Interfaces.ILaboratorioNegocio;
-import Interfaces.ISoftwareNegocio;
 import Negocio.ComputadoraNegocio;
 import Negocio.InstitutoNegocio;
 import Negocio.LaboratorioNegocio;
-import Negocio.SoftwareNegocio;
 import Programa3.AdminEquiposComputo;
-import Programa3.AsignarSoftwares;
 import Programa3.EquipoDatosSE;
 import Programa3.FrmAgregarLaboratorio;
 import Programa3.FrmLoginInstituto;
 import Programa3.Menu;
-import Programa3.NuevoSoftware;
-import java.awt.Color;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -43,7 +35,6 @@ public class ControlNavegacion {
     private static IInstitutoNegocio institutoNegocio;
     private static ILaboratorioNegocio labNegocio;
     private static IComputadoraNegocio pcNegocio;
-    private static ISoftwareNegocio swNegocio;
     private static Long idLab;
     private static Long idInstituto;
     private static List<LaboratorioDTO> labsDTO;
@@ -56,8 +47,6 @@ public class ControlNavegacion {
     private static JFrame frmAdminEquipos;
     private static JFrame frmEquipoDatosSE;
     private static Menu menu;
-    private static AsignarSoftwares panelAsignarSoftwares;
-    private static NuevoSoftware panelNuevoSw;
     private static AdminEquiposComputo panelAdminPc;
     private static EquipoDatosSE panelDatosPc;
     
@@ -70,7 +59,6 @@ public class ControlNavegacion {
         idInstituto  =institutoDTO.getId();
         labNegocio = new LaboratorioNegocio(idInstituto);
         pcNegocio = new ComputadoraNegocio();
-        swNegocio = new SoftwareNegocio();
     }
     //FRMS 
     public static void mostrarLogin(){
@@ -131,34 +119,7 @@ public class ControlNavegacion {
         return institutoNegocio.obtenerInstituto(nombre);
     }
     
-    //ObtenerLaboratoriosPorID
     
-    
-    //Los metodos acrear seran staticos
-    public static void guardarSoftware(String nombreSw, String descripcionSw){
-        //Convertir a DTO
-        SoftwareDTO swDTO= new SoftwareDTO(nombreSw, descripcionSw);
-        try {
-            swNegocio.guardarSoftware(swDTO);
-        } catch (NegocioException ex) {
-            //Mostrar JoptionPane de error
-        }
-    }
-    //Estos metodos se usaran en Jpanel para no tener logica ahi solo llamar metodos
-    
-    public static List<SoftwareDTO> obtenerSoftwares(){
-        return swNegocio.obtenerSoftwares();
-    }
-    
-    public static void mostrarAsignarSoftwares(){
-        panelAsignarSoftwares = new AsignarSoftwares(obtenerSoftwares());
-        menu.mostrarPanel(panelAsignarSoftwares);
-    }
-    public static void mostrarAgregarSoftware(){
-        panelNuevoSw = new NuevoSoftware();
-        menu.mostrarPanel(panelNuevoSw);
-        
-    }
     //ADministrar Computadoras
     public static List<ComputadoraDTO> obtenerComputadoras(Long idLab){
         return pcNegocio.obtenerComputadorasPorLaboratorio(idLab);

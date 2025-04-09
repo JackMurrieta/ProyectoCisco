@@ -21,7 +21,7 @@ import javax.persistence.Table;
  * @author Oribiel
  */
 @Entity
- @Table(name = "tblCarreras")
+ @Table(name = "Carreras")
 public class CarreraEntidad implements Serializable {
 
     @Id

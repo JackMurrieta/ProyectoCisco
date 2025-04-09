@@ -5,10 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +20,7 @@ import javax.persistence.Table;
  * @author Jack Murrieta
  */
 @Entity
-@Table(name ="tblApartado")
+@Table(name ="Apartados")
 public class ApartadoEntidad implements Serializable {
 
     
@@ -32,18 +28,9 @@ public class ApartadoEntidad implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idApartado")
     private Long id;
-    
-    @Column(name = "fechaInicio", nullable = false)
-    private LocalDate fechaInicio;
-    
-    @Column(name = "horaInicio", nullable = false)
+        
+    @Column(name= "horaInicio", nullable = false)
     private LocalTime horaInicio;
-    
-    @Column(name = "fechaFin", nullable = true)
-    private LocalDate fechaFin;
-    
-    @Column(name= "horaFin", nullable = true)
-    private LocalTime horaFin;
     
 //    IdEstudiante: entero FK Requerido
     @ManyToOne
@@ -63,31 +50,13 @@ public class ApartadoEntidad implements Serializable {
     public ApartadoEntidad() {
     }
 
-    public ApartadoEntidad(LocalDate fechaInicio, LocalTime horaInicio, LocalDate fechaFin, LocalTime horaFin, AlumnoEntidad alumno, ComputadoraEntidad computadora, ApartadoPorDiaEntidad apartadoPorDia) {
-        this.fechaInicio = fechaInicio;
+    public ApartadoEntidad(LocalTime horaInicio, AlumnoEntidad alumno, ComputadoraEntidad computadora, ApartadoPorDiaEntidad apartadoPorDia) {
         this.horaInicio = horaInicio;
-        this.fechaFin = fechaFin;
-        this.horaFin = horaFin;
         this.alumno = alumno;
         this.computadora = computadora;
         this.apartadoPorDia = apartadoPorDia;
     }
-
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
-    }
-
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public LocalDate getFechaFin() {
-        return fechaFin;
-    }
-
-    public LocalTime getHoraFin() {
-        return horaFin;
-    }
+    
 
     public AlumnoEntidad getAlumno() {
         return alumno;
