@@ -4,19 +4,23 @@
 
 package com.mycompany.negociocisco;
 
+import DAOs.AlumnoDAO;
 import DAOs.CarreraDAO;
 import DAOs.ComputadoraDAO;
 import DAOs.InstitutoDAO;
 import DAOs.LaboratorioDAO;
+import DTOs.ApartadoDTO;
 import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
 import DTOs.InstitutoDTO;
 import DTOs.LaboratorioDTO;
+import Entidades.AlumnoEntidad;
 import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
 import Entidades.InstitutoEntidad;
 import Entidades.LaboratorioEntidad;
 import ExcepcionNegocio.NegocioException;
+import Negocio.ApartadoNegocio;
 import Negocio.ComputadoraNegocio;
 import Negocio.InstitutoNegocio;
 import java.util.List;
@@ -41,7 +45,7 @@ public class NegocioCISCO {
         
         
         LaboratorioDAO labDAO = new LaboratorioDAO();
-        LaboratorioEntidad labEntity = labDAO.obtenerLabPorId(2L);
+        LaboratorioEntidad labEntity = labDAO.obtenerLabPorId(1L);
         Long idLab = labEntity.getId();
         System.out.println(labEntity.toString());
         System.out.println(idLab);
@@ -49,6 +53,15 @@ public class NegocioCISCO {
         //NEGOCIO COMPUTADORAS
         ComputadoraDAO pcDAO = new ComputadoraDAO();
         ComputadoraNegocio pcNegocio = new ComputadoraNegocio();
+        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("030");
+        
+        AlumnoDAO aDAO =new AlumnoDAO();
+        AlumnoEntidad alumnoEntity = aDAO.obtenerAlumnoEntidad(1L);
+        
+        ApartadoDTO apartado = new ApartadoDTO(alumnoEntity.getId(), pcEntity.getNumComputadora());
+        ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
+        apartadoNegocio.registrarApartado(apartado);
+        System.out.println("apartado Exitoso");
         
         //SOLO CON LAB
 //        

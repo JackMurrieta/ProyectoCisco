@@ -54,14 +54,34 @@ public class ApartadoPorDiaEntidad implements Serializable {
     public ApartadoPorDiaEntidad() {
     }
 
-    public ApartadoPorDiaEntidad(Long id, LocalDate fechaApartado, LocalTime horaInicio, LocalTime horaFin, LaboratorioEntidad laboratorio) {
-        this.id = id;
+    public ApartadoPorDiaEntidad( LocalDate fechaApartado, LocalTime horaInicio, LocalTime horaFin, LaboratorioEntidad laboratorio) {
         this.fechaApartado = fechaApartado;
         this.horaInicio = horaInicio;
         this.horaFin = horaFin;
         this.laboratorio = laboratorio;
     }
 
+    public void setFechaApartado(LocalDate fechaApartado) {
+        this.fechaApartado = fechaApartado;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public void setApartados(List<ApartadoEntidad> apartados) {
+        this.apartados = apartados;
+    }
+
+    public void setLaboratorio(LaboratorioEntidad laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    
     public LocalDate getFechaApartado() {
         return fechaApartado;
     }

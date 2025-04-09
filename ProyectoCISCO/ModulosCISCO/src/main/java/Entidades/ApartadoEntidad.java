@@ -56,6 +56,14 @@ public class ApartadoEntidad implements Serializable {
         this.computadora = computadora;
         this.apartadoPorDia = apartadoPorDia;
     }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
     
 
     public AlumnoEntidad getAlumno() {

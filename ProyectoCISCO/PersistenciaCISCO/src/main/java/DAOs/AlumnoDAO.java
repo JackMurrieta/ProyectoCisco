@@ -212,8 +212,29 @@ public void eliminarAlumnoPorId(Long id) {
     } 
 }
 
+    public AlumnoEntidad obtenerAlumnoEntidad(Long id) {
+        try {
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<AlumnoEntidad> cq = cb.createQuery(AlumnoEntidad.class);
+            Root<AlumnoEntidad> root = cq.from(AlumnoEntidad.class);
+            cq.select(root).where(cb.equal(root.get("id"), id));
 
+            AlumnoEntidad alumno = entityManager.createQuery(cq).getSingleResult();
 
-    
+            if (alumno != null) {
+                return alumno;
+            } else {
+                System.out.println(" Alumno no encontrado.");
+                entityManager.getTransaction().rollback();
+            }
+
+        } catch (Exception e) {
+            if (entityManager.getTransaction().isActive()) {
+                entityManager.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
