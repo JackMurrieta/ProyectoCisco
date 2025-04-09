@@ -20,7 +20,7 @@ import Negocio.InstitutoNegocio;
 import Negocio.LaboratorioNegocio;
 import Programa3.AdminEquiposComputo;
 import Programa3.EquipoDatosSE;
-import Programa3.FrmAgregarLaboratorio;
+import Programa3.FrmAgregarLaboratorioLogin;
 import Programa3.FrmLoginInstituto;
 import Programa3.Menu;
 import Programa3.OpcionRealizarComputo;
@@ -53,7 +53,7 @@ public class ControlNavegacion {
     
     // Los paneles y Frames como static
     private static FrmLoginInstituto login;
-    private static FrmAgregarLaboratorio frmAgregarLab;
+    private static FrmAgregarLaboratorioLogin frmAgregarLab;
     private static JFrame frmAdminEquipos;
     private static JFrame frmEquipoDatosSE;
     private static Menu menu;
@@ -90,7 +90,7 @@ public class ControlNavegacion {
             institutoDTO = obtenerInstitutoNombre("ITSON");
             idInstituto = institutoDTO.getId();
         }
-        frmAgregarLab = new FrmAgregarLaboratorio(institutoDTO);
+        frmAgregarLab = new FrmAgregarLaboratorioLogin(institutoDTO);
         frmAgregarLab.setVisible(true);
     }
     
