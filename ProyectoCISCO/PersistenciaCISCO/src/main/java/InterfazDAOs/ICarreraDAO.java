@@ -5,6 +5,7 @@
 package InterfazDAOs;
 
 import DTOs.CarreraDTO;
+import Entidades.CarreraEntidad;
 import Excepciones.PersistenciaException;
 import java.util.List;
 
@@ -26,4 +27,9 @@ public interface ICarreraDAO {
     void eliminarCarreraPorId(Long id);
     
     CarreraDTO buscarCarreraPorId(Long id);
+    
+    //Metodo para obtenerEntidadPorID
+    //necesario al guardar una computadora con una entityCarrera
+    CarreraEntidad obtenerCarreraPorID(Long id);
+    CarreraEntidad obtenerEntityPorNombre(String nombre);
 }

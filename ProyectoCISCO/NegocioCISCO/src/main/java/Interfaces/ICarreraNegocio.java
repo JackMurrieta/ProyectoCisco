@@ -27,5 +27,8 @@ public interface ICarreraNegocio {
     void editarCarreraPorId(CarreraDTO dto);
     
     CarreraDTO buscarCarreraPorId(Long id);
+    
+    CarreraDTO obtenerCarreraDTOPorID(long idCarrera);
+    CarreraDTO obtenerCarreraDTOPorNombre(String nombreCarrera);
 
 }

@@ -192,17 +192,6 @@ public void eliminarCarreraPorId(Long id) {
 }
 
 
-    public CarreraEntidad obtenerCarreraPorId(Long id) {
-
-        CarreraEntidad carrera = entityManager.find(CarreraEntidad.class, id);
-
-        if (carrera != null) {
-
-            return carrera;
-        } else {
-            throw new PersistenceException("laboratrio no encontrado");
-        }
-    }
     
         @Override
     public CarreraDTO buscarCarreraPorId(Long id) {
@@ -247,5 +236,38 @@ public void eliminarCarreraPorId(Long id) {
         }
 
         return listaCarreras;
+    }
+
+    @Override
+    public CarreraEntidad obtenerCarreraPorID(Long id) {
+        EntityManager em = fabrica.createEntityManager();
+
+        try {
+            CarreraEntidad carreraEntidad = em.find(CarreraEntidad.class, id);
+
+            if (carreraEntidad != null) {
+                return carreraEntidad;
+            } else {
+                throw new PersistenceException("Carrera no encontrada");
+            }
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public CarreraEntidad obtenerEntityPorNombre(String nombre) {
+        EntityManager em = fabrica.createEntityManager();
+
+        try {
+            return em.createQuery(
+                    "SELECT c FROM CarreraEntidad c WHERE c.nombre = :nombre", CarreraEntidad.class)
+                    .setParameter("nombre", nombre)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            throw new PersistenceException("Carrera no encontrada con nombre: " + nombre);
+        } finally {
+            em.close();
+        }
     }
 }

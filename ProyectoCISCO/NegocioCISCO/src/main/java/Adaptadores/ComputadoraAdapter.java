@@ -6,6 +6,7 @@ package Adaptadores;
 
 import DAOs.CarreraDAO;
 import DAOs.LaboratorioDAO;
+import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
 import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
@@ -19,19 +20,31 @@ public class ComputadoraAdapter {
 
     public ComputadoraAdapter() {
     }
-
-    public ComputadoraEntidad convertirComputadoraEntidad(ComputadoraDTO pc) {
+    
+    public ComputadoraEntidad convertirDTOFkLab(ComputadoraDTO pcDTO){
         LaboratorioDAO labDAO = new LaboratorioDAO();
-        LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pc.getIdLab());
+        LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
+        ComputadoraEntidad pcEntity = new ComputadoraEntidad(pcDTO.getDireccionIp(), pcDTO.getNumComputadora(),
+                pcDTO.isEstatus(), labEntidad);
+        return pcEntity;
+    }
+    
+    public ComputadoraEntidad convertirDTOConCarrera(ComputadoraDTO pcDTO){
+        LaboratorioDAO labDAO = new LaboratorioDAO();
+        LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
         CarreraDAO carreraDAO = new CarreraDAO();
-        CarreraEntidad carrera = carreraDAO.obtenerCarreraPorId(pc.getIdCarrera());
-
-        if (pc.getIdCarrera() == null) {
-            ComputadoraEntidad nuevo = new ComputadoraEntidad(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), labEntidad);
-            return nuevo;
-        }
-        ComputadoraEntidad nuevo = new ComputadoraEntidad(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), labEntidad, carrera);
-        return nuevo;
+        //DEBE DE DEVOLVER ENTIDAD 
+        CarreraEntidad carrera = carreraDAO.obtenerCarreraPorID(pcDTO.getIdCarrera());
+        ComputadoraEntidad pcEntity = new ComputadoraEntidad(pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), 
+                pcDTO.isEstatus(), labEntidad, carrera);
+        return pcEntity;
+    }
+    
+    private CarreraEntidad convertirCarrera(Long idCarrera){
+        CarreraDAO carreraDAO = new CarreraDAO();
+        CarreraEntidad carreraEntity = carreraDAO.obtenerCarreraPorID(idCarrera);
+        return carreraEntity;
+        //DEBE DE DEVOLVER ENTIDAD 
     }
     
     //convertir De entidad a DTO

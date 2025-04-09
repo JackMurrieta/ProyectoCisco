@@ -24,6 +24,9 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
         this.computadoras = computadoras;
         initComponents();
         setSize(912,572);
+        // Establecer tamaño preferido y tamaño real
+        setPreferredSize(new java.awt.Dimension(912, 572));
+        setSize(912, 572);
         JPanelColumnasEquipos panelEquipos = new JPanelColumnasEquipos(computadoras);
         scrollPC.setViewportView(panelEquipos);
     }

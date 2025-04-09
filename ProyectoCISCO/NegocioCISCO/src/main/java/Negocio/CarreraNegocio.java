@@ -5,6 +5,7 @@
 package Negocio;
 
 import DTOs.CarreraDTO;
+import Entidades.CarreraEntidad;
 import ExcepcionNegocio.NegocioException;
 import Excepciones.PersistenciaException;
 import Interfaces.ICarreraNegocio;
@@ -58,6 +59,25 @@ public class CarreraNegocio implements ICarreraNegocio{
     @Override
     public CarreraDTO buscarCarreraPorId(Long id){
         return carreraDAO.buscarCarreraPorId(id);
+    }
+
+    @Override
+    public CarreraDTO obtenerCarreraDTOPorID(long idCarrera) {
+        CarreraEntidad carreraEntity = carreraDAO.obtenerCarreraPorID(idCarrera);
+        return convertirDTO(carreraEntity);
+        //Convertir a DTO
+    }
+
+    @Override
+    public CarreraDTO obtenerCarreraDTOPorNombre(String nombreCarrera) {
+        CarreraEntidad carreraEntity = carreraDAO.obtenerEntityPorNombre(nombreCarrera);
+        //convertir a DTO
+        return convertirDTO(carreraEntity);
+    }
+    
+    private CarreraDTO convertirDTO(CarreraEntidad carrera){
+        CarreraDTO cDTO = new CarreraDTO(carrera.getId(), carrera.getNombre(), carrera.getColor(), carrera.getTiempoLimite());
+        return cDTO;
     }
     
 }

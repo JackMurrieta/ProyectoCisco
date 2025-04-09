@@ -73,7 +73,12 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     @Override
     public void guardarComputadora(ComputadoraDTO pc) throws NegocioException {
         ComputadoraDTO pcValidada= validarDatosComputadora(pc);
-        ComputadoraEntidad pcEntidad = convertidor.convertirComputadoraEntidad(pcValidada);
+        ComputadoraEntidad pcEntidad;
+        if(pc.getIdCarrera()==null){
+            pcEntidad = convertidor.convertirDTOFkLab(pcValidada);
+        }else{
+            pcEntidad = convertidor.convertirDTOConCarrera(pcValidada);
+        }
         pcDAO.guardarComputadora(pcEntidad);
     }
 
@@ -86,9 +91,15 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     @Override
     public void editarComputadora(ComputadoraDTO pc) throws NegocioException {
         ComputadoraDTO pcValidada= validarDatosComputadora(pc);
-        ComputadoraEntidad pcEntidad=convertidor.convertirComputadoraEntidad(pcValidada);
+        ComputadoraEntidad pcEntidad;
+        if(pc.getIdCarrera()==null){
+            pcEntidad = convertidor.convertirDTOFkLab(pcValidada);
+        }else{
+            pcEntidad = convertidor.convertirDTOConCarrera(pcValidada);
+        }
         pcDAO.editarComputadora(pcEntidad);
     }
+    
 
     @Override
     public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id) {

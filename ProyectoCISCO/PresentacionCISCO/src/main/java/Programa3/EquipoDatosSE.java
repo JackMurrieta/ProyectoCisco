@@ -96,6 +96,11 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
 
         btnGuardarCambios.setText("Guardar");
+        btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarCambiosActionPerformed(evt);
+            }
+        });
         add(btnGuardarCambios, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 320, 50));
 
         btnRegresar.setText("Regresar");
@@ -108,6 +113,10 @@ public class EquipoDatosSE extends javax.swing.JPanel {
     private void txtIPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIPActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIPActionPerformed
+
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -71,10 +71,6 @@ public class ComputadoraEntidad implements Serializable {
         this.carrera = carrera;
     }
 
-    
-    
-    
-
     public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio) {
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;

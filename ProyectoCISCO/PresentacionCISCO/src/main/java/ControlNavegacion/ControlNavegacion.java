@@ -53,6 +53,8 @@ public class ControlNavegacion {
     // Los paneles y Frames como static
     private static FrmLoginInstituto login;
     private static FrmAgregarLaboratorio frmAgregarLab;
+    private static JFrame frmAdminEquipos;
+    private static JFrame frmEquipoDatosSE;
     private static Menu menu;
     private static AsignarSoftwares panelAsignarSoftwares;
     private static NuevoSoftware panelNuevoSw;
@@ -164,18 +166,40 @@ public class ControlNavegacion {
     
         
     //MOSTRAR COMPUTADORAS METODOS
-    public static void mostrarAdminPc(){
-        //obtenerLista de computos
+    //ADMINISTRAR COMPUTADORAS FRM
+    public static JFrame mostrarAdminPc() {
+        // Si ya existe y sigue visible, solo la traemos al frente
+        if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
+            frmAdminEquipos.toFront();
+            frmAdminEquipos.requestFocus();
+            return frmAdminEquipos;
+        }
+
+        // Si no, la creamos nuevamente
         computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
         panelAdminPc = new AdminEquiposComputo(computadorasDTO);
-        mostrarFrm(panelAdminPc);
+        frmAdminEquipos = mostrarFrm(panelAdminPc);
+        return frmAdminEquipos;
     }
+
     
     
-    public static void mostrarEquipoDatosSE(){
+    public static JFrame mostrarEquipoDatosSE(){
+ // Si ya existe y sigue visible, solo la traemos al frente
+        if (frmEquipoDatosSE != null && frmEquipoDatosSE.isDisplayable()) {
+            frmEquipoDatosSE.toFront();
+            frmEquipoDatosSE.requestFocus();
+            return frmEquipoDatosSE;
+        }
+
+        // Si no, la creamos nuevamente
+        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
         panelDatosPc = new EquipoDatosSE();
-        mostrarFrm(panelDatosPc);
+        frmEquipoDatosSE = mostrarFrm(panelDatosPc);
+        return frmAdminEquipos;
     }
+    
+    
     
     public static void actualizarComputadoras() {
         computadorasDTO = obtenerComputadoras(lab.getId());
@@ -187,24 +211,21 @@ public class ControlNavegacion {
     
     
     //METODO DE FRM
-    public static void mostrarFrm(JPanel p) {
-        // Obtenemos el tamaño preferido del panel
-        p.setSize(p.getPreferredSize());
-
-        // Creamos un nuevo JFrame que abrirá el contenido
+    public static JFrame mostrarFrm(JPanel p) {
         JFrame newFrame = new JFrame();
         newFrame.setTitle(p.getName());
-        newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo el nuevo frame
-
-        // Establecemos el tamaño del JFrame igual al tamaño del panel
-        newFrame.setSize(p.getPreferredSize());
-        newFrame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
-
-        // Agregamos el panel al nuevo frame
+        newFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         newFrame.add(p);
-
-        // Hacemos visible el nuevo frame
+        newFrame.pack(); // Se ajusta automáticamente al preferredSize del panel
+        newFrame.setLocationRelativeTo(null);
         newFrame.setVisible(true);
+        return newFrame;
+    }
+    
+    public static void cerrarFrame(JFrame frm){
+        if (frm != null) {
+            frm.dispose();
+        }
     }
 }
 
