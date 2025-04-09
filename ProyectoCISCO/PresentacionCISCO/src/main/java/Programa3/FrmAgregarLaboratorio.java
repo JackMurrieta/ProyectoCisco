@@ -164,13 +164,13 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         //LocalTime horaInicio = 
         LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre,idInstituo);
         ControlNavegacion.ControlNavegacion.agregarLaboratorio(nuevo);
-        ControlNavegacion.ControlNavegacion.mostrarLogin();
+
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-        // TODO add your handling code here:
-        ControlNavegacion.ControlNavegacion.mostrarLogin();
+        
+       
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
