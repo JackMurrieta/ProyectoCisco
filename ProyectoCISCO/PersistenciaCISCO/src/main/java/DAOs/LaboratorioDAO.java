@@ -6,6 +6,8 @@ package DAOs;
 
 import Entidades.LaboratorioEntidad;
 import InterfazDAOs.ILaboratorioDAO;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -57,9 +59,14 @@ public class LaboratorioDAO implements ILaboratorioDAO {
 
     @Override
     public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad) {
-        
+
         EntityManager em = emf.createEntityManager();
         try {
+            // Encriptar la contraseña si no es null ni vacía
+            if (labEntidad.getContrasenaMaestra() != null && !labEntidad.getContrasenaMaestra().isEmpty()) {
+                String hash = encriptarPassword(labEntidad.getContrasenaMaestra());
+                labEntidad.setContrasenaMaestra(hash);
+            }
 
             em.getTransaction().begin();
             em.persist(labEntidad);
@@ -71,7 +78,7 @@ public class LaboratorioDAO implements ILaboratorioDAO {
         } finally {
             em.close();
         }
-  
+
     }
 
     @Override
@@ -90,6 +97,33 @@ public class LaboratorioDAO implements ILaboratorioDAO {
             em.close();
         }
         return laboratorios;
+    }
+    
+    // Método auxiliar para encriptar una contraseña usando SHA-256
+    public String encriptarPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = digest.digest(password.getBytes());
+
+            // Convertir los bytes a hex
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Error al encriptar la contraseña", e);
+        }
+    }
+    public boolean verificarContrasena(LaboratorioEntidad lab, String passwordIngresada) {
+        // Encriptamos la contraseña ingresada
+        String passwordEncriptada = encriptarPassword(passwordIngresada);
+        // Comparamos la contraseña encriptada con la que está en la base de datos
+        return passwordEncriptada.equals(lab.getContrasenaMaestra());
     }
 
 }

@@ -66,6 +66,10 @@ public class LaboratorioEntidad implements Serializable {
         this.instituto = instituto;
     }
 
+    public void setContrasenaMaestra(String contrasenaMaestra) {
+        this.contrasenaMaestra = contrasenaMaestra;
+    }
+
     
     public Long getId() {
         return id;
