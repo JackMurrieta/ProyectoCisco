@@ -301,7 +301,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdminUsoEquiposActionPerformed
 
     private void btnAdminLaboratoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminLaboratoriosActionPerformed
-        // TODO add your handling code here:
+        AdminLaboratorios p1= new AdminLaboratorios();
+        mostrarPanel(p1);
+        labelTitulo.setText("Administrar laboratorios");
     }//GEN-LAST:event_btnAdminLaboratoriosActionPerformed
 
     /**

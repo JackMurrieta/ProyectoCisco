@@ -141,7 +141,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
                 btnRegresarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 600, 260, 60));
+        getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 260, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

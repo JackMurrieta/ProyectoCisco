@@ -77,12 +77,15 @@ public class AdminUsoEquipos extends javax.swing.JPanel {
                 btn[0], // Botón desbloquear
             });
         }
+
         jTable1.setModel(modelo);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable1.getColumn("Desbloquear").setCellRenderer(new RenderTabla());
     }
-    
-  public void desbloquearAlumno(Long idbloqueo){
-      BloqueoConAlumnoDTO alumno = bloqueoNegocio.obtenerBloqueoPorid(idbloqueo);
+
+    public void desbloquearAlumno(Long idbloqueo) {
+        BloqueoConAlumnoDTO alumno = bloqueoNegocio.obtenerBloqueoPorid(idbloqueo);
         if (alumno != null) {
             int opcion = JOptionPane.showConfirmDialog(this,
                     "¿Está seguro de que desea bloquear al alumno " + alumno.getNombreAlumno() + "?",
@@ -100,7 +103,7 @@ public class AdminUsoEquipos extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-  }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -205,7 +208,7 @@ public class AdminUsoEquipos extends javax.swing.JPanel {
 
                 if (boton.getText().equals("Desbloquear")) {
                     desbloquearAlumno(bloqueoid);
-                } 
+                }
             }
         }
     }//GEN-LAST:event_jTable1MouseClicked
