@@ -28,6 +28,8 @@ public interface ILaboratorioDAO {
      LaboratorioDTO buscarLabPorId(Long id);
      
      void editarLaboratorioPorId(LaboratorioDTO dto);
+     
+     void eliminarLaboratorioPorId(Long id);
     
     
 }

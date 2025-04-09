@@ -4,6 +4,7 @@
  */
 package Programa3;
 
+import ControlNavegacion.ControlNavegacion;
 import DTOs.InstitutoDTO;
 import DTOs.LaboratorioDTO;
 import Utilerias.CustomSpinner;
@@ -28,7 +29,22 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         setSize(945, 677);
         
     }
-    
+    public FrmAgregarLaboratorio(InstitutoDTO instituto, LaboratorioDTO laboratorio) {
+        this(instituto); 
+        this.idLabEditando = laboratorio.getId();
+        txtNombre.setText(laboratorio.getNombreLab());
+        txtContrasena.setText(laboratorio.getContrasena());
+        
+        if (laboratorio.getHoraInicio() != null) {
+            inicioHora.setValue(laboratorio.getHoraInicio().getHour());
+            inicioMin.setValue(laboratorio.getHoraInicio().getMinute());
+        }
+        if (laboratorio.getHoraFin() != null) {
+            finHora.setValue(laboratorio.getHoraFin().getHour());
+            finMin.setValue(laboratorio.getHoraFin().getMinute());
+        }
+    }
+
     
 
     /**
@@ -154,7 +170,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+
         String nombre = txtNombre.getText().trim();
         String contrasena = txtContrasena.getText().trim();
         int horaInicio = (int) inicioHora.getValue();
@@ -164,9 +180,17 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
 
         LocalTime apertura = LocalTime.of(horaInicio, minutoInicio);
         LocalTime cierre = LocalTime.of(horaFin, minutoFin);
-        //LocalTime horaInicio = 
-        LaboratorioDTO nuevo = new LaboratorioDTO(nombre, contrasena,apertura, cierre,idInstituo);
-        ControlNavegacion.ControlNavegacion.agregarLaboratorio(nuevo);
+
+        LaboratorioDTO labDTO = new LaboratorioDTO(nombre, contrasena,apertura, cierre,idInstituo);
+        
+        if (idLabEditando == null) {
+         
+            ControlNavegacion.agregarLaboratorio(labDTO);
+        } else {
+       
+            labDTO.setId(idLabEditando);
+            ControlNavegacion.editarLaboratorio(labDTO);
+        }
 
         this.dispose();
     }//GEN-LAST:event_btnLoginActionPerformed

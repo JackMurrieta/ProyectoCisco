@@ -27,4 +27,6 @@ public interface ILaboratorioNegocio {
     
     void editarLaboratorioPorId(LaboratorioDTO dto);
     
+    void eliminarLabPorId(Long id);
+    
 }

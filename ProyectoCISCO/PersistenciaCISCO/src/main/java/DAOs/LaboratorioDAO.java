@@ -23,7 +23,7 @@ import javax.persistence.criteria.Root;
 
 /**
  *
- * @author Jack Murrieta
+ * @author Oribiel
  */
 public class LaboratorioDAO implements ILaboratorioDAO {
 
@@ -196,8 +196,7 @@ public void editarLaboratorioPorId(LaboratorioDTO dto) {
     EntityManager entityManager = emf.createEntityManager();
     try {
         entityManager.getTransaction().begin();
-
-        // Buscar el laboratorio por su ID
+        
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<LaboratorioEntidad> cq = cb.createQuery(LaboratorioEntidad.class);
         Root<LaboratorioEntidad> root = cq.from(LaboratorioEntidad.class);
@@ -206,22 +205,24 @@ public void editarLaboratorioPorId(LaboratorioDTO dto) {
         LaboratorioEntidad lab = entityManager.createQuery(cq).getSingleResult();
 
         if (lab != null) {
-            // Actualizar los atributos del laboratorio
-            lab.setNombreLab(dto.getNombreLab());  // Actualizamos el nombre del laboratorio
-            lab.setContrasenaMaestra(dto.getContrasena());  // Actualizamos la contraseña
-            lab.setHoraInicio(dto.getHoraInicio());  // Actualizamos la hora de inicio
-            lab.setHoraFin(dto.getHoraFin());  // Actualizamos la hora de fin
+            lab.setNombreLab(dto.getNombreLab());  
+             // Encriptar la contraseña si se ingresó una nueva contraseña
+            if (dto.getContrasena() != null && !dto.getContrasena().isEmpty()) {
+                String hash = encriptarPassword(dto.getContrasena());
+                lab.setContrasenaMaestra(hash);
+            }
+            lab.setHoraInicio(dto.getHoraInicio()); 
+            lab.setHoraFin(dto.getHoraFin());  
 
-            // Establecer el instituto con el ID 1 (preasignado)
-            InstitutoEntidad instituto = entityManager.find(InstitutoEntidad.class, 1L); // Buscamos el instituto con ID 1
+
+            InstitutoEntidad instituto = entityManager.find(InstitutoEntidad.class, 1L); 
             if (instituto != null) {
-                lab.setInstituto(instituto);  // Asignamos el instituto al laboratorio
+                lab.setInstituto(instituto);  
             } else {
                 System.out.println("Instituto con ID 1 no encontrado.");
             }
 
-            // Guardar los cambios
-            entityManager.merge(lab);  // Realizamos el merge para guardar los cambios
+            entityManager.merge(lab);
             entityManager.getTransaction().commit();
             System.out.println("Laboratorio actualizado correctamente.");
         } else {
@@ -236,6 +237,35 @@ public void editarLaboratorioPorId(LaboratorioDTO dto) {
     } finally {
         entityManager.close();
     }
+}
+@Override
+public void eliminarLaboratorioPorId(Long id) {
+      EntityManager entityManager = emf.createEntityManager();
+    try {
+        entityManager.getTransaction().begin();
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<LaboratorioEntidad> cq = cb.createQuery(LaboratorioEntidad.class);
+        Root<LaboratorioEntidad> root = cq.from(LaboratorioEntidad.class);
+        cq.select(root).where(cb.equal(root.get("id"), id));
+
+        LaboratorioEntidad lab = entityManager.createQuery(cq).getSingleResult();
+
+        if (lab != null) {
+            entityManager.remove(lab);
+            entityManager.getTransaction().commit();
+            System.out.println(" Laboratorio eliminado correctamente.");
+        } else {
+            System.out.println(" Lab no encontrado.");
+            entityManager.getTransaction().rollback();
+        }
+
+    } catch (Exception e) {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
+        e.printStackTrace();
+    } 
 }
 
 }

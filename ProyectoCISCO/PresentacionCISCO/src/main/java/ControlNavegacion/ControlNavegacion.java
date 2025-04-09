@@ -107,7 +107,11 @@ public class ControlNavegacion {
         actualizarListaLab();
     }
 
-        
+        public static void editarLaboratorio(LaboratorioDTO labDTO) {
+            labNegocio.editarLaboratorioPorId(labDTO);
+            javax.swing.JOptionPane.showMessageDialog(null, "Laboratorio actualizado correctamente.");
+            actualizarListaLab();
+}
     
     
     

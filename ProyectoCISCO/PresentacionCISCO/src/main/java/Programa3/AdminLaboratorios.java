@@ -5,6 +5,7 @@
 package Programa3;
 
 import DAOs.LaboratorioDAO;
+import DTOs.InstitutoDTO;
 import DTOs.LaboratorioDTO;
 import Interfaces.ILaboratorioNegocio;
 import Negocio.LaboratorioNegocio;
@@ -161,25 +162,42 @@ public class AdminLaboratorios extends javax.swing.JPanel {
         ControlNavegacion.ControlNavegacion.mostrarAgregarLaboratorio();
     }//GEN-LAST:event_btnNuevoLaboratorioActionPerformed
 
-        public void mostrarPanel(JFrame p) {
 
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        frame.setSize(385, 400);
-        frame.setLocationRelativeTo(null);
-        frame.add(p);
-        frame.setVisible(true);
+    public void editarLaboratorio(Long idlab) {
+
+        LaboratorioDTO laboratorioDTO = laboratorioNegocio.buscarLabPorId(idlab);
+
+        if (laboratorioDTO == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Laboratorio no encontrado", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        InstitutoDTO institutoDTO = ControlNavegacion.ControlNavegacion.obtenerInstitutoNombre("ITSON");
+
+        FrmAgregarLaboratorio frmEditar = new FrmAgregarLaboratorio(institutoDTO, laboratorioDTO);
+        frmEditar.setVisible(true);
     }
 
-    
-    public void editarLaboratorio(Long idlab){
+    public void eliminarLaboratorio(Long idlab) {
+            LaboratorioDTO laboratorioDTO = laboratorioNegocio.buscarLabPorId(idlab);
+        if (laboratorioDTO != null) {
+            int opcion = JOptionPane.showConfirmDialog(this,
+                    "¿Está seguro de que desea eliminar el laboratorio " + laboratorioDTO.getNombreLab() + "?",
+                    "Confirmación de eliminación",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
 
+            if (opcion == JOptionPane.YES_OPTION) {
+                laboratorioNegocio.eliminarLabPorId(idlab);
+                JOptionPane.showMessageDialog(this, "Alumno eliminado con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                llenarTablaLaboratorio();
+            } else {
+                JOptionPane.showMessageDialog(this, "Eliminación cancelada.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    
-    public void eliminarLaboratorio(Long idlab){
-        
-    }
-    
+
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         int column = this.jTable1.getColumnModel().getColumnIndexAtX(evt.getX());
         int row = evt.getY() / this.jTable1.getRowHeight();
