@@ -29,7 +29,7 @@ public class ComputadoraEntidad implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="idComutadora")
+    @Column(name ="idComputadora")
     private Long id;
     
     @Column(name="direccionIp", length =40, unique = true, nullable= false)
@@ -42,6 +42,7 @@ public class ComputadoraEntidad implements Serializable {
     private boolean estatus;
     
     @Column(name = "tipo", length = 20 , nullable = false)
+    private String tipo;
     
     //Relacion con laboratorio
     @ManyToOne
@@ -60,6 +61,8 @@ public class ComputadoraEntidad implements Serializable {
     
     public ComputadoraEntidad() {
     }
+    
+    
 
     public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio, CarreraEntidad carrera) {
         this.direccionIp = direccionIp;

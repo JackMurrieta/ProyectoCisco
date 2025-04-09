@@ -70,6 +70,7 @@ public class AlumnoEntidad implements Serializable {
         this.estatus = estatus;
         this.carrera = carrera;
     }
+    
 
     public List<ApartadoEntidad> getApartados() {
         return apartados;

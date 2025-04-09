@@ -44,6 +44,16 @@ public class CarreraEntidad implements Serializable {
     //Relacion con carreras
     @OneToMany(mappedBy = "carrera", cascade = {CascadeType.PERSIST})
     private List<ComputadoraEntidad> computadoras;
+
+    public CarreraEntidad() {
+    }
+
+    public CarreraEntidad(String nombre, Integer tiempoLimite, String color) {
+        this.nombre = nombre;
+        this.tiempoLimite = tiempoLimite;
+        this.color = color;
+    }
+    
     
     public Long getId() {
         return id;
