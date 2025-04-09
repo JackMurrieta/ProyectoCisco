@@ -4,17 +4,22 @@
  */
 package Programa3;
 
+import DTOs.ComputadoraDTO;
+import DTOs.LaboratorioDTO;
+
 /**
  *
  * @author Jack Murrieta
  */
 public class OpcionRealizarComputo extends javax.swing.JPanel {
+    private ComputadoraDTO pcDTO;
 
     /**
      * Creates new form EquipoSeleccionado
      */
-    public OpcionRealizarComputo() {
+    public OpcionRealizarComputo(ComputadoraDTO pcDTO) {
         initComponents();
+        this.pcDTO = pcDTO;
     }
 
     /**
@@ -27,7 +32,7 @@ public class OpcionRealizarComputo extends javax.swing.JPanel {
         lblTitulo1 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        btnAsignarSw = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -38,19 +43,49 @@ public class OpcionRealizarComputo extends javax.swing.JPanel {
         add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 28, 464, 81));
 
         btnEditar.setText("Editar Equipo");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 320, 60));
 
         btnRegresar.setText("Regresar");
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 30));
 
-        btnAsignarSw.setText("Asignar Softwares");
-        add(btnAsignarSw, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, 340, 60));
+        btnEliminar.setText("Eliminar Computadora");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+        add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 230, 340, 60));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+        ControlNavegacion.ControlNavegacion.mostrarEquipoDatosSE(pcDTO);
+        //CerrarFrames
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        //EliminarComputadora
+        ControlNavegacion.ControlNavegacion.eliminarComputadora(pcDTO);
+        
+        
+        // Mostrar Menu
+        Long id = ControlNavegacion.ControlNavegacion.obtenerIdLab();
+        LaboratorioDTO labDTO = new LaboratorioDTO();
+        labDTO.setId(id);
+        ControlNavegacion.ControlNavegacion.mostrarMenu(labDTO);
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAsignarSw;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel lblTitulo1;
     // End of variables declaration//GEN-END:variables

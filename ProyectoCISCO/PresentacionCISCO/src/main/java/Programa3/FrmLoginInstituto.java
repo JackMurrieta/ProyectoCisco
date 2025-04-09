@@ -47,6 +47,7 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         comboxLaboratorios = new javax.swing.JComboBox<>();
         txtContrasena = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -90,6 +91,15 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 140, 340, 350));
 
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        btnAgregar.setText("+");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 140, 60, 60));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -108,8 +118,15 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        ControlNavegacion.ControlNavegacion.mostrarAgregarLaboratorio();
+        this.dispose();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnLogin;
     private javax.swing.JComboBox<String> comboxLaboratorios;
     private javax.swing.JPanel jPanel1;

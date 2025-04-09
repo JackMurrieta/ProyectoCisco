@@ -10,6 +10,7 @@ package DTOs;
  */
 public class ComputadoraDTO {
     
+    private Long idComputadora;
     private String direccionIp;
     private String numComputadora;
     private boolean estatus;
@@ -19,7 +20,9 @@ public class ComputadoraDTO {
     private Long idCarrera;
     private Long idLab;
 
-    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, CarreraDTO carreraDTO, String tipo, String color, Long idCarrera, Long idLab) {
+    //DTO CONVERTIDOR
+    public ComputadoraDTO(Long idComputadora,String direccionIp, String numComputadora, boolean estatus, CarreraDTO carreraDTO, String tipo, String color, Long idCarrera, Long idLab) {
+        this.idComputadora = idComputadora;
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
@@ -30,10 +33,34 @@ public class ComputadoraDTO {
         this.idLab = idLab;
     }
 
+    //Utilizado en ADAPTADOR
+    public ComputadoraDTO(Long idComputadora, String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long idLab) {
+        this.idComputadora = idComputadora;
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.tipo = tipo;
+        this.color = color;
+        this.idLab = idLab;
+    }
+
+    public ComputadoraDTO(Long idComputadora, String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long idCarrera, Long idLab) {
+        this.idComputadora = idComputadora;
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.tipo = tipo;
+        this.color = color;
+        this.idCarrera = idCarrera;
+        this.idLab = idLab;
+    }
+    
+
     
     //SIN COLOR AL GUARDAR UN NUEVO PC
     //COMPUTADORA TIPO = HACER APARTADOS
-    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo,Long idCarrera, Long idLab) {
+    public ComputadoraDTO(Long idComputadora,String direccionIp, String numComputadora, boolean estatus, String tipo,Long idCarrera, Long idLab) {
+        this.idComputadora = idComputadora;
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
@@ -43,6 +70,17 @@ public class ComputadoraDTO {
     }
 
     //COMPUTADORA TIPO = LEER APARTADOS
+    public ComputadoraDTO(Long idComputadora,String direccionIp, String numComputadora, boolean estatus, String tipo, Long idLab) {
+        this.idComputadora = idComputadora;
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.tipo = tipo;
+        this.idLab = idLab;
+    }
+    
+    //DTO SIN CARRERA SIN ID
+
     public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, Long idLab) {
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
@@ -51,27 +89,23 @@ public class ComputadoraDTO {
         this.idLab = idLab;
     }
     
-    //DTO SIN CARRERA
+    //DTO CON id y carrera sin ID
 
-    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long idLab) {
+    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, Long idCarrera, Long idLab) {
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
         this.tipo = tipo;
-        this.color = color;
-        this.idLab = idLab;
-    }
-    
-    //DTO CON COLOR Y CARRERA
-
-    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long idCarrera, Long idLab) {
-        this.direccionIp = direccionIp;
-        this.numComputadora = numComputadora;
-        this.estatus = estatus;
-        this.tipo = tipo;
-        this.color = color;
         this.idCarrera = idCarrera;
         this.idLab = idLab;
+    }
+
+    public Long getIdComputadora() {
+        return idComputadora;
+    }
+
+    public void setIdComputadora(Long idComputadora) {
+        this.idComputadora = idComputadora;
     }
     
     
@@ -144,8 +178,6 @@ public class ComputadoraDTO {
     public String toString() {
         return "ComputadoraDTO{" + "direccionIp=" + direccionIp + ", numComputadora=" + numComputadora + ", estatus=" + estatus + ", idCarrera=" + idCarrera + ", color=" + color + ", idLab=" + idLab + '}';
     }
-    
-    
     
     
 }

@@ -23,10 +23,12 @@ import Programa3.EquipoDatosSE;
 import Programa3.FrmAgregarLaboratorio;
 import Programa3.FrmLoginInstituto;
 import Programa3.Menu;
+import Programa3.OpcionRealizarComputo;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -57,6 +59,8 @@ public class ControlNavegacion {
     private static Menu menu;
     private static AdminEquiposComputo panelAdminPc;
     private static EquipoDatosSE panelDatosPc;
+    private static JFrame FrmOpcionRealizarComputo;
+    private static OpcionRealizarComputo panelOpcionesPc;
     
 
     public ControlNavegacion() {
@@ -97,20 +101,30 @@ public class ControlNavegacion {
         } catch (NegocioException ex) {
             //Poner JOPTION
             ex.printStackTrace();
+            mostrarMensajeError(ex);
         }
         try {
             labNegocio.guardarLabortorio(labDTO);
+            mostrarMensajeInformativo("Laboratorio Guardado Correctamente");
         } catch (NegocioException ex) {
             //PONERJOPTION
             ex.printStackTrace();
+            mostrarMensajeError(ex);
         }
         actualizarListaLab();
     }
-
-        
     
+    //Mostrar mensaje Error con Excepcion Obtenida
+    public static void mostrarMensajeError(Exception e){
+           JOptionPane.showMessageDialog(
+            null,
+            "Ocurrió un error: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE
+        );
+    }  
     
-    
+   
     public static void mostrarMenu(LaboratorioDTO labDTO){
         ControlNavegacion.idLab = labDTO.getId();
         lab = labNegocio.obtenerLabPorId(idLab);
@@ -138,6 +152,10 @@ public class ControlNavegacion {
         return pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
     }
     
+    public static ComputadoraDTO obtenerPcPorNum(String numeroComputadora){
+        return pcNegocio.obtenerComputadora(numeroComputadora);
+    }
+    
         
     //MOSTRAR COMPUTADORAS METODOS
     //ADMINISTRAR COMPUTADORAS FRM
@@ -158,7 +176,7 @@ public class ControlNavegacion {
 
     
     
-    public static JFrame mostrarEquipoDatosSE(){
+    public static JFrame mostrarEquipoDatosSE(ComputadoraDTO pcDTO){
  // Si ya existe y sigue visible, solo la traemos al frente
         if (frmEquipoDatosSE != null && frmEquipoDatosSE.isDisplayable()) {
             frmEquipoDatosSE.toFront();
@@ -174,14 +192,30 @@ public class ControlNavegacion {
         return frmAdminEquipos;
     }
     
+    public static void mostrarMensajeInformativo(String mensaje) {
+        JOptionPane.showMessageDialog(
+                null,
+                mensaje,
+                "Información",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
     public static void guardarEquipo(ComputadoraDTO pcDTO, CarreraDTO carreraDto){
         try {
             pcNegocio.guardarComputadora(pcDTO, carreraDto);
+            mostrarMensajeInformativo("Equipo Guardado Correctamente");
         } catch (NegocioException ex) {
             //PONERJOPTION PANE
-            Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
+            mostrarMensajeError(ex);
         }
     }
+    //ELIMINAR COMPUTADORA POR DTO
+    
+    public static void eliminarComputadora(ComputadoraDTO pcDTO){
+        ComputadoraDTO pcObtenida = pcNegocio.obtenerComputadora(pcDTO.getNumComputadora());
+        pcNegocio.eliminarComputadora(pcObtenida.getIdLab());
+    }
+    
     public static CarreraDTO buscarCarreraPorNombre(String nombre){
         return carreraNegocio.obtenerCarreraDTOPorNombre(nombre);
     }
@@ -196,6 +230,19 @@ public class ControlNavegacion {
     public static void actualizarListaCarreras(){
         carreras = carreraNegocio.obtenerCarreras();  
     }
+    
+    public static void mostrarOpcionesComputadora(ComputadoraDTO pcDTO){
+        panelOpcionesPc = new OpcionRealizarComputo(pcDTO);
+        FrmOpcionRealizarComputo = mostrarFrm(panelOpcionesPc);
+        
+    }
+   public static void editarComputadora(ComputadoraDTO pc, CarreraDTO carreraDTO){
+        try {
+            pcNegocio.editarComputadora(pc, carreraDTO);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+        }
+   }
 
 
     

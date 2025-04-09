@@ -13,6 +13,7 @@ import java.util.List;
  * @author Jack Murrieta
  */
 public class EquipoDatosSE extends javax.swing.JPanel {
+    private boolean estatus;
 
     /**
      * Creates new form EquipoSeleccionado
@@ -30,6 +31,7 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         for (CarreraDTO carrera : carreras) {
             comboxCarreras.addItem(carrera.getNombre());
         }
+ 
     }
  
     /**

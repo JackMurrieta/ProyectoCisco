@@ -4,7 +4,6 @@
  */
 package Utilerias;
 
-import DTOs.ComputadoraDTO;
 import Programa1.FrmEquiposComputo;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -25,14 +24,14 @@ import javax.swing.SwingUtilities;
  *
  * @author Usuario
  */
-public class JPanelBtnPC extends JPanel {
+public class JPanelBtnPCApartados extends JPanel {
 
     private int anchoPanel;
     private int largoPanel;
     private Color color;
     private String numero;
 
-    public JPanelBtnPC(Color color, String numero) {
+    public JPanelBtnPCApartados(Color color, String numero) {
         this.numero= numero;
         this.color = color;
         initComponents();
@@ -75,7 +74,7 @@ public class JPanelBtnPC extends JPanel {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Color color = Color.cyan;
-                JPanelBtnPC panel = new JPanelBtnPC(color, "001");
+                JPanelBtnPCApartados panel = new JPanelBtnPCApartados(color, "001");
                 JFrame frame = new JFrame();
                  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Permite cerrar la ventana correctamente
                 frame.setSize(100,155);
@@ -113,8 +112,7 @@ public class JPanelBtnPC extends JPanel {
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
         // TODO add your handling code here:
-        ComputadoraDTO pcDTO = ControlNavegacion.ControlNavegacion.obtenerPcPorNum(numero);
-        ControlNavegacion.ControlNavegacion.mostrarOpcionesComputadora(pcDTO);
+        System.out.println("BOTON CLIKEADO"+ numero);
     }//GEN-LAST:event_btnPCActionPerformed
 
 

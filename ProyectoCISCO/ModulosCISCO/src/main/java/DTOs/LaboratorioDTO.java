@@ -18,6 +18,10 @@ public class LaboratorioDTO {
     private LocalTime horaFin;
     private Long idInstituto;
 
+    public LaboratorioDTO() {
+    }
+    
+
     public LaboratorioDTO(String nombreLab, String contrasena) {
         this.nombreLab = nombreLab;
         this.contrasena = contrasena;

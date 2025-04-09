@@ -42,14 +42,25 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
     
     private ComputadoraDTO validarCarrera(ComputadoraDTO pc){
-        if (pc.getIdCarrera() == null) {
-            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdLab());
-            return pcValidada;
-        } else {
-            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(),pc.getTipo() ,pc.getIdCarrera(), pc.getIdLab());
-            return pcValidada;
+        ComputadoraDTO pcExistente = validarExistencia(pc);
+        if(pcExistente ==null){
+            if (pc.getIdCarrera() == null) {
+                ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdLab());
+                return pcValidada;
+            } else {
+                ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdCarrera(), pc.getIdLab());
+                return pcValidada;
+            }
         }
+        return pcExistente;
 
+    }
+    private ComputadoraDTO validarExistencia(ComputadoraDTO pcDto){
+        if(pcDto.getIdComputadora() != null){
+            ComputadoraDTO  pcExistente= obtenerComputadora(pcDto.getNumComputadora());
+            return pcExistente;
+        }
+        return null;
     }
     
     private void validarDireccionIp(String direccionIp) throws NegocioException{

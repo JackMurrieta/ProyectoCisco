@@ -54,14 +54,14 @@ public class ComputadoraAdapter {
         
         if(pcEntidad.getCarrera()==null){
             String color = null;
-            return new ComputadoraDTO(pcEntidad.getDireccionIp(),
+            return new ComputadoraDTO(pcEntidad.getId(),pcEntidad.getDireccionIp(),
                     pcEntidad.getNumComputadora(), 
                     pcEntidad.isEstatus(), pcEntidad.getTipo(), 
                     color,
                     pcEntidad.getLaboratorio().getId());
         }else{
             String color = pcEntidad.getCarrera().getColor();
-            return new ComputadoraDTO(pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
+            return new ComputadoraDTO(pcEntidad.getId(),pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
                     pcEntidad.isEstatus(), pcEntidad.getTipo(),
                     color, 
                     pcEntidad.getCarrera().getId(), pcEntidad.getLaboratorio().getId());
