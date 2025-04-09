@@ -4,6 +4,7 @@
  */
 package InterfazDAOs;
 
+import DTOs.LaboratorioDTO;
 import Entidades.LaboratorioEntidad;
 import java.util.List;
 
@@ -21,6 +22,12 @@ public interface ILaboratorioDAO {
     
     public LaboratorioEntidad obtenerPorNombre(String nombre);
     public boolean verificarContrasena(LaboratorioEntidad lab, String passwordIngresada);
+    
+    public List<LaboratorioDTO> obtenerLaboratoriosTabla();
+    
+     LaboratorioDTO buscarLabPorId(Long id);
+     
+     void editarLaboratorioPorId(LaboratorioDTO dto);
     
     
 }

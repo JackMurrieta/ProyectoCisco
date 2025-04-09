@@ -21,4 +21,10 @@ public interface ILaboratorioNegocio {
     public LaboratorioDTO obtenerLabPorNombre(String nombre);
     public boolean validarPasswordEncriptada(String nombreLab,String password);
     
+    List<LaboratorioDTO> obtenerLaboratoriosTabla();
+    
+    LaboratorioDTO buscarLabPorId(Long id);
+    
+    void editarLaboratorioPorId(LaboratorioDTO dto);
+    
 }

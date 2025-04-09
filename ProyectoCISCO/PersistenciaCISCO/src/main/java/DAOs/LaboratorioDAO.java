@@ -4,16 +4,22 @@
  */
 package DAOs;
 
+import DTOs.LaboratorioDTO;
+import Entidades.InstitutoEntidad;
 import Entidades.LaboratorioEntidad;
 import InterfazDAOs.ILaboratorioDAO;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -125,6 +131,112 @@ public class LaboratorioDAO implements ILaboratorioDAO {
         // Comparamos la contraseña encriptada con la que está en la base de datos
         return passwordEncriptada.equals(lab.getContrasenaMaestra());
     }
+    
+      @Override
+    public List<LaboratorioDTO> obtenerLaboratoriosTabla() {
+           EntityManager entityManager= emf.createEntityManager();
+        List<LaboratorioDTO> laboratoriosDTO = new ArrayList<>();
+
+        try {
+
+            CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+            CriteriaQuery<LaboratorioEntidad> cq = cb.createQuery(LaboratorioEntidad.class);
+            Root<LaboratorioEntidad> labRoot = cq.from(LaboratorioEntidad.class);
+
+            cq.select(labRoot);
+
+            List<LaboratorioEntidad> laboratorios = entityManager.createQuery(cq).getResultList();
+
+            for (LaboratorioEntidad laboratorio : laboratorios) {
+
+                LaboratorioDTO laboratorioDTO = new LaboratorioDTO(
+                        laboratorio.getId(),
+                        laboratorio.getNombreLab(),
+                        laboratorio.getHoraInicio(),
+                        laboratorio.getHoraFin()
+                );
+                laboratoriosDTO.add(laboratorioDTO);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return laboratoriosDTO;
+    }
+
+        @Override
+    public LaboratorioDTO buscarLabPorId(Long id) {
+    EntityManager entityManager = emf.createEntityManager();
+    try {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<LaboratorioEntidad> cq = cb.createQuery(LaboratorioEntidad.class);
+        Root<LaboratorioEntidad> labRoot = cq.from(LaboratorioEntidad.class);
+        cq.select(labRoot).where(cb.equal(labRoot.get("id"), id));
+
+        LaboratorioEntidad lab = entityManager.createQuery(cq).getSingleResult();
+        
+        if (lab != null) {
+            return new LaboratorioDTO(
+                lab.getId(),
+                lab.getNombreLab(),
+                lab.getHoraInicio(),
+                lab.getHoraFin()
+            );
+        }
+        return null;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+    }
+    
+  @Override
+public void editarLaboratorioPorId(LaboratorioDTO dto) {
+    EntityManager entityManager = emf.createEntityManager();
+    try {
+        entityManager.getTransaction().begin();
+
+        // Buscar el laboratorio por su ID
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<LaboratorioEntidad> cq = cb.createQuery(LaboratorioEntidad.class);
+        Root<LaboratorioEntidad> root = cq.from(LaboratorioEntidad.class);
+        cq.select(root).where(cb.equal(root.get("id"), dto.getId()));
+
+        LaboratorioEntidad lab = entityManager.createQuery(cq).getSingleResult();
+
+        if (lab != null) {
+            // Actualizar los atributos del laboratorio
+            lab.setNombreLab(dto.getNombreLab());  // Actualizamos el nombre del laboratorio
+            lab.setContrasenaMaestra(dto.getContrasena());  // Actualizamos la contraseña
+            lab.setHoraInicio(dto.getHoraInicio());  // Actualizamos la hora de inicio
+            lab.setHoraFin(dto.getHoraFin());  // Actualizamos la hora de fin
+
+            // Establecer el instituto con el ID 1 (preasignado)
+            InstitutoEntidad instituto = entityManager.find(InstitutoEntidad.class, 1L); // Buscamos el instituto con ID 1
+            if (instituto != null) {
+                lab.setInstituto(instituto);  // Asignamos el instituto al laboratorio
+            } else {
+                System.out.println("Instituto con ID 1 no encontrado.");
+            }
+
+            // Guardar los cambios
+            entityManager.merge(lab);  // Realizamos el merge para guardar los cambios
+            entityManager.getTransaction().commit();
+            System.out.println("Laboratorio actualizado correctamente.");
+        } else {
+            System.out.println("Laboratorio no encontrado.");
+            entityManager.getTransaction().rollback();
+        }
+    } catch (Exception e) {
+        if (entityManager.getTransaction().isActive()) {
+            entityManager.getTransaction().rollback();
+        }
+        e.printStackTrace();
+    } finally {
+        entityManager.close();
+    }
+}
 
 }
 

@@ -25,6 +25,11 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
     private ILaboratorioDAO labDAO;
     private LaboratorioAdapter convertidor;
 
+     public LaboratorioNegocio(ILaboratorioDAO labDAO) {
+        this.labDAO = labDAO;
+    }
+    
+
     public LaboratorioNegocio(Long idInstituto) {
         this.idInstituto = idInstituto;
         labDAO= new LaboratorioDAO();
@@ -100,5 +105,20 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
         LaboratorioEntidad labEntity = labDAO.obtenerPorNombre(nombreLab);
         return labDAO.verificarContrasena(labEntity, password);
         
+    }
+    
+    @Override
+    public List<LaboratorioDTO> obtenerLaboratoriosTabla(){
+        return labDAO.obtenerLaboratoriosTabla();
+    }
+    
+    @Override
+    public LaboratorioDTO buscarLabPorId(Long id){
+        return labDAO.buscarLabPorId(id);
+    }
+    
+    @Override
+    public void editarLaboratorioPorId(LaboratorioDTO dto){
+        labDAO.editarLaboratorioPorId(dto);
     }
 }

@@ -4,8 +4,17 @@
  */
 package Programa3;
 
+import DAOs.LaboratorioDAO;
+import DTOs.LaboratorioDTO;
+import Interfaces.ILaboratorioNegocio;
+import Negocio.LaboratorioNegocio;
+import Utilerias.RenderTabla;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,13 +22,57 @@ import javax.swing.JPanel;
  */
 public class AdminLaboratorios extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AdminLaboratorios
-     */
+    ILaboratorioNegocio laboratorioNegocio;
+
     public AdminLaboratorios() {
+        this.laboratorioNegocio = new LaboratorioNegocio(new LaboratorioDAO());
         initComponents();
+        llenarTablaLaboratorio();
     }
- 
+
+    public void llenarTablaLaboratorio() {
+
+        List<LaboratorioDTO> laboratorios = laboratorioNegocio.obtenerLaboratoriosTabla();
+        if (laboratorios == null || laboratorios.isEmpty()) {
+            return;
+        }
+        DefaultTableModel modelo = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        modelo.setColumnIdentifiers(new Object[]{"ID", "Nombre", "Hora Apertura", "Hora cierre", "Editar", "Eliminar"});
+        for (LaboratorioDTO laboratorio : laboratorios) {
+            JButton[] btn = generarBotones(laboratorio.getId());
+
+            modelo.addRow(new Object[]{
+                laboratorio.getId(),
+                laboratorio.getNombreLab(),
+                laboratorio.getHoraInicio(),
+                laboratorio.getHoraFin(),
+                btn[0], // Botón Editar
+                btn[1] // Botón Eliminar
+            });
+        }
+
+        jTable1.setModel(modelo);
+
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        jTable1.getColumn("Editar").setCellRenderer(new RenderTabla());
+        jTable1.getColumn("Eliminar").setCellRenderer(new RenderTabla());
+    }
+
+    private JButton[] generarBotones(Long alumnoid) {
+
+        JButton btnEditar = new JButton("Editar");
+        btnEditar.setName("M");
+        JButton btnEliminar = new JButton("Eliminar");
+        btnEliminar.setName("E");
+
+        return new JButton[]{btnEditar, btnEliminar};
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,6 +107,11 @@ public class AdminLaboratorios extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -100,8 +158,47 @@ public class AdminLaboratorios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoLaboratorioActionPerformed
-           ControlNavegacion.ControlNavegacion.mostrarAgregarLaboratorio();
+        ControlNavegacion.ControlNavegacion.mostrarAgregarLaboratorio();
     }//GEN-LAST:event_btnNuevoLaboratorioActionPerformed
+
+        public void mostrarPanel(JFrame p) {
+
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(385, 400);
+        frame.setLocationRelativeTo(null);
+        frame.add(p);
+        frame.setVisible(true);
+    }
+
+    
+    public void editarLaboratorio(Long idlab){
+
+    }
+    
+    public void eliminarLaboratorio(Long idlab){
+        
+    }
+    
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int column = this.jTable1.getColumnModel().getColumnIndexAtX(evt.getX());
+        int row = evt.getY() / this.jTable1.getRowHeight();
+
+        if (row < this.jTable1.getRowCount() && row >= 0 && column < this.jTable1.getColumnCount() && column >= 0) {
+            Object value = this.jTable1.getValueAt(row, column);
+
+            if (value instanceof JButton) {
+                JButton boton = (JButton) value;
+                Long labid = (Long) this.jTable1.getValueAt(row, 0);
+
+                if (boton.getText().equals("Editar")) {
+                    editarLaboratorio(labid);
+                } else if (boton.getText().equals("Eliminar")) {
+                    eliminarLaboratorio(labid);
+                }
+            }
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

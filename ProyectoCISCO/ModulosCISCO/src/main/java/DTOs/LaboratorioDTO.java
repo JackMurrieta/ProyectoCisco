@@ -23,6 +23,15 @@ public class LaboratorioDTO {
         this.contrasena = contrasena;
     }
 
+    public LaboratorioDTO(Long id, String nombreLab, LocalTime horaInicio, LocalTime horaFin) {
+        this.id = id;
+        this.nombreLab = nombreLab;
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
+    
+    
+
     public LaboratorioDTO(String nombreLab, String contrasena, LocalTime horaInicio, LocalTime horaFin,Long idInstituto) {
         this.nombreLab = nombreLab;
         this.contrasena = contrasena;
@@ -63,6 +72,18 @@ public class LaboratorioDTO {
 
     public void setIdInstituto(Long idInstituto) {
         this.idInstituto = idInstituto;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombreLab(String nombreLab) {
+        this.nombreLab = nombreLab;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
      
 

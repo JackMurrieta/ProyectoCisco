@@ -103,6 +103,34 @@ public class LaboratorioEntidad implements Serializable {
         return apartadosPorDia;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombreLab(String nombreLab) {
+        this.nombreLab = nombreLab;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public void setInstituto(InstitutoEntidad instituto) {
+        this.instituto = instituto;
+    }
+
+    public void setComputadoras(List<ComputadoraEntidad> computadoras) {
+        this.computadoras = computadoras;
+    }
+
+    public void setApartadosPorDia(List<ApartadoPorDiaEntidad> apartadosPorDia) {
+        this.apartadosPorDia = apartadosPorDia;
+    }
+    
 
     @Override
     public int hashCode() {
