@@ -121,4 +121,9 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
     public void editarLaboratorioPorId(LaboratorioDTO dto){
         labDAO.editarLaboratorioPorId(dto);
     }
+    
+    @Override
+    public void eliminarLabPorId(Long id){
+        labDAO.eliminarLaboratorioPorId(id);
+    }
 }

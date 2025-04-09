@@ -114,6 +114,13 @@ public class ControlNavegacion {
         actualizarListaLab();
     }
     
+    public static void editarLaboratorio(LaboratorioDTO labDTO) {
+        labNegocio.editarLaboratorioPorId(labDTO);
+        javax.swing.JOptionPane.showMessageDialog(null, "Laboratorio actualizado correctamente.");
+       actualizarListaLab();
+        
+    }
+
     //Mostrar mensaje Error con Excepcion Obtenida
     public static void mostrarMensajeError(Exception e){
            JOptionPane.showMessageDialog(
@@ -265,4 +272,5 @@ public class ControlNavegacion {
         }
     }
 }
+
 
