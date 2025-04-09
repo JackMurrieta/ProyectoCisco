@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
 import Entidades.ComputadoraEntidad;
 import ExcepcionNegocio.NegocioException;
@@ -18,10 +19,11 @@ public interface IComputadoraNegocio {
     
     public ComputadoraDTO validarDatosComputadora(ComputadoraDTO pc)throws NegocioException ;
     
-    public void guardarComputadora(ComputadoraDTO pc)throws NegocioException;
+   public void guardarComputadora(ComputadoraDTO pc,CarreraDTO carreraDTO)throws NegocioException;
+    
     public void eliminarComputadora(Long id);
     //editarComputadora
-    public void editarComputadora(ComputadoraDTO pc)throws NegocioException;
+    public void editarComputadora(ComputadoraDTO pc,CarreraDTO carreraDTO)throws NegocioException;
     //obtener computadras en una DTO
     public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id);
     

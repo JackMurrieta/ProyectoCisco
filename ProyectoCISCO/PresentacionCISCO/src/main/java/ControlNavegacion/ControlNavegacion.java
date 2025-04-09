@@ -174,16 +174,16 @@ public class ControlNavegacion {
         return frmAdminEquipos;
     }
     
-    public static void guardarEquipo(ComputadoraDTO pcDTO){
+    public static void guardarEquipo(ComputadoraDTO pcDTO, CarreraDTO carreraDto){
         try {
-            pcNegocio.guardarComputadora(pcDTO);
+            pcNegocio.guardarComputadora(pcDTO, carreraDto);
         } catch (NegocioException ex) {
             //PONERJOPTION PANE
             Logger.getLogger(ControlNavegacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static CarreraDTO buscarCarreraPorNombre(String nombre){
-        return carreraNegocio.buscarCarreraPorNombre(nombre);
+        return carreraNegocio.obtenerCarreraDTOPorNombre(nombre);
     }
     public static Long obtenerIdLab(){
         return idLab;

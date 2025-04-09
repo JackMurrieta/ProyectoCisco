@@ -6,6 +6,7 @@ package Negocio;
 
 import Adaptadores.ComputadoraAdapter;
 import DAOs.ComputadoraDAO;
+import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
 import Entidades.ComputadoraEntidad;
 import ExcepcionNegocio.NegocioException;
@@ -72,13 +73,13 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
 
     @Override
-    public void guardarComputadora(ComputadoraDTO pc) throws NegocioException {
+    public void guardarComputadora(ComputadoraDTO pc,CarreraDTO carreraDTO) throws NegocioException {
         ComputadoraDTO pcValidada= validarDatosComputadora(pc);
         ComputadoraEntidad pcEntidad;
         if(pc.getIdCarrera()==null){
             pcEntidad = convertidor.ConvertirDtoLeer(pcValidada);
         }else{
-            pcEntidad = convertidor.convertirDtoHacer(pcValidada);
+            pcEntidad = convertidor.convertirDtoHacer(pcValidada,carreraDTO);
         }
         pcDAO.guardarComputadora(pcEntidad);
     }
@@ -90,13 +91,13 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
 
     //Checar editar Metodo
     @Override
-    public void editarComputadora(ComputadoraDTO pc) throws NegocioException {
+    public void editarComputadora(ComputadoraDTO pc,CarreraDTO carreraDTO) throws NegocioException {
         ComputadoraDTO pcValidada= validarDatosComputadora(pc);
         ComputadoraEntidad pcEntidad;
         if(pc.getIdCarrera()==null){
             pcEntidad = convertidor.ConvertirDtoLeer(pcValidada);
         }else{
-            pcEntidad = convertidor.convertirDtoHacer(pcValidada);
+            pcEntidad = convertidor.convertirDtoHacer(pcValidada,carreraDTO);
         }
         pcDAO.editarComputadora(pcEntidad);
     }

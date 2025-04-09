@@ -31,12 +31,12 @@ public class ComputadoraAdapter {
         return pcEntity;
     }
     
-    public ComputadoraEntidad convertirDtoHacer(ComputadoraDTO pcDTO){
+    public ComputadoraEntidad convertirDtoHacer(ComputadoraDTO pcDTO,CarreraDTO carreraDTO){
         LaboratorioDAO labDAO = new LaboratorioDAO();
         LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
-        CarreraDAO carreraDAO = new CarreraDAO();
+        
+        CarreraEntidad carrera =convertirCarrera(carreraDTO.getId());
         //DEBE DE DEVOLVER ENTIDAD 
-        CarreraEntidad carrera = carreraDAO.obtenerCarreraPorID(pcDTO.getIdCarrera());
         ComputadoraEntidad pcEntity = new ComputadoraEntidad
         (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad, carrera);
         return pcEntity;

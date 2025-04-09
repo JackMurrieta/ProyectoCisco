@@ -68,12 +68,12 @@ public class CarreraDTO {
         this.tiempoLimite = tiempoLimite;
     }
 
-    
-    
     @Override
     public String toString() {
-        return "CarreraDTO{" + "nombre=" + nombre + '}';
+        return "CarreraDTO{" + "id=" + id + ", nombre=" + nombre + ", color=" + color + ", tiempoLimite=" + tiempoLimite + '}';
     }
+
     
+  
     
 }

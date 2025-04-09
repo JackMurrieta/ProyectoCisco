@@ -154,11 +154,9 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         // TODO add your handling code here:
         String ip = txtIP.getText().trim();
         String numPC = txtNumEquipo.getText().trim();
-        boolean estatus;
-        if(lblEstatus.getText().equalsIgnoreCase("Habilitiado")){
-            estatus = true;
-        }else{
-            estatus = false;
+        boolean estatus = true;
+        if(lblEstatus.getText().equalsIgnoreCase("Deshabilitado")){
+            estatus =false;
         }
         //ObtenerCarreraPorNombre
         String carreraNombre;
@@ -169,14 +167,15 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         if(tipo.equalsIgnoreCase("Leer apartados")){
             idCarrera = null;
             ComputadoraDTO pcDTO = new ComputadoraDTO(ip, numPC, estatus, tipo, idCarrera, idLab);
-            ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO);
+            ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO,null);
             return;
             
         }
         carreraNombre = (String) comboxCarreras.getSelectedItem();
         CarreraDTO cDTO= ControlNavegacion.ControlNavegacion.buscarCarreraPorNombre(carreraNombre);
+        System.out.println(cDTO.toString());
         ComputadoraDTO pcDTO = new ComputadoraDTO(ip, numPC, estatus, tipo, cDTO.getId(),idLab);
-        ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO);
+        ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO,cDTO);
  
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 

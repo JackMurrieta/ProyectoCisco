@@ -13,11 +13,24 @@ public class ComputadoraDTO {
     private String direccionIp;
     private String numComputadora;
     private boolean estatus;
+    private CarreraDTO carreraDTO;
     private String tipo;
     private String color;
     private Long idCarrera;
     private Long idLab;
 
+    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, CarreraDTO carreraDTO, String tipo, String color, Long idCarrera, Long idLab) {
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.carreraDTO = carreraDTO;
+        this.tipo = tipo;
+        this.color = color;
+        this.idCarrera = idCarrera;
+        this.idLab = idLab;
+    }
+
+    
     //SIN COLOR AL GUARDAR UN NUEVO PC
     //COMPUTADORA TIPO = HACER APARTADOS
     public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo,Long idCarrera, Long idLab) {
