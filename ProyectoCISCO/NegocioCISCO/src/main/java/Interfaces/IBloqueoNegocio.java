@@ -5,6 +5,7 @@
 package Interfaces;
 
 import DTOs.BloqueoConAlumnoDTO;
+import java.util.List;
 
 /**
  *
@@ -12,4 +13,10 @@ import DTOs.BloqueoConAlumnoDTO;
  */
 public interface IBloqueoNegocio {
     void registrarBloqueo(BloqueoConAlumnoDTO dto);
+    
+    List<BloqueoConAlumnoDTO> obtenerAlumnosBloqueados();
+    
+    void desbloquearAlumnoPorIdBloqueo(Long idBloqueo) ;
+    
+    BloqueoConAlumnoDTO obtenerBloqueoPorid(Long idBloqueo);
 }

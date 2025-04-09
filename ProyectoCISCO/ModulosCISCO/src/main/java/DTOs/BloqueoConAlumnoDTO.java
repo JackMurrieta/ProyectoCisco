@@ -30,10 +30,13 @@ public class BloqueoConAlumnoDTO {
         this.fechaFin = fechaFin;
     }
 
-    public BloqueoConAlumnoDTO(String nombreAlumno, String apellidoP, String apellidoM) {
+    public BloqueoConAlumnoDTO(Long idBloqueo,String nombreAlumno, String apellidoP, String apellidoM, String motivo) {
+        this.idBloqueo= idBloqueo;
         this.nombreAlumno = nombreAlumno;
         this.apellidoP = apellidoP;
         this.apellidoM = apellidoM;
+        this.motivo= motivo;
+       
     }
 
     public String getNombreAlumno() {

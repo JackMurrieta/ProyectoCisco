@@ -23,6 +23,8 @@ public class crearBloqueos extends javax.swing.JPanel {
     public crearBloqueos() {
          this.bloqueoNegocio = new BloqueoNegocio(new BloqueoDAO());
         initComponents();
+        jTFfechaInicio.setText(LocalDate.now().toString());
+        
     }
 
     /**
@@ -47,9 +49,7 @@ public class crearBloqueos extends javax.swing.JPanel {
 
         jLabel1.setText("ID del alumno: ");
 
-        jTFfechaInicio.setText("YYYY/MM/DD");
-
-        jTFfechaFin.setText("YYYY/MM/DD");
+        jTFfechaFin.setText("YYYY-MM-DD");
 
         jLabel2.setText("Fecha inicio:");
 
@@ -133,10 +133,11 @@ public class crearBloqueos extends javax.swing.JPanel {
         try {
         // Obtener los valores de los campos de texto
         Long idAlumno = Long.parseLong(jTFidAlumno.getText().trim());
-        LocalDate fechaInicio = LocalDate.parse(jTFfechaInicio.getText().trim());
+        LocalDate fechaInicio = LocalDate.now(); 
         LocalDate fechaFin = LocalDate.parse(jTFfechaFin.getText().trim());
         String motivo = jTFmotivo.getText().trim();
 
+          jTFfechaInicio.setText(fechaInicio.toString());
         // Crear un DTO con los datos del formulario
         BloqueoConAlumnoDTO dto = new BloqueoConAlumnoDTO();
         dto.setIdAlumno(idAlumno);

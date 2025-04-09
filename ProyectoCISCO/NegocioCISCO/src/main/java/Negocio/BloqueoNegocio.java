@@ -7,6 +7,7 @@ package Negocio;
 import DTOs.BloqueoConAlumnoDTO;
 import Interfaces.IBloqueoNegocio;
 import InterfazDAOs.IBloqueoDAO;
+import java.util.List;
 
 /**
  *
@@ -21,5 +22,18 @@ public class BloqueoNegocio implements IBloqueoNegocio{
     @Override
     public void registrarBloqueo(BloqueoConAlumnoDTO dto) {
         bloqueoDAO.guardarBloqueoConAlumnoPorId(dto);
+    }
+      @Override
+    public List<BloqueoConAlumnoDTO> obtenerAlumnosBloqueados() {
+        
+            return bloqueoDAO.obtenerAlumnosBloqueados();  
+      
+    }
+    @Override
+    public void desbloquearAlumnoPorIdBloqueo(Long idBloqueo) {
+        bloqueoDAO.desbloquearAlumnoPorIdBloqueo(idBloqueo);
+    }
+    public BloqueoConAlumnoDTO obtenerBloqueoPorid(Long idBloqueo){
+        return bloqueoDAO.obtenerBloqueoPorId(idBloqueo);
     }
 }
