@@ -21,22 +21,24 @@ public class ComputadoraAdapter {
     public ComputadoraAdapter() {
     }
     
-    public ComputadoraEntidad convertirDTOFkLab(ComputadoraDTO pcDTO){
+    public ComputadoraEntidad ConvertirDtoLeer(ComputadoraDTO pcDTO){
         LaboratorioDAO labDAO = new LaboratorioDAO();
         LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
-        ComputadoraEntidad pcEntity = new ComputadoraEntidad(pcDTO.getDireccionIp(), pcDTO.getNumComputadora(),
-                pcDTO.isEstatus(), labEntidad);
+        
+        ComputadoraEntidad pcEntity = new ComputadoraEntidad
+        (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad);
+        
         return pcEntity;
     }
     
-    public ComputadoraEntidad convertirDTOConCarrera(ComputadoraDTO pcDTO){
+    public ComputadoraEntidad convertirDtoHacer(ComputadoraDTO pcDTO){
         LaboratorioDAO labDAO = new LaboratorioDAO();
         LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
         CarreraDAO carreraDAO = new CarreraDAO();
         //DEBE DE DEVOLVER ENTIDAD 
         CarreraEntidad carrera = carreraDAO.obtenerCarreraPorID(pcDTO.getIdCarrera());
-        ComputadoraEntidad pcEntity = new ComputadoraEntidad(pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), 
-                pcDTO.isEstatus(), labEntidad, carrera);
+        ComputadoraEntidad pcEntity = new ComputadoraEntidad
+        (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad, carrera);
         return pcEntity;
     }
     
@@ -51,12 +53,18 @@ public class ComputadoraAdapter {
     public ComputadoraDTO convertirDTO(ComputadoraEntidad pcEntidad){
         
         if(pcEntidad.getCarrera()==null){
-            return new ComputadoraDTO(pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
-                    pcEntidad.isEstatus(), null, null, pcEntidad.getLaboratorio().getId());
+            String color = null;
+            return new ComputadoraDTO(pcEntidad.getDireccionIp(),
+                    pcEntidad.getNumComputadora(), 
+                    pcEntidad.isEstatus(), pcEntidad.getTipo(), 
+                    color,
+                    pcEntidad.getLaboratorio().getId());
         }else{
             String color = pcEntidad.getCarrera().getColor();
-            return new ComputadoraDTO(pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(),
-                    pcEntidad.isEstatus(), pcEntidad.getCarrera().getId(), color, pcEntidad.getLaboratorio().getId());
+            return new ComputadoraDTO(pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
+                    pcEntidad.isEstatus(), pcEntidad.getTipo(),
+                    color, 
+                    pcEntidad.getCarrera().getId(), pcEntidad.getLaboratorio().getId());
          
         }
     

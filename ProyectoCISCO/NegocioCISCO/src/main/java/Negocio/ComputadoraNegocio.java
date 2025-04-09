@@ -39,12 +39,13 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         //Construye DTO dependiendo de si tiene Carrera o no
         return validarCarrera(pc);
     }
+    
     private ComputadoraDTO validarCarrera(ComputadoraDTO pc){
         if (pc.getIdCarrera() == null) {
-            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getIdLab());
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdLab());
             return pcValidada;
         } else {
-            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getIdCarrera(), pc.getIdLab());
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(),pc.getTipo() ,pc.getIdCarrera(), pc.getIdLab());
             return pcValidada;
         }
 
@@ -75,9 +76,9 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         ComputadoraDTO pcValidada= validarDatosComputadora(pc);
         ComputadoraEntidad pcEntidad;
         if(pc.getIdCarrera()==null){
-            pcEntidad = convertidor.convertirDTOFkLab(pcValidada);
+            pcEntidad = convertidor.ConvertirDtoLeer(pcValidada);
         }else{
-            pcEntidad = convertidor.convertirDTOConCarrera(pcValidada);
+            pcEntidad = convertidor.convertirDtoHacer(pcValidada);
         }
         pcDAO.guardarComputadora(pcEntidad);
     }
@@ -93,9 +94,9 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         ComputadoraDTO pcValidada= validarDatosComputadora(pc);
         ComputadoraEntidad pcEntidad;
         if(pc.getIdCarrera()==null){
-            pcEntidad = convertidor.convertirDTOFkLab(pcValidada);
+            pcEntidad = convertidor.ConvertirDtoLeer(pcValidada);
         }else{
-            pcEntidad = convertidor.convertirDTOConCarrera(pcValidada);
+            pcEntidad = convertidor.convertirDtoHacer(pcValidada);
         }
         pcDAO.editarComputadora(pcEntidad);
     }

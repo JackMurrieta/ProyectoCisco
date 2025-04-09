@@ -57,17 +57,17 @@ public class NegocioCISCO {
 //        try {
 //            pcNegocio.guardarComputadora(pc2);
 ////            CON CARRERA
-            
-        CarreraDAO cDAO = new CarreraDAO();
-        CarreraEntidad carrera = cDAO.obtenerCarreraPorID(1L);
-        
-        ComputadoraDTO pc3 = new ComputadoraDTO("100.100.13.2", "020", true, carrera.getId() ,labEntity.getId() );
-        
-        //Obtener Lista de Computadoras
-        List<ComputadoraDTO> computadoras = pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
-        System.out.println(computadoras.toString());
-        //ComputadoraDTO pc4 = new ComputadoraDTO("192.168.123.4", "004", true, labEntity.getId());
-        
+//            
+//        CarreraDAO cDAO = new CarreraDAO();
+//        CarreraEntidad carrera = cDAO.obtenerCarreraPorID(1L);
+//        
+//        ComputadoraDTO pc3 = new ComputadoraDTO("100.100.13.2", "020", true, carrera.getId() ,labEntity.getId() );
+//        
+//        //Obtener Lista de Computadoras
+//        List<ComputadoraDTO> computadoras = pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
+//        System.out.println(computadoras.toString());
+//        //ComputadoraDTO pc4 = new ComputadoraDTO("192.168.123.4", "004", true, labEntity.getId());
+//        
 //        try {
 //            //PC CON LAB
 //            pcNegocio.guardarComputadora(pc3);

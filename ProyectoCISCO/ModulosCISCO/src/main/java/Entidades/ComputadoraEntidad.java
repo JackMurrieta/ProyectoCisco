@@ -62,26 +62,39 @@ public class ComputadoraEntidad implements Serializable {
     public ComputadoraEntidad() {
     }
     
-    
+    //COMPUTADORA CON CARRERA TIPO = HACER APARTATOS
 
-    public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio, CarreraEntidad carrera) {
+    public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, String tipo, LaboratorioEntidad laboratorio, CarreraEntidad carrera) {
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
+        this.tipo = tipo;
         this.laboratorio = laboratorio;
         this.carrera = carrera;
     }
+    
+    
+    
+    
+    //COMPUTADORA SIN CARRERA TIPO = LEER APARTADOS
 
-    public ComputadoraEntidad(String direccionIp, String numComputadora, boolean estatus, LaboratorioEntidad laboratorio) {
+    public ComputadoraEntidad( String direccionIp, String numComputadora, boolean estatus, String tipo, LaboratorioEntidad laboratorio) {
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
+        this.tipo = tipo;
         this.laboratorio = laboratorio;
     }
+    
 
     public void setDireccionIp(String direccionIp) {
         this.direccionIp = direccionIp;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+    
 
     public void setNumComputadora(String numComputadora) {
         this.numComputadora = numComputadora;
