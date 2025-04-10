@@ -63,7 +63,7 @@ public class ComputadoraAdapter {
             String color = pcEntidad.getCarrera().getColor();
             return new ComputadoraDTO(pcEntidad.getId(),pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
                     pcEntidad.isEstatus(), pcEntidad.getTipo(),
-                    color, 
+                    color, pcEntidad.getCarrera().getNombre(),
                     pcEntidad.getCarrera().getId(), pcEntidad.getLaboratorio().getId());
          
         }

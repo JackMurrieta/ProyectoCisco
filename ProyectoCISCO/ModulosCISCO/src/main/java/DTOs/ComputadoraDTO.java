@@ -14,26 +14,38 @@ public class ComputadoraDTO {
     private String direccionIp;
     private String numComputadora;
     private boolean estatus;
-    private CarreraDTO carreraDTO;
+    private String nombreCarrera;
     private String tipo;
     private String color;
     private Long idCarrera;
     private Long idLab;
 
-    //DTO CONVERTIDOR
-    public ComputadoraDTO(Long idComputadora,String direccionIp, String numComputadora, boolean estatus, CarreraDTO carreraDTO, String tipo, String color, Long idCarrera, Long idLab) {
-        this.idComputadora = idComputadora;
+    //Constructor DE LEER APARTADOS
+    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, Long idLab) {
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
-        this.carreraDTO = carreraDTO;
         this.tipo = tipo;
-        this.color = color;
+        this.idLab = idLab;
+        this.nombreCarrera = null;
+        this.idCarrera = null;
+    }
+    //CONSTURCTOR DE HACER APARTADOS
+    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, Long idCarrera, Long idLab) {
+        this.direccionIp = direccionIp;
+        this.numComputadora = numComputadora;
+        this.estatus = estatus;
+        this.tipo = tipo;
         this.idCarrera = idCarrera;
         this.idLab = idLab;
+        this.nombreCarrera = null;
     }
 
-    //Utilizado en ADAPTADOR
+//    public ComputadoraDTO(Long id, String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long id0) {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
+
+    //LEER APARTADOS CONVERTIDO
     public ComputadoraDTO(Long idComputadora, String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long idLab) {
         this.idComputadora = idComputadora;
         this.direccionIp = direccionIp;
@@ -44,11 +56,13 @@ public class ComputadoraDTO {
         this.idLab = idLab;
     }
 
-    public ComputadoraDTO(Long idComputadora, String direccionIp, String numComputadora, boolean estatus, String tipo, String color, Long idCarrera, Long idLab) {
+    //HACER APARTADOS CONVERTIDO
+    public ComputadoraDTO(Long idComputadora, String direccionIp, String numComputadora, boolean estatus, String nombreCarrera, String tipo, String color, Long idCarrera, Long idLab) {
         this.idComputadora = idComputadora;
         this.direccionIp = direccionIp;
         this.numComputadora = numComputadora;
         this.estatus = estatus;
+        this.nombreCarrera = nombreCarrera;
         this.tipo = tipo;
         this.color = color;
         this.idCarrera = idCarrera;
@@ -56,50 +70,14 @@ public class ComputadoraDTO {
     }
     
 
-    
-    //SIN COLOR AL GUARDAR UN NUEVO PC
-    //COMPUTADORA TIPO = HACER APARTADOS
-    public ComputadoraDTO(Long idComputadora,String direccionIp, String numComputadora, boolean estatus, String tipo,Long idCarrera, Long idLab) {
-        this.idComputadora = idComputadora;
-        this.direccionIp = direccionIp;
-        this.numComputadora = numComputadora;
-        this.estatus = estatus;
-        this.tipo = tipo;
-        this.idCarrera = idCarrera;
-        this.idLab = idLab;
+    public String getNombreCarrera() {
+        return nombreCarrera;
     }
 
-    //COMPUTADORA TIPO = LEER APARTADOS
-    public ComputadoraDTO(Long idComputadora,String direccionIp, String numComputadora, boolean estatus, String tipo, Long idLab) {
-        this.idComputadora = idComputadora;
-        this.direccionIp = direccionIp;
-        this.numComputadora = numComputadora;
-        this.estatus = estatus;
-        this.tipo = tipo;
-        this.idLab = idLab;
+    public void setNombreCarrera(String nombreCarrera) {
+        this.nombreCarrera = nombreCarrera;
     }
-    
-    //DTO SIN CARRERA SIN ID
-
-    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, Long idLab) {
-        this.direccionIp = direccionIp;
-        this.numComputadora = numComputadora;
-        this.estatus = estatus;
-        this.tipo = tipo;
-        this.idLab = idLab;
-    }
-    
-    //DTO CON id y carrera sin ID
-
-    public ComputadoraDTO(String direccionIp, String numComputadora, boolean estatus, String tipo, Long idCarrera, Long idLab) {
-        this.direccionIp = direccionIp;
-        this.numComputadora = numComputadora;
-        this.estatus = estatus;
-        this.tipo = tipo;
-        this.idCarrera = idCarrera;
-        this.idLab = idLab;
-    }
-
+        
     public Long getIdComputadora() {
         return idComputadora;
     }
@@ -109,7 +87,6 @@ public class ComputadoraDTO {
     }
     
     
-
     public String getTipo() {
         return tipo;
     }

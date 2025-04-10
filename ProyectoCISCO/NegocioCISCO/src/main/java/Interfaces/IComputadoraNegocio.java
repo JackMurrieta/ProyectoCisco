@@ -29,6 +29,8 @@ public interface IComputadoraNegocio {
     
     public ComputadoraDTO obtenerComputadora(String numComputadora);
     
+    public ComputadoraDTO obtenerComputadoraPorId(Long id);
+    
     //MetodosISoftwareEnComputadora
     //agregarComputadoraConSOftware
     //eliminarSoftwareEncomputadora

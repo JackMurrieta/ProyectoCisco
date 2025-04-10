@@ -6,6 +6,7 @@ package InterfazDAOs;
 
 import DTOs.ComputadoraDTO;
 import Entidades.ComputadoraEntidad;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -28,5 +29,8 @@ public interface IComputadoraDAO {
     
     public void editarComputadora(ComputadoraEntidad pc);
     
+    public ComputadoraEntidad obtenerPorIdComputadora(Long id);
+    
+    public ComputadoraEntidad obtenerPorDireccionIp(String ip) throws PersistenciaException;
     
 }

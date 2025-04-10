@@ -34,35 +34,79 @@ import java.util.logging.Logger;
 public class NegocioCISCO {
 
     public static void main(String[] args) {
-        InstitutoDAO institutoDAO = new InstitutoDAO();
-        InstitutoEntidad institutoEntidad = institutoDAO.obtenerInstitutoPorNombre("ITSON");
-        InstitutoNegocio institutoNegocio = new InstitutoNegocio();
         
-        InstitutoDTO uniDTO =institutoNegocio.obtenerInstituto("ITSON");
-        InstitutoDTO uniDTO2 = institutoNegocio.obtenerInstitutoPorID(1L);
-        System.out.println(uniDTO.toString());
-        System.out.println(uniDTO2.toString());
-        
-        
-        LaboratorioDAO labDAO = new LaboratorioDAO();
-        LaboratorioEntidad labEntity = labDAO.obtenerLabPorId(1L);
-        Long idLab = labEntity.getId();
-        System.out.println(labEntity.toString());
-        System.out.println(idLab);
-        
-        //NEGOCIO COMPUTADORAS
+        //PROBAR CRUD COMPUTADORAS
         ComputadoraDAO pcDAO = new ComputadoraDAO();
-        ComputadoraNegocio pcNegocio = new ComputadoraNegocio();
-        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("030");
+        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("002");
+        ComputadoraEntidad pcEntity1 = pcDAO.obtenerComputadoraPorNum("003");
+        ComputadoraEntidad pcEntity2 = pcDAO.obtenerComputadoraPorNum("004");
+
+        System.out.println(pcEntity);
+        System.out.println("Antes de editar:");
+        System.out.println(pcEntity);
         
-        AlumnoDAO aDAO =new AlumnoDAO();
-        AlumnoEntidad alumnoEntity = aDAO.obtenerAlumnoEntidad(1L);
+        CarreraDAO carreraDAO = new CarreraDAO();
         
-        ApartadoDTO apartado = new ApartadoDTO(alumnoEntity.getId(), pcEntity.getNumComputadora());
-        ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
-        apartadoNegocio.registrarApartado(apartado);
-        System.out.println("apartado Exitoso");
+        //DTOS de Computadoras
         
+        
+        
+//        System.out.println(carrera.toString());
+//       
+//        if (pcEntity != null) {
+//            // Modificar valores
+//            pcEntity.setDireccionIp("192.168.1.222");
+//            pcEntity.setTipo("PC Gamer");
+//            pcEntity.setEstatus(true);
+//            pcEntity.setCarrera(null);
+//            
+//
+//            // Llamar al método para actualizar en la BD
+//            pcDAO.editarComputadora(pcEntity);
+//        } else {
+//            System.out.println("Computadora con número 002 no encontrada.");
+//        }
+//
+//        System.out.println("Después de editar:");
+//        ComputadoraEntidad actualizada = pcDAO.obtenerComputadoraPorNum("002");
+//        System.out.println(actualizada);
+//        System.out.println("Eliminaar PC");
+//        pcDAO.eliminarComputadora(pcEntity.getId());
+//        System.out.println("Eliminado");
+    
+        
+        
+//        InstitutoDAO institutoDAO = new InstitutoDAO();
+//        InstitutoEntidad institutoEntidad = institutoDAO.obtenerInstitutoPorNombre("ITSON");
+//        InstitutoNegocio institutoNegocio = new InstitutoNegocio();
+//        
+//        InstitutoDTO uniDTO =institutoNegocio.obtenerInstituto("ITSON");
+//        InstitutoDTO uniDTO2 = institutoNegocio.obtenerInstitutoPorID(1L);
+//        System.out.println(uniDTO.toString());
+//        System.out.println(uniDTO2.toString());
+//        
+//        
+//        NEGOCIO APARTADO Y APARTADOS POR DIA 
+
+//        LaboratorioDAO labDAO = new LaboratorioDAO();
+//        LaboratorioEntidad labEntity = labDAO.obtenerLabPorId(1L);
+//        Long idLab = labEntity.getId();
+//        System.out.println(labEntity.toString());
+//        System.out.println(idLab);
+//        
+//        //NEGOCIO COMPUTADORAS
+//        ComputadoraDAO pcDAO = new ComputadoraDAO();
+//        ComputadoraNegocio pcNegocio = new ComputadoraNegocio();
+//        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("030");
+//        
+//        AlumnoDAO aDAO =new AlumnoDAO();
+//        AlumnoEntidad alumnoEntity = aDAO.obtenerAlumnoEntidad(1L);
+//        
+//        ApartadoDTO apartado = new ApartadoDTO(alumnoEntity.getId(), pcEntity.getNumComputadora());
+//        ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
+//        apartadoNegocio.registrarApartado(apartado);
+//        System.out.println("apartado Exitoso");
+//        
         //SOLO CON LAB
 //        
 //        ComputadoraDTO pc1 = new ComputadoraDTO("192.168.123.5", "005", true, labEntity.getId());

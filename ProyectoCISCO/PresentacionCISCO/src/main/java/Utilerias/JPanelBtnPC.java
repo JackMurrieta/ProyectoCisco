@@ -5,21 +5,10 @@
 package Utilerias;
 
 import DTOs.ComputadoraDTO;
-import Programa1.FrmEquiposComputo;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -29,13 +18,16 @@ public class JPanelBtnPC extends JPanel {
 
     private int anchoPanel;
     private int largoPanel;
-    private Color color;
+    private ComputadoraDTO pcDTO;
     private String numero;
+    private Color color;
 
-    public JPanelBtnPC(Color color, String numero) {
-        this.numero= numero;
-        this.color = color;
+    public JPanelBtnPC(Color color, ComputadoraDTO pcDTO) {
         initComponents();
+        this.pcDTO = pcDTO;
+        this.numero = pcDTO.getNumComputadora();
+        this.color = color;
+        
         btnPC.setOpaque(false); // No opaco
         btnPC.setContentAreaFilled(false); // No relleno
         btnPC.setBorderPainted(false); // Sin borde
@@ -43,47 +35,7 @@ public class JPanelBtnPC extends JPanel {
         btnPC.setBackground(new Color(0, 0, 0, 0)); // Color completamente transparente
 
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Color color = Color.cyan;
-                JPanelBtnPC panel = new JPanelBtnPC(color, "001");
-                JFrame frame = new JFrame();
-                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Permite cerrar la ventana correctamente
-                frame.setSize(100,155);
-                frame.add(panel);
-                frame.setVisible(true);
-            }
-        });
-    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -113,7 +65,6 @@ public class JPanelBtnPC extends JPanel {
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
         // TODO add your handling code here:
-        ComputadoraDTO pcDTO = ControlNavegacion.ControlNavegacion.obtenerPcPorNum(numero);
         ControlNavegacion.ControlNavegacion.mostrarOpcionesComputadora(pcDTO);
     }//GEN-LAST:event_btnPCActionPerformed
 

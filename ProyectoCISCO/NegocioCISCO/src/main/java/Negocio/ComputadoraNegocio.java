@@ -5,6 +5,7 @@
 package Negocio;
 
 import Adaptadores.ComputadoraAdapter;
+import DAOs.CarreraDAO;
 import DAOs.ComputadoraDAO;
 import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
@@ -24,12 +25,15 @@ import java.util.logging.Logger;
  */
 public class ComputadoraNegocio implements IComputadoraNegocio {
     private  IComputadoraDAO pcDAO;
-    ComputadoraAdapter convertidor;
+    private ComputadoraAdapter convertidor;
+    private CarreraDAO carreraDAO;
+    
     
 
     public ComputadoraNegocio() {
         pcDAO = new ComputadoraDAO();
         convertidor = new ComputadoraAdapter();
+        carreraDAO = new CarreraDAO();
     }
     
 //DTO CON CARRERA Y IDLAB
@@ -92,6 +96,8 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         pcDAO.guardarComputadora(pcEntidad);
     }
 
+   
+    
     @Override
     public void eliminarComputadora(Long id) {
         pcDAO.eliminarComputadora(id);
@@ -102,46 +108,25 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     public void editarComputadora(ComputadoraDTO pc) throws NegocioException {
         validarDireccionIp(pc.getDireccionIp());
         validarNumComputadora(pc.getNumComputadora());
-        ComputadoraDTO existente = validarExistencia(pc);
         
-        existente.setDireccionIp(pc.getDireccionIp());
-        existente.setNumComputadora(pc.getNumComputadora());
-        existente.setEstatus(pc.isEstatus());
-        existente.setTipo(pc.getTipo());
-        existente.setIdCarrera(pc.getIdCarrera());
-        existente.setIdLab(pc.getIdLab());
+        ComputadoraEntidad pcEntity = pcDAO.obtenerPorIdComputadora(pc.getIdComputadora());
+        //Obtener Carrera
+        CarreraEntidad carreraEntity = null;
         
-        
-        ComputadoraEntidad pcEditar = new ComputadoraEntidad();
-        CarreraEntidad carreraEntity = convertidor.convertirCarrera(existente.getIdCarrera());
-        
-        if(existente.getIdCarrera()==null){
-            //BUSCAR EN DAO
-            ComputadoraEntidad pcEntidad = convertidor.ConvertirDtoLeer(existente);
-            pcEditar.setId(existente.getIdComputadora());
-            pcEditar.setDireccionIp(pcEntidad.getDireccionIp());
-            pcEditar.setNumComputadora(pcEntidad.getNumComputadora());
-            pcEditar.setEstatus(pcEntidad.isEstatus());
-            pcEditar.setTipo(pcEntidad.getTipo());
-            pcEditar.setLaboratorio(pcEntidad.getLaboratorio());
-            pcEditar.setCarrera(null);
-            
-            pcDAO.editarComputadora(pcEditar);
-        }else{
-            ComputadoraEntidad pcEntidad = convertidor.convertirDtoHacer(existente);
-            pcEditar.setId(existente.getIdComputadora());
-            pcEditar.setDireccionIp(pcEntidad.getDireccionIp());
-            pcEditar.setNumComputadora(pcEntidad.getNumComputadora());
-            pcEditar.setEstatus(pcEntidad.isEstatus());
-            pcEditar.setTipo(pcEntidad.getTipo());
-            pcEditar.setLaboratorio(pcEntidad.getLaboratorio());
-            pcEditar.setCarrera(carreraEntity);
-            
-            pcDAO.editarComputadora(pcEditar);
+        if (pc.getIdCarrera() != null) {
+            carreraEntity = carreraDAO.obtenerCarreraPorID(pc.getIdCarrera());
         }
+        
+        pcEntity.setDireccionIp(pc.getDireccionIp());
+        pcEntity.setNumComputadora(pc.getNumComputadora());
+        pcEntity.setEstatus(pc.isEstatus());
+        pcEntity.setTipo(pc.getTipo());
+        pcEntity.setCarrera(carreraEntity);
+        
+        pcDAO.editarComputadora(pcEntity);
     }
     
-
+    
     @Override
     public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id) {
         List<ComputadoraEntidad> computadorasBD = pcDAO.obtenerComputadorasPorLaboratorio(id);
@@ -166,5 +151,12 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         }
         return null;
         
+    }
+
+    @Override
+    public ComputadoraDTO obtenerComputadoraPorId(Long id) {
+        ComputadoraEntidad pcEntity = pcDAO.obtenerPorIdComputadora(id);
+        ComputadoraDTO pcEncontrada = convertidor.convertirDTO(pcEntity);
+        return pcEncontrada; 
     }
 }

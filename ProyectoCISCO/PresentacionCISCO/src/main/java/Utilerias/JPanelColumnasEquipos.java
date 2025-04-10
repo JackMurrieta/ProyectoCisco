@@ -22,6 +22,7 @@ public class JPanelColumnasEquipos extends JPanel {
     private GridBagConstraints gbc;
     private int fila = 0, columna = 0, columnasMax = 4;
     private List<ComputadoraDTO> computadoras;
+    
 
     public JPanelColumnasEquipos(List<ComputadoraDTO> listaComputadoras) {
         setLayout(new GridBagLayout());
@@ -33,7 +34,7 @@ public class JPanelColumnasEquipos extends JPanel {
 
         if (listaComputadoras != null) {
             for (ComputadoraDTO compu : listaComputadoras) {
-                agregarBtnsPC(compu.getNumComputadora(), compu.getColor());
+                agregarBtnsPC(compu.getColor(),compu);
             }
         }
 
@@ -41,9 +42,9 @@ public class JPanelColumnasEquipos extends JPanel {
     }
 
 
-    public void agregarBtnsPC(String numero, String color) {
+    public void agregarBtnsPC(String color,ComputadoraDTO pcDTO) {
         ColorAdapter adapter = new ColorAdapter();
-        JPanelBtnPC panelPC = new JPanelBtnPC(adapter.convertirStringAColor(color), numero);
+        JPanelBtnPC panelPC = new JPanelBtnPC(adapter.convertirStringAColor(color), pcDTO);
         panelPC.setPreferredSize(new Dimension(100, 113));
 
         gbc.gridx = columna;

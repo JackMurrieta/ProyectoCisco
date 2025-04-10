@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -51,10 +53,27 @@ public class ComputadoraDAO implements IComputadoraDAO {
         if(pc != null){
             em.remove(pc);
             em.getTransaction().commit();
+            em.close();
         }else{
             throw new PersistenceException("Computadora no encontrada");
         }
 
+    }
+
+    @Override
+    public ComputadoraEntidad obtenerPorIdComputadora(Long id) {
+        EntityManager em = emf.createEntityManager();
+        ComputadoraEntidad pc = null;
+
+        try {
+            pc = em.find(ComputadoraEntidad.class, id);
+            if (pc == null) {
+                throw new PersistenceException("Computadora no encontrada con ID: " + id);
+            }
+            return pc;
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -123,5 +142,30 @@ public class ComputadoraDAO implements IComputadoraDAO {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public ComputadoraEntidad obtenerPorDireccionIp(String ip) throws PersistenciaException {
+        EntityManager em = emf.createEntityManager();
+        ComputadoraEntidad resultado = null;
+
+        try {
+            TypedQuery<ComputadoraEntidad> query = em.createQuery(
+                    "SELECT c FROM ComputadoraEntidad c WHERE c.direccionIp = :ip",
+                    ComputadoraEntidad.class
+            );
+            query.setParameter("ip", ip);
+
+            // asumiendo que solo puede haber una computadora con esa IP
+            em.close();
+            return resultado = query.getSingleResult();
+        } catch (NoResultException e) {
+            // No se encontró ninguna computadora con esa IP
+            throw new PersistenciaException("Ip no encontrada");
+        } catch (NonUniqueResultException e) {
+            // Hay más de una computadora con esa IP (lo cual podría ser un error en tu modelo)
+            throw new PersistenciaException("Mas de una computadora con la misma Ip");
+        }
+
     }
 }

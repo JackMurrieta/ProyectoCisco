@@ -5,7 +5,6 @@
 package Programa3;
 
 import DTOs.ComputadoraDTO;
-import Utilerias.JPanelColumnas;
 import Utilerias.JPanelColumnasEquipos;
 import java.util.List;
 import javax.swing.JScrollPane;
@@ -73,7 +72,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
 
     private void btnNuevoEquipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoEquipoActionPerformed
         // TODO add your handling code here:
-        ControlNavegacion.ControlNavegacion.mostrarEquipoDatosSE(null);
+        ControlNavegacion.ControlNavegacion.mostrarEquipoDatosGuardar();
     }//GEN-LAST:event_btnNuevoEquipoActionPerformed
 
 

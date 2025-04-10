@@ -64,7 +64,7 @@ public class OpcionRealizarComputo extends javax.swing.JPanel {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        ControlNavegacion.ControlNavegacion.mostrarEquipoDatosSE(pcDTO);
+        ControlNavegacion.ControlNavegacion.mostrarEquipoDatosEditar(pcDTO);
         //CerrarFrames
         
     }//GEN-LAST:event_btnEditarActionPerformed
@@ -74,8 +74,6 @@ public class OpcionRealizarComputo extends javax.swing.JPanel {
         //EliminarComputadora
         ControlNavegacion.ControlNavegacion.eliminarComputadora(pcDTO);
         ControlNavegacion.ControlNavegacion.mostrarMensajeInformativo("Computadora eliminada correctamente");
-        
-        
         // Mostrar Menu
         Long id = ControlNavegacion.ControlNavegacion.obtenerIdLab();
         LaboratorioDTO labDTO = new LaboratorioDTO();
