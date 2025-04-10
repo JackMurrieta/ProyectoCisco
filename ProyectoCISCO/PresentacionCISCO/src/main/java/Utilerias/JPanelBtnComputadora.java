@@ -15,26 +15,31 @@ import javax.swing.JPanel;
  *
  * @author Usuario
  */
-public class JPanelBtnPC extends JPanel {
-
-    private int anchoPanel;
-    private int largoPanel;
+public class JPanelBtnComputadora extends JPanel {
+    
     private String numero;
     private Color color;
+    private ComputadoraDTO computadoraDTO;
 
-    public JPanelBtnPC(Color color, String numero) {
+    public JPanelBtnComputadora(Color color, ComputadoraDTO computadoraDTO) {
         initComponents();
-        this.numero = numero;
-        this.color = color;
+        this.computadoraDTO = computadoraDTO;  // Asignamos el objeto ComputadoraDTO
+        this.numero = computadoraDTO.getNumComputadora();
+        String nuevo = computadoraDTO.getColor();
+        ColorAdapter adapter = new ColorAdapter();
         
+        this.color = color;
+        this.color = adapter.convertirStringAColor(nuevo);
+
         btnPC.setOpaque(false); // No opaco
         btnPC.setContentAreaFilled(false); // No relleno
         btnPC.setBorderPainted(false); // Sin borde
         btnPC.setFocusPainted(false); // Evita que se muestre resaltado al hacer clic
         btnPC.setBackground(new Color(0, 0, 0, 0)); // Color completamente transparente
-        JpanelPCRecomendado.setBackground(color);
+        JpanelPCRecomendado.setBackground(color); // Establecemos el color del panel
         lblNumPC.setText(numero);
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -67,14 +72,7 @@ public class JPanelBtnPC extends JPanel {
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
         // TODO add your handling code here:
-        ComputadoraDTO obtenida;
-        List<ComputadoraDTO> pcs = ControlNavegacion.ControlNavegacion.obtenerComputadoras(ControlNavegacion.ControlNavegacion.obtenerIdLab());
-         for (ComputadoraDTO pc : pcs) {
-             if(pc.getNumComputadora().equals(numero)){
-                 obtenida=pc;
-                 ControlNavegacion.ControlNavegacion.mostrarOpcionesComputadora(obtenida);
-             }
-        }
+        ControlNavegacion.ControlNavegacion.mostrarOpcionesComputadora(computadoraDTO);
     }//GEN-LAST:event_btnPCActionPerformed
 
 

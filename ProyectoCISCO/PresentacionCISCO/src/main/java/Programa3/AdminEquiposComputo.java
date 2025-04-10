@@ -5,7 +5,7 @@
 package Programa3;
 
 import DTOs.ComputadoraDTO;
-import Utilerias.JPanelColumnasEquipos;
+import Utilerias.JPanelColumnasComputadoras;
 import java.util.List;
 import javax.swing.JScrollPane;
 
@@ -26,7 +26,7 @@ public class AdminEquiposComputo extends javax.swing.JPanel {
         // Establecer tamaño preferido y tamaño real
         setPreferredSize(new java.awt.Dimension(912, 572));
         setSize(912, 572);
-        JPanelColumnasEquipos panelEquipos = new JPanelColumnasEquipos(computadoras);
+        JPanelColumnasComputadoras panelEquipos = new JPanelColumnasComputadoras(computadoras);
         scrollPC.setViewportView(panelEquipos);
     }
 

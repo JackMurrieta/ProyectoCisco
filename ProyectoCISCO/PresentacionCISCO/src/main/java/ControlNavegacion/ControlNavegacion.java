@@ -66,8 +66,6 @@ public class ControlNavegacion {
     private static EquipoDatosEditar panelDatosPcEditar;
     
     
-    
-
     public ControlNavegacion() {
         //Inicializar el menu
         institutoNegocio = new InstitutoNegocio();
@@ -168,23 +166,25 @@ public class ControlNavegacion {
         return pcNegocio.obtenerComputadora(numeroComputadora);
     }
     
-        
+    public static ComputadoraDTO obtenerPcPorID(Long id){
+        return pcNegocio.obtenerComputadoraPorId(id);
+    }
     //MOSTRAR COMPUTADORAS METODOS
     //ADMINISTRAR COMPUTADORAS FRM
-    public static JFrame mostrarAdminPc() {
-        // Si ya existe y sigue visible, solo la traemos al frente
-        if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
-            frmAdminEquipos.toFront();
-            frmAdminEquipos.requestFocus();
-            return frmAdminEquipos;
-        }
-
-        // Si no, la creamos nuevamente
-        actualizarComputadoras();
-        panelAdminPc = new AdminEquiposComputo(computadorasDTO);
-        frmAdminEquipos = mostrarFrm(panelAdminPc);
-        return frmAdminEquipos;
-    }
+//    public static JFrame mostrarAdminPc() {
+//        // Si ya existe y sigue visible, solo la traemos al frente
+//        if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
+//            frmAdminEquipos.toFront();
+//            frmAdminEquipos.requestFocus();
+//            return frmAdminEquipos;
+//        }
+//
+//        // Si no, la creamos nuevamente
+//        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
+//        panelAdminPc = new AdminEquiposComputo(computadorasDTO);
+//        frmAdminEquipos = mostrarFrm(panelAdminPc);
+//        return frmAdminEquipos;
+//    }
 
     //MostrarEquipoDATOS GUARDAR
     public static JFrame mostrarEquipoDatosGuardar() {
@@ -196,7 +196,6 @@ public class ControlNavegacion {
         }
 
         // Si no, la creamos nuevamente
-        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
         actualizarListaCarreras();
         panelDatosPcGuardar = new EquipoDatosGuardar(carreras);
         frmEquipoDatosGuardar = mostrarFrm(panelDatosPcGuardar);
@@ -231,9 +230,8 @@ public class ControlNavegacion {
     //ELIMINAR COMPUTADORA POR DTO
     
     public static void eliminarComputadora(ComputadoraDTO pcDTO){
-        ComputadoraDTO pcEncontrada = pcNegocio.obtenerComputadoraPorId(pcDTO.getIdCarrera());
-        Long id =pcEncontrada.getIdCarrera();
-        pcNegocio.eliminarComputadora(id);
+        
+        pcNegocio.eliminarComputadora(pcDTO.getIdComputadora());
     }
     
     public static CarreraDTO buscarCarreraPorNombre(String nombre){

@@ -61,17 +61,7 @@ public class Menu extends javax.swing.JFrame {
         content.setBackground(new java.awt.Color(255, 255, 255));
         content.setForeground(new java.awt.Color(102, 102, 102));
         content.setPreferredSize(new java.awt.Dimension(390, 850));
-
-        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
-        content.setLayout(contentLayout);
-        contentLayout.setHorizontalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        contentLayout.setVerticalGroup(
-            contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 410, Short.MAX_VALUE)
-        );
+        content.setLayout(new java.awt.BorderLayout());
 
         jPanel2.setBackground(new java.awt.Color(153, 0, 51));
 
@@ -279,7 +269,7 @@ public class Menu extends javax.swing.JFrame {
 
     public void mostrarPanel(JPanel p) {
 
-        p.setSize(850, 410);
+//        p.setSize(850, 410);
         p.setLocation(0, 0);
 
         content.removeAll();
@@ -298,7 +288,11 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnAdministrarComputadorasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarComputadorasActionPerformed
         // TODO add your handling code here:
-        ControlNavegacion.ControlNavegacion.mostrarAdminPc();
+        
+        AdminEquiposComputo p1 =new AdminEquiposComputo
+        (ControlNavegacion.ControlNavegacion.obtenerComputadoras
+        (ControlNavegacion.ControlNavegacion.obtenerIdLab()));
+        mostrarPanel(p1);
         labelTitulo.setText("Administrar equipos de computo");
     }//GEN-LAST:event_btnAdministrarComputadorasActionPerformed
 

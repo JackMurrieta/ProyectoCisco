@@ -52,22 +52,30 @@ public class ComputadoraAdapter {
     //convertir De entidad a DTO
     public ComputadoraDTO convertirDTO(ComputadoraEntidad pcEntidad){
         
-        if(pcEntidad.getCarrera()==null){
+        if (pcEntidad.getCarrera() == null) {
             String color = null;
-            return new ComputadoraDTO(pcEntidad.getId(),pcEntidad.getDireccionIp(),
-                    pcEntidad.getNumComputadora(), 
-                    pcEntidad.isEstatus(), pcEntidad.getTipo(), 
+            
+            return new ComputadoraDTO(pcEntidad.getId(),
+                    pcEntidad.getDireccionIp(),
+                    pcEntidad.getNumComputadora(),
+                    pcEntidad.isEstatus(),
+                    pcEntidad.getTipo(),
                     color,
                     pcEntidad.getLaboratorio().getId());
-        }else{
+        } else {
             String color = pcEntidad.getCarrera().getColor();
-            return new ComputadoraDTO(pcEntidad.getId(),pcEntidad.getDireccionIp(), pcEntidad.getNumComputadora(), 
-                    pcEntidad.isEstatus(), pcEntidad.getTipo(),
-                    color, pcEntidad.getCarrera().getNombre(),
+            
+            return new ComputadoraDTO(pcEntidad.getId(),
+                    pcEntidad.getDireccionIp(),
+                    pcEntidad.getNumComputadora(),
+                    pcEntidad.isEstatus(),
+                    pcEntidad.getTipo(),
+                    color,
+                    pcEntidad.getCarrera().getNombre(),
                     pcEntidad.getCarrera().getId(), pcEntidad.getLaboratorio().getId());
-         
+
         }
-    
+
     }
 
 }

@@ -78,7 +78,6 @@ public class OpcionRealizarComputo extends javax.swing.JPanel {
         Long id = ControlNavegacion.ControlNavegacion.obtenerIdLab();
         LaboratorioDTO labDTO = new LaboratorioDTO();
         labDTO.setId(id);
-        ControlNavegacion.ControlNavegacion.mostrarMenu(labDTO);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
 

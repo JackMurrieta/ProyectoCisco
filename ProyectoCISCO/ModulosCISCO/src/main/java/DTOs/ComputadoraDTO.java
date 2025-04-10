@@ -144,11 +144,13 @@ public class ComputadoraDTO {
         return idCarrera;
     }
 
-
     @Override
     public String toString() {
-        return "ComputadoraDTO{" + "direccionIp=" + direccionIp + ", numComputadora=" + numComputadora + ", estatus=" + estatus + ", idCarrera=" + idCarrera + ", color=" + color + ", idLab=" + idLab + '}';
+        return "ComputadoraDTO{" + "idComputadora=" + idComputadora + ", direccionIp=" + direccionIp + ", numComputadora=" + numComputadora + ", estatus=" + estatus + ", nombreCarrera=" + nombreCarrera + ", tipo=" + tipo + ", color=" + color + ", idCarrera=" + idCarrera + ", idLab=" + idLab + '}';
     }
+
+
+   
     
     
 }
