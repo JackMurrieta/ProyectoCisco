@@ -45,7 +45,7 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         comboxLaboratorios = new javax.swing.JComboBox<>();
-        txtContrasena = new javax.swing.JTextField();
+        txtContrasena = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
 
@@ -78,6 +78,8 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
 
         comboxLaboratorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(comboxLaboratorios);
+
+        txtContrasena.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jPanel2.add(txtContrasena);
 
         btnLogin.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -134,6 +136,6 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
     private javax.swing.JLabel lblLab;
     private javax.swing.JLabel lblNombreInstituto;
     private javax.swing.JLabel lblPassword;
-    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JPasswordField txtContrasena;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,7 +28,7 @@ public class frmEquipoDesbloqueado extends javax.swing.JFrame {
 
     private void inicializarDatos() {
 
-        labelNumComputadora.setText("Equipo: " + computadora.getNumComputadora());
+    labelNumComputadora.setText("Equipo: " + computadora.getNumComputadora());
    
     String colorHex = computadora.getCarrera().getColor();
     ColorAdapter adapter = new ColorAdapter();
@@ -64,6 +64,7 @@ public class frmEquipoDesbloqueado extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Tiempo restante:");
 
+        labelNumComputadora.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         labelNumComputadora.setText("jLabel2");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -87,11 +88,11 @@ public class frmEquipoDesbloqueado extends javax.swing.JFrame {
                         .addGap(126, 126, 126)
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(labelNumComputadora))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(93, 93, 93)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(148, 148, 148)
+                        .addComponent(labelNumComputadora)))
                 .addContainerGap(115, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(

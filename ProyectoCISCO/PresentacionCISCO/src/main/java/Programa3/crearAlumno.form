@@ -67,7 +67,7 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jTFapellidoPaterno" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
                                               <Component id="JTFcontrasenia1" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
-                                              <Component id="jTextField1" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
+                                              <Component id="jTFcontrasenia2" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
@@ -143,7 +143,7 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="jTextField1" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="jTFcontrasenia2" min="-2" pref="36" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnRegresar" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
@@ -248,7 +248,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="JTFcontrasenia1">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField1">
+        <Component class="javax.swing.JTextField" name="jTFcontrasenia2">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel7">
           <Properties>
