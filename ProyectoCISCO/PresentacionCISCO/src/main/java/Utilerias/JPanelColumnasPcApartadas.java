@@ -50,7 +50,12 @@ public class JPanelColumnasPcApartadas extends JPanel {
     }
 
     public void agregarBtnsPC(ComputadoraDTO pcDTO) {
-        String colorCarrera = obtenerColorDeCarrera(pcDTO.getIdCarrera());
+        String colorCarrera = "#FFFFFF";
+
+        if (pcDTO.getIdCarrera() != null) {
+            colorCarrera = obtenerColorDeCarrera(pcDTO.getIdCarrera());
+        }
+
         String numeroPc = pcDTO.getNumComputadora();
         Color color = colorAdapter.convertirStringAColor(colorCarrera);
 

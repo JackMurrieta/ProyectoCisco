@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -149,9 +150,18 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    //FILTRAR LISTA
     private List<ComputadoraDTO> obtenerListaDeComputadoras() {
         ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio();
-        return computadoraNegocio.obtenerComputadorasPorLaboratorio(1L);
+        List<ComputadoraDTO> computadorasApartado = new ArrayList<>();
+        List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(1L);
+        for (ComputadoraDTO computadoraDTO : pcsBd) {
+            if(computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")){
+                computadorasApartado.add(computadoraDTO);
+            }
+            
+        }
+        return computadorasApartado;
     }
 
     public LocalTime obtenerHoraSeleccionada() {
