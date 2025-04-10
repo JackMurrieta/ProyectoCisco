@@ -171,20 +171,20 @@ public class ControlNavegacion {
     }
     //MOSTRAR COMPUTADORAS METODOS
     //ADMINISTRAR COMPUTADORAS FRM
-//    public static JFrame mostrarAdminPc() {
-//        // Si ya existe y sigue visible, solo la traemos al frente
-//        if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
-//            frmAdminEquipos.toFront();
-//            frmAdminEquipos.requestFocus();
-//            return frmAdminEquipos;
-//        }
-//
-//        // Si no, la creamos nuevamente
-//        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
-//        panelAdminPc = new AdminEquiposComputo(computadorasDTO);
-//        frmAdminEquipos = mostrarFrm(panelAdminPc);
-//        return frmAdminEquipos;
-//    }
+    public static JFrame mostrarAdminPc() {
+        // Si ya existe y sigue visible, solo la traemos al frente
+        if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
+            frmAdminEquipos.toFront();
+            frmAdminEquipos.requestFocus();
+            return frmAdminEquipos;
+        }
+
+        // Si no, la creamos nuevamente
+        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
+        panelAdminPc = new AdminEquiposComputo(computadorasDTO);
+        frmAdminEquipos = mostrarFrm(panelAdminPc);
+        return frmAdminEquipos;
+    }
 
     //MostrarEquipoDATOS GUARDAR
     public static JFrame mostrarEquipoDatosGuardar() {

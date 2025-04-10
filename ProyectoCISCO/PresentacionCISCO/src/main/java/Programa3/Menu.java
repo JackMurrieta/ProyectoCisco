@@ -294,6 +294,8 @@ public class Menu extends javax.swing.JFrame {
         (ControlNavegacion.ControlNavegacion.obtenerIdLab()));
         mostrarPanel(p1);
         labelTitulo.setText("Administrar equipos de computo");
+        
+        JFrame adminEquipos = ControlNavegacion.ControlNavegacion.mostrarAdminPc();
     }//GEN-LAST:event_btnAdministrarComputadorasActionPerformed
 
     private void btnAdminAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminAlumnosActionPerformed
