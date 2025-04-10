@@ -174,7 +174,7 @@ public class FrmAgregarLaboratorioLogin extends javax.swing.JFrame {
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         
-       
+       ControlNavegacion.mostrarLogin();
         this.dispose();
     }//GEN-LAST:event_btnRegresarActionPerformed
 
