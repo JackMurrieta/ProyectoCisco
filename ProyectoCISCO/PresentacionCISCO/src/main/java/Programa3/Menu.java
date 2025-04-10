@@ -292,7 +292,7 @@ public class Menu extends javax.swing.JFrame {
         AdminEquiposComputo p1 =new AdminEquiposComputo
         (ControlNavegacion.ControlNavegacion.obtenerComputadoras
         (ControlNavegacion.ControlNavegacion.obtenerIdLab()));
-        mostrarPanel(p1);
+     
         labelTitulo.setText("Administrar equipos de computo");
         
         JFrame adminEquipos = ControlNavegacion.ControlNavegacion.mostrarAdminPc();

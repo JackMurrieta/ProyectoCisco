@@ -7,6 +7,7 @@ package Programa3;
 import DTOs.InstitutoDTO;
 import DTOs.LaboratorioDTO;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -116,7 +117,7 @@ public class FrmLoginInstituto extends javax.swing.JFrame {
             ControlNavegacion.ControlNavegacion.mostrarMenu(labSeleccionado);
             this.dispose();
         } else {
-            //JOptionPane Contraseña Incorrecta
+           JOptionPane.showMessageDialog(this, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
