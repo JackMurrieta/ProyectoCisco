@@ -64,4 +64,23 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
             em.close();
         }
     }
+   
+
+    public ApartadoPorDiaEntidad obtenerApartadoPorDiaPorId(Long id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            // Usamos una consulta para obtener el ApartadoPorDiaEntidad por su id
+            TypedQuery<ApartadoPorDiaEntidad> query = em.createQuery(
+                "SELECT a FROM ApartadoPorDiaEntidad a WHERE a.id = :id", 
+                ApartadoPorDiaEntidad.class
+            );
+            query.setParameter("id", id);
+            return query.getSingleResult();  // Retorna el único resultado
+        } catch (NoResultException e) {
+            // En caso de que no se encuentre, retornamos null o puedes lanzar una excepción si prefieres
+            return null;
+        } finally {
+            em.close();
+        }
+    }
 }

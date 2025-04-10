@@ -87,6 +87,20 @@ public class ApartadoEntidad implements Serializable {
         this.id = id;
     }
 
+    public void setAlumno(AlumnoEntidad alumno) {
+        this.alumno = alumno;
+    }
+
+    public void setComputadora(ComputadoraEntidad computadora) {
+        this.computadora = computadora;
+    }
+
+    public void setApartadoPorDia(ApartadoPorDiaEntidad apartadoPorDia) {
+        this.apartadoPorDia = apartadoPorDia;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;

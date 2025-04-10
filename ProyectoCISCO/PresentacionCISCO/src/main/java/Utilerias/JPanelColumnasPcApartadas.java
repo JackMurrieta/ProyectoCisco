@@ -18,17 +18,17 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author Jack Murrieta
+ * @author Oribiel
  */
-public class JPanelColumnasComputadoras extends JPanel {
+public class JPanelColumnasPcApartadas extends JPanel {
 
     private GridBagConstraints gbc;
     private int fila = 0, columna = 0, columnasMax = 4;
     private List<ComputadoraDTO> computadoras;
-      private ColorAdapter colorAdapter;
-      private CarreraNegocio carreraNegocio; 
+    private ColorAdapter colorAdapter;
+     private CarreraNegocio carreraNegocio; 
 
-    public JPanelColumnasComputadoras(List<ComputadoraDTO> listaComputadoras) {
+    public JPanelColumnasPcApartadas(List<ComputadoraDTO> listaComputadoras) {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         gbc = new GridBagConstraints();
@@ -36,7 +36,7 @@ public class JPanelColumnasComputadoras extends JPanel {
 
         this.computadoras = listaComputadoras;
         this.colorAdapter = new ColorAdapter();
-         this.carreraNegocio = new CarreraNegocio(new CarreraDAO()); 
+        this.carreraNegocio = new CarreraNegocio(new CarreraDAO()); 
 
         if (listaComputadoras != null) {
             for (ComputadoraDTO compu : listaComputadoras) {
@@ -48,11 +48,11 @@ public class JPanelColumnasComputadoras extends JPanel {
     }
 
     public void agregarBtnsPC(ComputadoraDTO pcDTO) {
-       String colorCarrera = obtenerColorDeCarrera(pcDTO.getIdCarrera());
-     
+      String colorCarrera = obtenerColorDeCarrera(pcDTO.getIdCarrera());
+        String numeroPc = pcDTO.getNumComputadora();
         Color color = colorAdapter.convertirStringAColor(colorCarrera);
-        
-        JPanelBtnComputadora panelPC = new JPanelBtnComputadora(color, pcDTO);  // Se pasa el objeto ComputadoraDTO
+
+        JPanelBtnPCApartados panelPC = new JPanelBtnPCApartados(color, numeroPc, pcDTO.getIdComputadora());
         panelPC.setPreferredSize(new Dimension(100, 113));
 
         gbc.gridx = columna;
@@ -69,10 +69,9 @@ public class JPanelColumnasComputadoras extends JPanel {
         repaint();
     }
     
-        private String obtenerColorDeCarrera(Long idCarrera) {
-        // Obtener el color de la carrera asociada a la computadora
+    private String obtenerColorDeCarrera(Long idCarrera) {
         CarreraDTO carreraDTO = carreraNegocio.obtenerCarreraDTOPorID(idCarrera);
-        return carreraDTO != null ? carreraDTO.getColor() : "#FFFFFF";  // Si no encuentra el color, asigna blanco
+        return carreraDTO != null ? carreraDTO.getColor() : "#FFFFFF"; 
     }
 
     private void ajustarTamanioPanel() {
@@ -82,6 +81,4 @@ public class JPanelColumnasComputadoras extends JPanel {
         int ancho = columnasMax * 110;
         setPreferredSize(new Dimension(ancho, alto));
     }
-
 }
-

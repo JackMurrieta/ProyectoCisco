@@ -4,6 +4,16 @@
  */
 package Utilerias;
 
+import DAOs.AlumnoDAO;
+import DAOs.ApartadoPorDiaDAO;
+import DAOs.ComputadoraDAO;
+import DTOs.AlumnoDTO;
+import Entidades.AlumnoEntidad;
+import Entidades.ApartadoEntidad;
+import Entidades.ApartadoPorDiaEntidad;
+import Entidades.ComputadoraEntidad;
+import Interfaces.IAlumnoNegocio;
+import Negocio.AlumnoNegocio;
 import Programa1.FrmEquiposComputo;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -26,63 +36,28 @@ import javax.swing.SwingUtilities;
  */
 public class JPanelBtnPCApartados extends JPanel {
 
-    private int anchoPanel;
-    private int largoPanel;
     private Color color;
     private String numero;
+    private Long idComputadora; // Añadido para identificar la computadora
+     private IAlumnoNegocio alumnoNegocio;
+     
 
-    public JPanelBtnPCApartados(Color color, String numero) {
-        this.numero= numero;
+    public JPanelBtnPCApartados(Color color, String numero, Long idComputadora) {
+        this.numero = numero;
         this.color = color;
+        this.idComputadora = idComputadora;
+              this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
         initComponents();
-        btnPC.setOpaque(false); // No opaco
-        btnPC.setContentAreaFilled(false); // No relleno
-        btnPC.setBorderPainted(false); // Sin borde
-        btnPC.setFocusPainted(false); // Evita que se muestre resaltado al hacer clic
-        btnPC.setBackground(new Color(0, 0, 0, 0)); // Color completamente transparente
-
+        btnPC.setOpaque(false);
+        btnPC.setContentAreaFilled(false);
+        btnPC.setBorderPainted(false);
+        btnPC.setFocusPainted(false);
+        btnPC.setBackground(new Color(0, 0, 0, 0)); // Color transparente
     }
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmEquiposComputo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Color color = Color.cyan;
-                JPanelBtnPCApartados panel = new JPanelBtnPCApartados(color, "001");
-                JFrame frame = new JFrame();
-                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Permite cerrar la ventana correctamente
-                frame.setSize(100,155);
-                frame.add(panel);
-                frame.setVisible(true);
-            }
-        });
-    }
+   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,10 +86,11 @@ public class JPanelBtnPCApartados extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
-        // TODO add your handling code here:
-        System.out.println("BOTON CLIKEADO"+ numero);
+      
+        
     }//GEN-LAST:event_btnPCActionPerformed
 
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JpanelPCRecomendado;
