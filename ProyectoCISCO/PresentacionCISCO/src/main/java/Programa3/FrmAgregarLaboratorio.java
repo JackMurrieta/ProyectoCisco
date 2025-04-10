@@ -68,9 +68,9 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
         finMin = new CustomSpinner(CustomSpinner.Tipo.MINUTO);
         btnLogin = new javax.swing.JButton();
         txtNombre = new javax.swing.JTextField();
-        txtContrasena = new javax.swing.JTextField();
         lblNombreInstituto1 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
+        txtContrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -146,7 +146,6 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
             }
         });
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, 340, 60));
-        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 340, 60));
 
         lblNombreInstituto1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
         lblNombreInstituto1.setForeground(new java.awt.Color(30, 47, 86));
@@ -161,6 +160,9 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, 260, 60));
+
+        txtContrasena.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        getContentPane().add(txtContrasena, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 230, 340, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -217,7 +219,7 @@ public class FrmAgregarLaboratorio extends javax.swing.JFrame {
     private javax.swing.JLabel lblNombreInstituto1;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblPassword2;
-    private javax.swing.JTextField txtContrasena;
+    private javax.swing.JPasswordField txtContrasena;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
