@@ -5,8 +5,11 @@
 package DAOs;
 
 import Entidades.ComputadoraEntidad;
+import Excepciones.PersistenciaException;
 import InterfazDAOs.IComputadoraDAO;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -91,20 +94,34 @@ public class ComputadoraDAO implements IComputadoraDAO {
     }
 
     @Override
-    public void editarComputadora(ComputadoraEntidad pc) {
+    public void editarComputadora(ComputadoraEntidad pcEntidad) {  
+        if (pcEntidad.getId() == null) {
+            throw new IllegalArgumentException("La computadora a editar debe tener un ID válido.");
+        }
+
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();
+        try {
+            em.getTransaction().begin();
 
-        ComputadoraEntidad pcEncontrada = em.find(ComputadoraEntidad.class, pc.getId());
+            ComputadoraEntidad pcEditar = em.find(ComputadoraEntidad.class, pcEntidad.getId());
 
-        if (pcEncontrada != null) {
-            pcEncontrada.setDireccionIp(pc.getDireccionIp());
-            pcEncontrada.setNumComputadora(pc.getNumComputadora());
-            pcEncontrada.setEstatus(pc.isEstatus());
-            pcEncontrada.setCarrera(pc.getCarrera());
-            em.getTransaction().commit();
-        } else {
-            throw new PersistenceException("Computadora no enconrada");
+            if (pcEditar != null) {
+                pcEditar.setDireccionIp(pcEntidad.getDireccionIp());
+                pcEditar.setNumComputadora(pcEntidad.getNumComputadora());
+                pcEditar.setEstatus(pcEntidad.isEstatus());
+                pcEditar.setTipo(pcEntidad.getTipo());
+                pcEditar.setLaboratorio(pcEntidad.getLaboratorio());
+                pcEditar.setCarrera(pcEntidad.getCarrera());
+
+                em.getTransaction().commit();
+            } else {
+                em.getTransaction().rollback();
+                throw new PersistenciaException("Computadora no encontrada");
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(ComputadoraDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            em.close();
         }
     }
 }

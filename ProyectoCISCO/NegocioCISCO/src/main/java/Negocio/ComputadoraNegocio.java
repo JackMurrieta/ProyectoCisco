@@ -8,6 +8,7 @@ import Adaptadores.ComputadoraAdapter;
 import DAOs.ComputadoraDAO;
 import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
+import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IComputadoraNegocio;
@@ -33,7 +34,7 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     
 //DTO CON CARRERA Y IDLAB
     @Override
-    public ComputadoraDTO validarDatosComputadora(ComputadoraDTO pc) throws NegocioException {
+    public ComputadoraDTO validarDatosGuardarComputadora(ComputadoraDTO pc) throws NegocioException {
         validarDireccionIp(pc.getDireccionIp());
         validarNumComputadora(pc.getNumComputadora());
         //Revisar este Codigo
@@ -42,19 +43,15 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
     
     private ComputadoraDTO validarCarrera(ComputadoraDTO pc){
-        ComputadoraDTO pcExistente = validarExistencia(pc);
-        if(pcExistente ==null){
-            if (pc.getIdCarrera() == null) {
-                ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdLab());
-                return pcValidada;
-            } else {
-                ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdCarrera(), pc.getIdLab());
-                return pcValidada;
-            }
+        if (pc.getIdCarrera() == null) {
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdLab());
+            return pcValidada;
+        } else {
+            ComputadoraDTO pcValidada = new ComputadoraDTO(pc.getDireccionIp(), pc.getNumComputadora(), pc.isEstatus(), pc.getTipo(), pc.getIdCarrera(), pc.getIdLab());
+            return pcValidada;
         }
-        return pcExistente;
-
     }
+    
     private ComputadoraDTO validarExistencia(ComputadoraDTO pcDto){
         if(pcDto.getIdComputadora() != null){
             ComputadoraDTO  pcExistente= obtenerComputadora(pcDto.getNumComputadora());
@@ -84,13 +81,13 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
 
     @Override
-    public void guardarComputadora(ComputadoraDTO pc,CarreraDTO carreraDTO) throws NegocioException {
-        ComputadoraDTO pcValidada= validarDatosComputadora(pc);
+    public void guardarComputadora(ComputadoraDTO pc) throws NegocioException {
+        ComputadoraDTO pcValidada= validarDatosGuardarComputadora(pc);
         ComputadoraEntidad pcEntidad;
         if(pc.getIdCarrera()==null){
             pcEntidad = convertidor.ConvertirDtoLeer(pcValidada);
         }else{
-            pcEntidad = convertidor.convertirDtoHacer(pcValidada,carreraDTO);
+            pcEntidad = convertidor.convertirDtoHacer(pcValidada);
         }
         pcDAO.guardarComputadora(pcEntidad);
     }
@@ -102,15 +99,46 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
 
     //Checar editar Metodo
     @Override
-    public void editarComputadora(ComputadoraDTO pc,CarreraDTO carreraDTO) throws NegocioException {
-        ComputadoraDTO pcValidada= validarDatosComputadora(pc);
-        ComputadoraEntidad pcEntidad;
-        if(pc.getIdCarrera()==null){
-            pcEntidad = convertidor.ConvertirDtoLeer(pcValidada);
+    public void editarComputadora(ComputadoraDTO pc) throws NegocioException {
+        validarDireccionIp(pc.getDireccionIp());
+        validarNumComputadora(pc.getNumComputadora());
+        ComputadoraDTO existente = validarExistencia(pc);
+        
+        existente.setDireccionIp(pc.getDireccionIp());
+        existente.setNumComputadora(pc.getNumComputadora());
+        existente.setEstatus(pc.isEstatus());
+        existente.setTipo(pc.getTipo());
+        existente.setIdCarrera(pc.getIdCarrera());
+        existente.setIdLab(pc.getIdLab());
+        
+        
+        ComputadoraEntidad pcEditar = new ComputadoraEntidad();
+        CarreraEntidad carreraEntity = convertidor.convertirCarrera(existente.getIdCarrera());
+        
+        if(existente.getIdCarrera()==null){
+            //BUSCAR EN DAO
+            ComputadoraEntidad pcEntidad = convertidor.ConvertirDtoLeer(existente);
+            pcEditar.setId(existente.getIdComputadora());
+            pcEditar.setDireccionIp(pcEntidad.getDireccionIp());
+            pcEditar.setNumComputadora(pcEntidad.getNumComputadora());
+            pcEditar.setEstatus(pcEntidad.isEstatus());
+            pcEditar.setTipo(pcEntidad.getTipo());
+            pcEditar.setLaboratorio(pcEntidad.getLaboratorio());
+            pcEditar.setCarrera(null);
+            
+            pcDAO.editarComputadora(pcEditar);
         }else{
-            pcEntidad = convertidor.convertirDtoHacer(pcValidada,carreraDTO);
+            ComputadoraEntidad pcEntidad = convertidor.convertirDtoHacer(existente);
+            pcEditar.setId(existente.getIdComputadora());
+            pcEditar.setDireccionIp(pcEntidad.getDireccionIp());
+            pcEditar.setNumComputadora(pcEntidad.getNumComputadora());
+            pcEditar.setEstatus(pcEntidad.isEstatus());
+            pcEditar.setTipo(pcEntidad.getTipo());
+            pcEditar.setLaboratorio(pcEntidad.getLaboratorio());
+            pcEditar.setCarrera(carreraEntity);
+            
+            pcDAO.editarComputadora(pcEditar);
         }
-        pcDAO.editarComputadora(pcEntidad);
     }
     
 

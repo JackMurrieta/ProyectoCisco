@@ -109,7 +109,6 @@ public class ComputadoraDTO {
     }
     
     
-    
 
     public String getTipo() {
         return tipo;
@@ -123,8 +122,6 @@ public class ComputadoraDTO {
         this.idCarrera = idCarrera;
     }
     
-    
-
     public String getColor() {
         return color;
     }
@@ -170,9 +167,6 @@ public class ComputadoraDTO {
         return idCarrera;
     }
 
-    public void setIdCarrera(long idCarrera) {
-        this.idCarrera = idCarrera;
-    }
 
     @Override
     public String toString() {

@@ -12,15 +12,17 @@ import java.util.List;
  *
  * @author Jack Murrieta
  */
-public class EquipoDatosSE extends javax.swing.JPanel {
+public class EquipoDatosEditar extends javax.swing.JPanel {
     private boolean estatus;
-
+    private ComputadoraDTO pcDTO;
     /**
      * Creates new form EquipoSeleccionado
      * @param carreras
      */
-    public EquipoDatosSE(List<CarreraDTO> carreras) {
+    public EquipoDatosEditar(List<CarreraDTO> carreras,ComputadoraDTO pc) {
         initComponents();
+        this.pcDTO = pc;
+        this.estatus = pcDTO.isEstatus();
         // Inicializando el comboBox con las opciones
         comboxTipo.removeAllItems();
         comboxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{
@@ -31,6 +33,12 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         for (CarreraDTO carrera : carreras) {
             comboxCarreras.addItem(carrera.getNombre());
         }
+        txtIP.setText(pc.getDireccionIp());
+        txtNumEquipo.setText(pc.getNumComputadora());
+        if(estatus == false){
+            lblEstatus.setText("Deshabilitado");
+        }
+        comboxTipo.setSelectedItem(pc.getTipo());
  
     }
  
@@ -156,7 +164,6 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         // TODO add your handling code here:
         String ip = txtIP.getText().trim();
         String numPC = txtNumEquipo.getText().trim();
-        boolean estatus = true;
         if(lblEstatus.getText().equalsIgnoreCase("Deshabilitado")){
             estatus =false;
         }
@@ -166,18 +173,27 @@ public class EquipoDatosSE extends javax.swing.JPanel {
         
         String tipo = (String) comboxTipo.getSelectedItem();
         Long idLab = ControlNavegacion.ControlNavegacion.obtenerIdLab();
+        //Settear VALORES DE LA pc SELECCIONADA
+        this.pcDTO.setDireccionIp(ip);
+        pcDTO.setNumComputadora(numPC);
+        pcDTO.setEstatus(estatus);
+        pcDTO.setTipo(tipo);
+        pcDTO.setIdLab(idLab);
+        
         if(tipo.equalsIgnoreCase("Leer apartados")){
             idCarrera = null;
-            ComputadoraDTO pcDTO = new ComputadoraDTO(ip, numPC, estatus, tipo, idCarrera, idLab);
-            ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO,null);
+            //SETTEAR DTO
+            pcDTO.setIdCarrera(idCarrera);
+            ControlNavegacion.ControlNavegacion.editarComputadora(pcDTO);
+            ControlNavegacion.ControlNavegacion.mostrarMensajeInformativo("Cambios Guardados");
             return;
-            
         }
         carreraNombre = (String) comboxCarreras.getSelectedItem();
         CarreraDTO cDTO= ControlNavegacion.ControlNavegacion.buscarCarreraPorNombre(carreraNombre);
         System.out.println(cDTO.toString());
-        ComputadoraDTO pcDTO = new ComputadoraDTO(ip, numPC, estatus, tipo, cDTO.getId(),idLab);
-        ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO,cDTO);
+        pcDTO.setIdCarrera(cDTO.getId());
+        ControlNavegacion.ControlNavegacion.editarComputadora(pcDTO);
+        ControlNavegacion.ControlNavegacion.mostrarMensajeInformativo("Cambios Guardados");
  
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
 

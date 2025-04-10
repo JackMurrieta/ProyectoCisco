@@ -73,6 +73,7 @@ public class OpcionRealizarComputo extends javax.swing.JPanel {
         // TODO add your handling code here:
         //EliminarComputadora
         ControlNavegacion.ControlNavegacion.eliminarComputadora(pcDTO);
+        ControlNavegacion.ControlNavegacion.mostrarMensajeInformativo("Computadora eliminada correctamente");
         
         
         // Mostrar Menu

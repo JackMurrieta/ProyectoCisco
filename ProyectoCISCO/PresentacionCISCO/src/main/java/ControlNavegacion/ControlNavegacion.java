@@ -19,7 +19,8 @@ import Negocio.ComputadoraNegocio;
 import Negocio.InstitutoNegocio;
 import Negocio.LaboratorioNegocio;
 import Programa3.AdminEquiposComputo;
-import Programa3.EquipoDatosSE;
+import Programa3.EquipoDatosEditar;
+import Programa3.EquipoDatosGuardar;
 import Programa3.FrmAgregarLaboratorioLogin;
 import Programa3.FrmLoginInstituto;
 import Programa3.Menu;
@@ -58,9 +59,12 @@ public class ControlNavegacion {
     private static JFrame frmEquipoDatosSE;
     private static Menu menu;
     private static AdminEquiposComputo panelAdminPc;
-    private static EquipoDatosSE panelDatosPc;
+    private static EquipoDatosGuardar panelDatosPcGuardar;
     private static JFrame FrmOpcionRealizarComputo;
     private static OpcionRealizarComputo panelOpcionesPc;
+    private static EquipoDatosEditar panelDatosPcEditar;
+    
+    
     
 
     public ControlNavegacion() {
@@ -182,9 +186,8 @@ public class ControlNavegacion {
     }
 
     
-    
-    public static JFrame mostrarEquipoDatosSE(ComputadoraDTO pcDTO){
- // Si ya existe y sigue visible, solo la traemos al frente
+    public static JFrame mostrarEquipoDatosSE(ComputadoraDTO pcDTO) {
+        // Si ya existe y sigue visible, solo la traemos al frente
         if (frmEquipoDatosSE != null && frmEquipoDatosSE.isDisplayable()) {
             frmEquipoDatosSE.toFront();
             frmEquipoDatosSE.requestFocus();
@@ -194,8 +197,15 @@ public class ControlNavegacion {
         // Si no, la creamos nuevamente
         computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
         actualizarListaCarreras();
-        panelDatosPc = new EquipoDatosSE(carreras);
-        frmEquipoDatosSE = mostrarFrm(panelDatosPc);
+        panelDatosPcGuardar = new EquipoDatosGuardar(carreras);
+        if (pcDTO == null) {
+            frmEquipoDatosSE = mostrarFrm(panelDatosPcGuardar);
+
+        } else {
+            panelDatosPcEditar = new EquipoDatosEditar(carreras, pcDTO);
+            frmEquipoDatosSE = mostrarFrm(panelDatosPcEditar);
+
+        }
         return frmAdminEquipos;
     }
     
@@ -207,9 +217,9 @@ public class ControlNavegacion {
                 JOptionPane.INFORMATION_MESSAGE
         );
     }
-    public static void guardarEquipo(ComputadoraDTO pcDTO, CarreraDTO carreraDto){
+    public static void guardarEquipo(ComputadoraDTO pcDTO){
         try {
-            pcNegocio.guardarComputadora(pcDTO, carreraDto);
+            pcNegocio.guardarComputadora(pcDTO);
             mostrarMensajeInformativo("Equipo Guardado Correctamente");
         } catch (NegocioException ex) {
             //PONERJOPTION PANE
@@ -220,7 +230,8 @@ public class ControlNavegacion {
     
     public static void eliminarComputadora(ComputadoraDTO pcDTO){
         ComputadoraDTO pcObtenida = pcNegocio.obtenerComputadora(pcDTO.getNumComputadora());
-        pcNegocio.eliminarComputadora(pcObtenida.getIdLab());
+        Long id =pcObtenida.getIdCarrera();
+        pcNegocio.eliminarComputadora(id);
     }
     
     public static CarreraDTO buscarCarreraPorNombre(String nombre){
@@ -243,9 +254,9 @@ public class ControlNavegacion {
         FrmOpcionRealizarComputo = mostrarFrm(panelOpcionesPc);
         
     }
-   public static void editarComputadora(ComputadoraDTO pc, CarreraDTO carreraDTO){
+   public static void editarComputadora(ComputadoraDTO pc){
         try {
-            pcNegocio.editarComputadora(pc, carreraDTO);
+            pcNegocio.editarComputadora(pc);
         } catch (NegocioException ex) {
             mostrarMensajeError(ex);
         }
