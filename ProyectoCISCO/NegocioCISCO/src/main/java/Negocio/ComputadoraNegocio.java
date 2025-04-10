@@ -12,6 +12,7 @@ import DTOs.ComputadoraDTO;
 import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
 import ExcepcionNegocio.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IComputadoraNegocio;
 import InterfazDAOs.IComputadoraDAO;
 import java.util.ArrayList;
@@ -93,7 +94,11 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         }else{
             pcEntidad = convertidor.convertirDtoHacer(pcValidada);
         }
-        pcDAO.guardarComputadora(pcEntidad);
+        try {
+            pcDAO.guardarComputadora(pcEntidad);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
 
    

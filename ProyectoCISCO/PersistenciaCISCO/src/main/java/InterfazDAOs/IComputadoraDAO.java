@@ -16,7 +16,7 @@ import java.util.List;
 public interface IComputadoraDAO {
     
     //guardarComputadora
-    public void guardarComputadora(ComputadoraEntidad pc);
+    public void guardarComputadora(ComputadoraEntidad pc)throws PersistenciaException;
     
     //EliminarComputadora
     public void eliminarComputadora(Long idComputadora);

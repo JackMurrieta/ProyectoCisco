@@ -222,10 +222,12 @@ public class ControlNavegacion {
         try {
             pcNegocio.guardarComputadora(pcDTO);
             mostrarMensajeInformativo("Equipo Guardado Correctamente");
-        } catch (NegocioException ex) {
+        }catch (NegocioException ex) {
             //PONERJOPTION PANE
             mostrarMensajeError(ex);
         }
+        //PONERJOPTION PANE
+
     }
     //ELIMINAR COMPUTADORA POR DTO
     
@@ -262,9 +264,6 @@ public class ControlNavegacion {
             mostrarMensajeError(ex);
         }
    }
-
-
-    
     
     //METODO DE FRM
     public static JFrame mostrarFrm(JPanel p) {

@@ -29,7 +29,7 @@ public class ComputadoraDAO implements IComputadoraDAO {
     public ComputadoraDAO() {
     }
 
-    public void guardarComputadora(ComputadoraEntidad pc) {
+    public void guardarComputadora(ComputadoraEntidad pc)throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
         try {
 
@@ -39,7 +39,7 @@ public class ComputadoraDAO implements IComputadoraDAO {
             System.out.println("Computadora guardada exitosamente.");
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersistenceException("Error al guardar la computadora: " + e.getMessage());
+            throw new PersistenciaException("Error al guardar la computadora: " + e.getMessage());
         } finally {
             em.close();
         }
