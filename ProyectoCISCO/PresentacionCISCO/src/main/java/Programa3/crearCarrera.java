@@ -10,9 +10,11 @@ import ExcepcionNegocio.NegocioException;
 import Excepciones.PersistenciaException;
 import Interfaces.ICarreraNegocio;
 import Negocio.CarreraNegocio;
+import java.awt.Color;
 import java.awt.Window;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -25,6 +27,7 @@ public class crearCarrera extends javax.swing.JPanel {
 
     ICarreraNegocio carreraNegocio;
     private Long idCarreraEditando = null;
+    private Color colorSeleccionado = Color.WHITE;
 
     public crearCarrera() {
         initComponents();
@@ -43,18 +46,15 @@ public class crearCarrera extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jTFNombreCarrera = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jTFcolor = new javax.swing.JTextField();
         jTFtiempoLimite = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnGuardarCarrera = new javax.swing.JButton();
+        btnElegirColor = new javax.swing.JButton();
 
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Nombre");
-
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel5.setText("Color");
 
         jLabel7.setBackground(new java.awt.Color(0, 0, 0));
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
@@ -74,6 +74,13 @@ public class crearCarrera extends javax.swing.JPanel {
             }
         });
 
+        btnElegirColor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/color.jpg"))); // NOI18N
+        btnElegirColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnElegirColorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -87,20 +94,18 @@ public class crearCarrera extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(jLabel5))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(96, 96, 96)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTFcolor, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                            .addComponent(jTFNombreCarrera)
-                            .addComponent(jTFtiempoLimite)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(162, 162, 162)
                         .addComponent(jLabel3))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(155, 155, 155)
-                        .addComponent(jLabel7)))
+                        .addComponent(jLabel7))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(96, 96, 96)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTFcolor)
+                            .addComponent(jTFNombreCarrera)
+                            .addComponent(jTFtiempoLimite)
+                            .addComponent(btnElegirColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -110,15 +115,15 @@ public class crearCarrera extends javax.swing.JPanel {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTFNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addComponent(btnElegirColor, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jTFcolor, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTFtiempoLimite, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -186,6 +191,21 @@ public class crearCarrera extends javax.swing.JPanel {
         jTFcolor.setText("");
         jTFtiempoLimite.setText("");
     }//GEN-LAST:event_btnGuardarCarreraActionPerformed
+
+    private void btnElegirColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirColorActionPerformed
+        Color nuevoColor = JColorChooser.showDialog(this, "Seleccionar color", colorSeleccionado);
+        if (nuevoColor != null) {
+            colorSeleccionado = nuevoColor;
+
+         
+            String colorHex = String.format("#%06X", (0xFFFFFF & nuevoColor.getRGB()));
+
+         
+            jTFcolor.setText(colorHex);
+            jTFcolor.setBackground(nuevoColor); 
+            jTFcolor.setForeground(Color.WHITE); 
+        }
+    }//GEN-LAST:event_btnElegirColorActionPerformed
     public void cargarDatosCarrera(CarreraDTO carrera) {
         jTFNombreCarrera.setText(carrera.getNombre());
         jTFcolor.setText(carrera.getColor());
@@ -195,10 +215,10 @@ public class crearCarrera extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnElegirColor;
     private javax.swing.JButton btnGuardarCarrera;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTFNombreCarrera;
