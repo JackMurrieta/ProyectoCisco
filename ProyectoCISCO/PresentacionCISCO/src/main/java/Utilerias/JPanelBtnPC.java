@@ -22,10 +22,9 @@ public class JPanelBtnPC extends JPanel {
     private String numero;
     private Color color;
 
-    public JPanelBtnPC(Color color, ComputadoraDTO pcDTO) {
+    public JPanelBtnPC(Color color, String numero) {
         initComponents();
-        this.pcDTO = pcDTO;
-        this.numero = pcDTO.getNumComputadora();
+        this.numero = numero;
         this.color = color;
         
         btnPC.setOpaque(false); // No opaco

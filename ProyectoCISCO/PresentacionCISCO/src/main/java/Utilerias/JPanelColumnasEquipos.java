@@ -44,7 +44,7 @@ public class JPanelColumnasEquipos extends JPanel {
 
     public void agregarBtnsPC(String color,ComputadoraDTO pcDTO) {
         ColorAdapter adapter = new ColorAdapter();
-        JPanelBtnPC panelPC = new JPanelBtnPC(adapter.convertirStringAColor(color), pcDTO);
+        JPanelBtnPC panelPC = new JPanelBtnPC(adapter.convertirStringAColor(color), pcDTO.getNumComputadora());
         panelPC.setPreferredSize(new Dimension(100, 113));
 
         gbc.gridx = columna;
