@@ -62,7 +62,7 @@ public class crearAlumno extends javax.swing.JPanel {
         jTFapellidoMaterno = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         JTFcontrasenia1 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        jTFcontrasenia2 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnGuardarAlumno = new javax.swing.JButton();
@@ -151,7 +151,7 @@ public class crearAlumno extends javax.swing.JPanel {
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jTFapellidoPaterno, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(JTFcontrasenia1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jTFcontrasenia2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                             .addGap(6, 6, 6)
                                             .addComponent(jLabel7)))
@@ -204,7 +204,7 @@ public class crearAlumno extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addGap(5, 5, 5)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTFcontrasenia2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,11 +254,17 @@ public class crearAlumno extends javax.swing.JPanel {
             String apellidoP = jTFapellidoPaterno.getText().trim();
             String apellidoM = jTFapellidoMaterno.getText().trim();
             String contrasenia = JTFcontrasenia1.getText().trim();
-
-            if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || contrasenia.isEmpty()) {
+            String confirmarContrasenia = jTFcontrasenia2.getText().trim();
+            
+            if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || contrasenia.isEmpty()  || confirmarContrasenia.isEmpty() ) {
                 JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
                 return;
             }
+            
+            if (!contrasenia.equals(confirmarContrasenia)) {
+            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
+            return;
+        }
 
             String estatusSeleccionado = (String) jComboBox1.getSelectedItem();
             boolean estatus = estatusSeleccionado.equalsIgnoreCase("Activo");
@@ -319,7 +325,7 @@ public class crearAlumno extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTFapellidoMaterno;
     private javax.swing.JTextField jTFapellidoPaterno;
+    private javax.swing.JTextField jTFcontrasenia2;
     private javax.swing.JTextField jTFnombre;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

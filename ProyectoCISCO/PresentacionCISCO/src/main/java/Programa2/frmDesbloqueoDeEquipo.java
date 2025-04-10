@@ -44,8 +44,8 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
         labelNumEquipo = new javax.swing.JLabel();
         labelAlumnoQueAparto = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTFcontrasenia = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
+        jTFcontrasenia = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +71,8 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
             }
         });
 
+        jTFcontrasenia.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -85,11 +87,11 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(labelAlumnoQueAparto, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFcontrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 60, Short.MAX_VALUE))
+                    .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addComponent(jTFcontrasenia))
+                .addGap(0, 117, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,11 +102,14 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
                     .addComponent(labelNumEquipo))
                 .addGap(18, 18, 18)
                 .addComponent(labelAlumnoQueAparto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTFcontrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jTFcontrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(37, 37, 37)
                 .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
@@ -190,7 +195,7 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
     private javax.swing.JButton btnIngresar;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTFcontrasenia;
+    private javax.swing.JPasswordField jTFcontrasenia;
     private javax.swing.JLabel labelAlumnoQueAparto;
     private javax.swing.JLabel labelBienvenido;
     private javax.swing.JLabel labelNumEquipo;
