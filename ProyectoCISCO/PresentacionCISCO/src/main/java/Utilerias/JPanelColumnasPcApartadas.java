@@ -8,6 +8,7 @@ import DAOs.CarreraDAO;
 import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
 import Negocio.CarreraNegocio;
+import Programa1.FrmEquiposComputo;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -27,13 +28,14 @@ public class JPanelColumnasPcApartadas extends JPanel {
     private List<ComputadoraDTO> computadoras;
     private ColorAdapter colorAdapter;
      private CarreraNegocio carreraNegocio; 
+     private FrmEquiposComputo frmEquiposComputo;
 
-    public JPanelColumnasPcApartadas(List<ComputadoraDTO> listaComputadoras) {
+    public JPanelColumnasPcApartadas(List<ComputadoraDTO> listaComputadoras, FrmEquiposComputo frmEquiposComputo) {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
-
+         this.frmEquiposComputo = frmEquiposComputo;
         this.computadoras = listaComputadoras;
         this.colorAdapter = new ColorAdapter();
         this.carreraNegocio = new CarreraNegocio(new CarreraDAO()); 
@@ -52,7 +54,7 @@ public class JPanelColumnasPcApartadas extends JPanel {
         String numeroPc = pcDTO.getNumComputadora();
         Color color = colorAdapter.convertirStringAColor(colorCarrera);
 
-        JPanelBtnPCApartados panelPC = new JPanelBtnPCApartados(color, numeroPc, pcDTO.getIdComputadora());
+        JPanelBtnPCApartados panelPC = new JPanelBtnPCApartados(color, numeroPc, pcDTO.getIdComputadora(),  frmEquiposComputo);
         panelPC.setPreferredSize(new Dimension(100, 113));
 
         gbc.gridx = columna;

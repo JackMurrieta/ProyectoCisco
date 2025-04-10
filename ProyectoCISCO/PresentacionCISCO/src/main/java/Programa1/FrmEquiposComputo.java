@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.time.LocalTime;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -52,14 +53,13 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 800));
 
-        this.setLocationRelativeTo(null); 
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
 
-        List<ComputadoraDTO> listaComputadoras = obtenerListaDeComputadoras(); 
+        List<ComputadoraDTO> listaComputadoras = obtenerListaDeComputadoras();
 
-
-        JPanelColumnasPcApartadas panelColumnas = new JPanelColumnasPcApartadas(listaComputadoras);
+        JPanelColumnasPcApartadas panelColumnas = new JPanelColumnasPcApartadas(listaComputadoras, this);
 
         JScrollPane scroll = new JScrollPane(panelColumnas);
         scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -150,10 +150,22 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     private List<ComputadoraDTO> obtenerListaDeComputadoras() {
-        ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio(); 
-        return computadoraNegocio.obtenerComputadorasPorLaboratorio(1L); 
+        ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio();
+        return computadoraNegocio.obtenerComputadorasPorLaboratorio(1L);
     }
 
+    public LocalTime obtenerHoraSeleccionada() {
+        Integer horaSeleccionada = (Integer) spnnerTiempo.getValue(); 
+        return LocalTime.of(horaSeleccionada, 0); 
+    }
+
+    public Long obtenerIdAlumno() {
+        return alumno.getId(); 
+    }
+    
+    public String obtenerNombreAlumno(){
+        return alumno.getNombre();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JpanelPCRecomendado;

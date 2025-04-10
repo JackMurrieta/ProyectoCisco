@@ -5,9 +5,11 @@
 package Utilerias;
 
 import DAOs.AlumnoDAO;
+import DAOs.ApartadoDAO;
 import DAOs.ApartadoPorDiaDAO;
 import DAOs.ComputadoraDAO;
 import DTOs.AlumnoDTO;
+import DTOs.ApartadoConDTO;
 import Entidades.AlumnoEntidad;
 import Entidades.ApartadoEntidad;
 import Entidades.ApartadoPorDiaEntidad;
@@ -22,6 +24,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalTime;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,12 +43,14 @@ public class JPanelBtnPCApartados extends JPanel {
     private String numero;
     private Long idComputadora; // Añadido para identificar la computadora
      private IAlumnoNegocio alumnoNegocio;
+     private FrmEquiposComputo frmEquiposComputo;
      
 
-    public JPanelBtnPCApartados(Color color, String numero, Long idComputadora) {
+    public JPanelBtnPCApartados(Color color, String numero, Long idComputadora, FrmEquiposComputo frmEquiposComputo) {
         this.numero = numero;
         this.color = color;
         this.idComputadora = idComputadora;
+          this.frmEquiposComputo = frmEquiposComputo;
               this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
         initComponents();
         btnPC.setOpaque(false);
@@ -86,8 +91,41 @@ public class JPanelBtnPCApartados extends JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
-      
+
+    LocalTime horaSeleccionada = frmEquiposComputo.obtenerHoraSeleccionada();  
+    Long idComputadoraSeleccionada = this.idComputadora; 
+    Long idAlumno = frmEquiposComputo.obtenerIdAlumno();  
+    String nombreAlumno = frmEquiposComputo.obtenerNombreAlumno(); 
+
+    String mensaje = "¿Deseas confirmar el apartado con los siguientes datos?\n\n"
+                   + "Alumno: " + nombreAlumno + "\n"
+                   + "Número de equipo: " + idComputadoraSeleccionada + "\n"
+                   + "Hora: " + horaSeleccionada;
+
+    // Mostrar mensaje de confirmación con opciones Sí/No
+    int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar apartado", JOptionPane.YES_NO_OPTION);
+
+    if (respuesta == JOptionPane.YES_OPTION) {
+        Long idApartadoPorDia = 1L; 
         
+        ApartadoConDTO apartadoDTO = new ApartadoConDTO();
+        apartadoDTO.setIdComputadora(idComputadoraSeleccionada);
+        apartadoDTO.setIdAlumno(idAlumno);
+        apartadoDTO.setIdApartadoPorDia(idApartadoPorDia);
+        apartadoDTO.setHoraInicio(horaSeleccionada);
+
+        ApartadoDAO apartadoDAO = new ApartadoDAO();
+        ApartadoEntidad apartadoEntidad = apartadoDAO.registrarApartadoo(apartadoDTO);
+
+        if (apartadoEntidad != null) {
+            JOptionPane.showMessageDialog(this, "El apartado se ha registrado exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Hubo un error al registrar el apartado.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "El apartado ha sido cancelado.");
+    }
+
     }//GEN-LAST:event_btnPCActionPerformed
 
     
