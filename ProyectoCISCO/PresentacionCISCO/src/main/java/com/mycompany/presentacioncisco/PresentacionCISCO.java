@@ -20,16 +20,7 @@ public class PresentacionCISCO {
         
         controlnav.mostrarLogin();
         FlatMaterialLighterIJTheme.setup();
-//        List<ComputadoraDTO> computadoras = ControlNavegacion.obtenerComputadoras(1L);
-//        for (ComputadoraDTO computadora : computadoras) {
-//            System.out.println(computadora.toString());
-//            System.out.println(computadora.getIdComputadora());
-//        }
-//        ComputadoraDTO pc = ControlNavegacion.obtenerPcPorNum("003");
-//        System.out.println(pc.toString());
-//        
-//        ComputadoraDTO pc1 = ControlNavegacion.obtenerPcPorID(13L);
-//        System.out.println(pc1.toString());
-//              
+
+           
     }
 }

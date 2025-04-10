@@ -8,6 +8,7 @@ import DAOs.AlumnoDAO;
 import DTOs.AlumnoDTO;
 import Interfaces.IAlumnoNegocio;
 import Negocio.AlumnoNegocio;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -80,7 +81,6 @@ public class FrmApartarEquipo extends javax.swing.JFrame {
 
         txtIdAlumno.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         txtIdAlumno.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtIdAlumno.setText("ingresa ID Alumno...");
         txtIdAlumno.setBorder(null);
         txtIdAlumno.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -175,7 +175,7 @@ public class FrmApartarEquipo extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+    FlatMaterialLighterIJTheme.setup();
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 

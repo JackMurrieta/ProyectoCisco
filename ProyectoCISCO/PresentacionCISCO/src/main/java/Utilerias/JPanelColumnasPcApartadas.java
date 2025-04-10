@@ -27,18 +27,18 @@ public class JPanelColumnasPcApartadas extends JPanel {
     private int fila = 0, columna = 0, columnasMax = 4;
     private List<ComputadoraDTO> computadoras;
     private ColorAdapter colorAdapter;
-     private CarreraNegocio carreraNegocio; 
-     private FrmEquiposComputo frmEquiposComputo;
+    private CarreraNegocio carreraNegocio;
+    private FrmEquiposComputo frmEquiposComputo;
 
     public JPanelColumnasPcApartadas(List<ComputadoraDTO> listaComputadoras, FrmEquiposComputo frmEquiposComputo) {
         setLayout(new GridBagLayout());
         setBackground(Color.WHITE);
         gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
-         this.frmEquiposComputo = frmEquiposComputo;
+        this.frmEquiposComputo = frmEquiposComputo;
         this.computadoras = listaComputadoras;
         this.colorAdapter = new ColorAdapter();
-        this.carreraNegocio = new CarreraNegocio(new CarreraDAO()); 
+        this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
 
         if (listaComputadoras != null) {
             for (ComputadoraDTO compu : listaComputadoras) {
@@ -50,11 +50,11 @@ public class JPanelColumnasPcApartadas extends JPanel {
     }
 
     public void agregarBtnsPC(ComputadoraDTO pcDTO) {
-      String colorCarrera = obtenerColorDeCarrera(pcDTO.getIdCarrera());
+        String colorCarrera = obtenerColorDeCarrera(pcDTO.getIdCarrera());
         String numeroPc = pcDTO.getNumComputadora();
         Color color = colorAdapter.convertirStringAColor(colorCarrera);
 
-        JPanelBtnPCApartados panelPC = new JPanelBtnPCApartados(color, numeroPc, pcDTO.getIdComputadora(),  frmEquiposComputo);
+        JPanelBtnPCApartados panelPC = new JPanelBtnPCApartados(color, numeroPc, pcDTO.getIdComputadora(), frmEquiposComputo);
         panelPC.setPreferredSize(new Dimension(100, 113));
 
         gbc.gridx = columna;
@@ -70,10 +70,10 @@ public class JPanelColumnasPcApartadas extends JPanel {
         revalidate();
         repaint();
     }
-    
+
     private String obtenerColorDeCarrera(Long idCarrera) {
         CarreraDTO carreraDTO = carreraNegocio.obtenerCarreraDTOPorID(idCarrera);
-        return carreraDTO != null ? carreraDTO.getColor() : "#FFFFFF"; 
+        return carreraDTO != null ? carreraDTO.getColor() : "#FFFFFF";
     }
 
     private void ajustarTamanioPanel() {

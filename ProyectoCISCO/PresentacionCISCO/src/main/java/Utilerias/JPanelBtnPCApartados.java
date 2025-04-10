@@ -42,16 +42,15 @@ public class JPanelBtnPCApartados extends JPanel {
     private Color color;
     private String numero;
     private Long idComputadora; // Añadido para identificar la computadora
-     private IAlumnoNegocio alumnoNegocio;
-     private FrmEquiposComputo frmEquiposComputo;
-     
+    private IAlumnoNegocio alumnoNegocio;
+    private FrmEquiposComputo frmEquiposComputo;
 
     public JPanelBtnPCApartados(Color color, String numero, Long idComputadora, FrmEquiposComputo frmEquiposComputo) {
         this.numero = numero;
         this.color = color;
         this.idComputadora = idComputadora;
-          this.frmEquiposComputo = frmEquiposComputo;
-              this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
+        this.frmEquiposComputo = frmEquiposComputo;
+        this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
         initComponents();
         btnPC.setOpaque(false);
         btnPC.setContentAreaFilled(false);
@@ -59,10 +58,11 @@ public class JPanelBtnPCApartados extends JPanel {
         btnPC.setFocusPainted(false);
         btnPC.setBackground(new Color(0, 0, 0, 0)); // Color transparente
     }
+
     /**
      * @param args the command line arguments
      */
-   
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -92,43 +92,41 @@ public class JPanelBtnPCApartados extends JPanel {
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
 
-    LocalTime horaSeleccionada = frmEquiposComputo.obtenerHoraSeleccionada();  
-    Long idComputadoraSeleccionada = this.idComputadora; 
-    Long idAlumno = frmEquiposComputo.obtenerIdAlumno();  
-    String nombreAlumno = frmEquiposComputo.obtenerNombreAlumno(); 
+        LocalTime horaSeleccionada = frmEquiposComputo.obtenerHoraSeleccionada();
+        Long idComputadoraSeleccionada = this.idComputadora;
+        Long idAlumno = frmEquiposComputo.obtenerIdAlumno();
+        String nombreAlumno = frmEquiposComputo.obtenerNombreAlumno();
 
-    String mensaje = "¿Deseas confirmar el apartado con los siguientes datos?\n\n"
-                   + "Alumno: " + nombreAlumno + "\n"
-                   + "Número de equipo: " + idComputadoraSeleccionada + "\n"
-                   + "Hora: " + horaSeleccionada;
+        String mensaje = "¿Deseas confirmar el apartado con los siguientes datos?\n\n"
+                + "Alumno: " + nombreAlumno + "\n"
+                + "Número de equipo: " + idComputadoraSeleccionada + "\n"
+                + "Hora: " + horaSeleccionada;
 
-    // Mostrar mensaje de confirmación con opciones Sí/No
-    int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar apartado", JOptionPane.YES_NO_OPTION);
+        int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar apartado", JOptionPane.YES_NO_OPTION);
 
-    if (respuesta == JOptionPane.YES_OPTION) {
-        Long idApartadoPorDia = 1L; 
-        
-        ApartadoConDTO apartadoDTO = new ApartadoConDTO();
-        apartadoDTO.setIdComputadora(idComputadoraSeleccionada);
-        apartadoDTO.setIdAlumno(idAlumno);
-        apartadoDTO.setIdApartadoPorDia(idApartadoPorDia);
-        apartadoDTO.setHoraInicio(horaSeleccionada);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            Long idApartadoPorDia = 1L;
 
-        ApartadoDAO apartadoDAO = new ApartadoDAO();
-        ApartadoEntidad apartadoEntidad = apartadoDAO.registrarApartadoo(apartadoDTO);
+            ApartadoConDTO apartadoDTO = new ApartadoConDTO();
+            apartadoDTO.setIdComputadora(idComputadoraSeleccionada);
+            apartadoDTO.setIdAlumno(idAlumno);
+            apartadoDTO.setIdApartadoPorDia(idApartadoPorDia);
+            apartadoDTO.setHoraInicio(horaSeleccionada);
 
-        if (apartadoEntidad != null) {
-            JOptionPane.showMessageDialog(this, "El apartado se ha registrado exitosamente.");
+            ApartadoDAO apartadoDAO = new ApartadoDAO();
+            ApartadoEntidad apartadoEntidad = apartadoDAO.registrarApartadoo(apartadoDTO);
+
+            if (apartadoEntidad != null) {
+                JOptionPane.showMessageDialog(this, "El apartado se ha registrado exitosamente.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Hubo un error al registrar el apartado.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Hubo un error al registrar el apartado.");
+            JOptionPane.showMessageDialog(this, "El apartado ha sido cancelado.");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "El apartado ha sido cancelado.");
-    }
 
     }//GEN-LAST:event_btnPCActionPerformed
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JpanelPCRecomendado;
