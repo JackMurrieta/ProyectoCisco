@@ -5,6 +5,7 @@
 package Interfaces;
 
 import DTOs.ApartadoDTO;
+import Entidades.ApartadoEntidad;
 
 /**
  *
@@ -12,6 +13,8 @@ import DTOs.ApartadoDTO;
  */
 public interface IApartadoNegocio {
     public void registrarApartado(ApartadoDTO apartadoDTO);
+    
+    ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
     
     
 }

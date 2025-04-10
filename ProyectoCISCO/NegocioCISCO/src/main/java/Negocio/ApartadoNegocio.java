@@ -48,5 +48,9 @@ public class ApartadoNegocio implements IApartadoNegocio{
         apartadoDAO.registrarApartado(apartadoEntity);
         
     }
+    @Override
+    public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno){
+        return apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
+    }
     
 }

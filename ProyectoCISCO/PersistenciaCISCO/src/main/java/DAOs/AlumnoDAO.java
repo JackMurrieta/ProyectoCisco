@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -236,5 +237,21 @@ public void eliminarAlumnoPorId(Long id) {
         }
         return null;
     }
+    
+    public AlumnoEntidad obtenerAlumnoPorContrasenia(String contrasenia) {
+    try {
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<AlumnoEntidad> cq = cb.createQuery(AlumnoEntidad.class);
+        Root<AlumnoEntidad> root = cq.from(AlumnoEntidad.class);
+        cq.select(root).where(cb.equal(root.get("contrasenia"), contrasenia));
+        return entityManager.createQuery(cq).getSingleResult();
+    } catch (NoResultException e) {
+        return null;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
+}
+
 
 }

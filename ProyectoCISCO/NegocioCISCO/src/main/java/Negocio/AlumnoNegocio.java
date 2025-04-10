@@ -6,6 +6,7 @@ package Negocio;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import Entidades.AlumnoEntidad;
 import ExcepcionNegocio.NegocioException;
 import Interfaces.IAlumnoNegocio;
 import InterfazDAOs.IAlumnoDAO;
@@ -46,6 +47,11 @@ public class AlumnoNegocio implements IAlumnoNegocio {
     @Override
     public void eliminarAlumno(Long id){
         alumnoDAO.eliminarAlumnoPorId(id);
+    }
+    
+    @Override
+    public  AlumnoEntidad obtenerAlumnoPorContrasenia(String contrasenia){
+        return alumnoDAO.obtenerAlumnoPorContrasenia(contrasenia);
     }
   
 }

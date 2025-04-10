@@ -13,4 +13,6 @@ import Entidades.ApartadoEntidad;
 public interface IApartadoDAO {
     public ApartadoEntidad registrarApartado(ApartadoEntidad apartado);
     
+     public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
+    
 }

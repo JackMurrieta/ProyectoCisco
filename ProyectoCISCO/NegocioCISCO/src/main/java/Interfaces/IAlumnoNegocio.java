@@ -6,6 +6,7 @@ package Interfaces;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import Entidades.AlumnoEntidad;
 import ExcepcionNegocio.NegocioException;
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface IAlumnoNegocio {
      void editarAlumno(AlumnoConCarreraDTO dto);
      
      void eliminarAlumno(Long id);
+     
+     AlumnoEntidad obtenerAlumnoPorContrasenia(String contrasenia);
 }

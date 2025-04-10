@@ -6,6 +6,7 @@ package InterfazDAOs;
 
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
+import Entidades.AlumnoEntidad;
 import java.util.List;
 
 /**
@@ -23,5 +24,6 @@ public interface IAlumnoDAO {
     
     void eliminarAlumnoPorId(Long id);
     
+     AlumnoEntidad obtenerAlumnoPorContrasenia(String contrasenia);
     
 }
