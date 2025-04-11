@@ -42,6 +42,8 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
         initComponents();
         this.setTitle("Numero Equipo De Computo");
         this.imagenFondo = new ImageIcon(getClass().getResource("/FondoCISCO.jpeg")).getImage();
+        
+        spnnerTiempo.setModel(new javax.swing.SpinnerNumberModel(1, 1, alumno.getCarreraTiempo(), 1)); // valor inicial, mínimo, máximo, paso
 
         JPanel jPanel1 = new javax.swing.JPanel() {
             @Override

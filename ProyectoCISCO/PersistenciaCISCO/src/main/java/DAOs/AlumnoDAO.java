@@ -94,7 +94,8 @@ public class AlumnoDAO implements IAlumnoDAO {
                         alumno.getApellidoM(),
                        
                         alumno.isEstatus(),
-                        carreraNombre
+                        carreraNombre, alumno.getCarrera().getTiempoLimite()
+                        
                 );
             }
 
@@ -130,7 +131,7 @@ public List<AlumnoDTO> obtenerAlumnos() {
                 alumno.getApellidoP(),
                 alumno.getApellidoM(),
                 alumno.isEstatus(),
-                carreraNombre
+                carreraNombre, alumno.getCarrera().getTiempoLimite()
             );
             alumnosDTO.add(alumnoDTO);
         }
