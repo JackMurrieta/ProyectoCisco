@@ -7,8 +7,11 @@ package DAOs;
 import DTOs.AlumnoConCarreraDTO;
 import DTOs.AlumnoDTO;
 import Entidades.AlumnoEntidad;
+import Entidades.ApartadoEntidad;
 import Entidades.CarreraEntidad;
+import Entidades.ComputadoraEntidad;
 import InterfazDAOs.IAlumnoDAO;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -28,9 +31,11 @@ public class AlumnoDAO implements IAlumnoDAO {
     private EntityManagerFactory fabrica;
     private EntityManager entityManager;
 
+
     public AlumnoDAO() {
         fabrica = Persistence.createEntityManagerFactory("CISCO_PU");
         entityManager = fabrica.createEntityManager();
+ 
     }
 
     public void guardarAlumnoConCarreraPorID(AlumnoConCarreraDTO dto) {
@@ -83,7 +88,7 @@ public class AlumnoDAO implements IAlumnoDAO {
             cq.select(alumnoRoot).where(cb.equal(alumnoRoot.get("id"), id));
             
             AlumnoEntidad alumno = entityManager.createQuery(cq).getSingleResult();
-            
+
             if (alumno != null) {
                 String carreraNombre = (alumno.getCarrera() != null) ? alumno.getCarrera().getNombre() : "Desconocida";
 

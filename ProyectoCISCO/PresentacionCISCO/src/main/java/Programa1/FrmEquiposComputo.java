@@ -156,6 +156,8 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     private List<ComputadoraDTO> obtenerListaDeComputadoras() {
         ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio();
         List<ComputadoraDTO> computadorasApartado = new ArrayList<>();
+        //Aqui esta el harcodeo
+        
         List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(1L);
         for (ComputadoraDTO computadoraDTO : pcsBd) {
             if(computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")){

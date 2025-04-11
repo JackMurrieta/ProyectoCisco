@@ -17,6 +17,7 @@ public class AlumnoDTO {
     private boolean estatus;
     private String carreraNombre; 
     private Integer carreraTiempo;
+    private Long idLab;
 
     public AlumnoDTO(Long id, String nombre, String apellidoP, String apellidoM, boolean estatus, String carreraNombre) {
         this.id = id;
@@ -37,7 +38,7 @@ public class AlumnoDTO {
         this.carreraNombre = carreraNombre;
         this.carreraTiempo = carreraTiempo;
     }
-
+    
     
     public int getCarreraTiempo() {
         return carreraTiempo;
