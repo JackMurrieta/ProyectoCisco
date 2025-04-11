@@ -69,8 +69,12 @@ public class ControlNavegacion {
     public ControlNavegacion() {
         //Inicializar el menu
         institutoNegocio = new InstitutoNegocio();
-        //institutoInicializado
-        institutoDTO = institutoNegocio.obtenerInstituto("ITSON");
+        try {
+            //institutoInicializado
+            institutoDTO = institutoNegocio.obtenerInstituto("ITSON");
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+        }
         idInstituto  =institutoDTO.getId();
         labNegocio = new LaboratorioNegocio(idInstituto);
         pcNegocio = new ComputadoraNegocio();
@@ -85,7 +89,12 @@ public class ControlNavegacion {
     }
     
     public static boolean verificarPassword(String nombreLab, String password){
-        return labNegocio.validarPasswordEncriptada(nombreLab, password);
+        try {
+            return labNegocio.validarPasswordEncriptada(nombreLab, password);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return false;
+        }
     }
     
     public static void mostrarAgregarLaboratorio(){
@@ -137,7 +146,11 @@ public class ControlNavegacion {
    
     public static void mostrarMenu(LaboratorioDTO labDTO){
         ControlNavegacion.idLab = labDTO.getId();
-        lab = labNegocio.obtenerLabPorId(idLab);
+        try {
+            lab = labNegocio.obtenerLabPorId(idLab);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+        }
         menu = new Menu();
         menu.setVisible(true);
     }
@@ -147,43 +160,73 @@ public class ControlNavegacion {
     }
     
     public static LaboratorioDTO obtenerLabPorNombre(String nombre){
-        return labNegocio.obtenerLabPorNombre(nombre);
+        try {
+            return labNegocio.obtenerLabPorNombre(nombre);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return null;
+        }
     }
     
     
     
     public static InstitutoDTO obtenerInstitutoNombre(String nombre){
-        return institutoNegocio.obtenerInstituto(nombre);
+        try {
+            return institutoNegocio.obtenerInstituto(nombre);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return null;
+        }
     }
     
     
     //ADministrar Computadoras
     public static List<ComputadoraDTO> obtenerComputadoras(Long idLab){
-        return pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
+        try {
+            return pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return null;
+        }
     }
     
     public static ComputadoraDTO obtenerPcPorNum(String numeroComputadora){
-        return pcNegocio.obtenerComputadora(numeroComputadora);
+        try {
+            return pcNegocio.obtenerComputadora(numeroComputadora);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return null;
+        }
     }
     
     public static ComputadoraDTO obtenerPcPorID(Long id){
-        return pcNegocio.obtenerComputadoraPorId(id);
+        try {
+            return pcNegocio.obtenerComputadoraPorId(id);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return null;
+        }
     }
     //MOSTRAR COMPUTADORAS METODOS
     //ADMINISTRAR COMPUTADORAS FRM
     public static JFrame mostrarAdminPc() {
-        // Si ya existe y sigue visible, solo la traemos al frente
-        if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
-            frmAdminEquipos.toFront();
-            frmAdminEquipos.requestFocus();
+        try {
+            // Si ya existe y sigue visible, solo la traemos al frente
+            if (frmAdminEquipos != null && frmAdminEquipos.isDisplayable()) {
+                frmAdminEquipos.toFront();
+                frmAdminEquipos.requestFocus();
+                return frmAdminEquipos;
+            }
+            
+            // Si no, la creamos nuevamente
+            computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
+            panelAdminPc = new AdminEquiposComputo(computadorasDTO);
+            frmAdminEquipos = mostrarFrm(panelAdminPc);
             return frmAdminEquipos;
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+            return null;
         }
-
-        // Si no, la creamos nuevamente
-        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(lab.getId());
-        panelAdminPc = new AdminEquiposComputo(computadorasDTO);
-        frmAdminEquipos = mostrarFrm(panelAdminPc);
-        return frmAdminEquipos;
     }
 
     //MostrarEquipoDATOS GUARDAR
@@ -233,7 +276,11 @@ public class ControlNavegacion {
     
     public static void eliminarComputadora(ComputadoraDTO pcDTO){
         
-        pcNegocio.eliminarComputadora(pcDTO.getIdComputadora());
+        try {
+            pcNegocio.eliminarComputadora(pcDTO.getIdComputadora());
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+        }
     }
     
     public static CarreraDTO buscarCarreraPorNombre(String nombre){
@@ -244,7 +291,11 @@ public class ControlNavegacion {
     }
     
     public static void actualizarComputadoras() {
-        computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
+        try {
+            computadorasDTO = pcNegocio.obtenerComputadorasPorLaboratorio(idLab);
+        } catch (NegocioException ex) {
+            mostrarMensajeError(ex);
+        }
     }
     //Lista Carreras
     public static void actualizarListaCarreras(){

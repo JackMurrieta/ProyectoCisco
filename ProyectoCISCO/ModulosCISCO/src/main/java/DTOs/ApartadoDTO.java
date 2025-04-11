@@ -4,6 +4,8 @@
  */
 package DTOs;
 
+import java.time.LocalTime;
+
 /**
  *
  * @author Usuario
@@ -13,7 +15,11 @@ public class ApartadoDTO {
     private int minutosSeleccionado;
     private String ipComputadora;
     private String numComputadora;
+    private LocalTime horaInicio;
+    private Long idApartadoPorDia;
+    private Long idComputadora;
 
+    
     public ApartadoDTO(Long idAlumno, int minutosSeleccionado, String ipComputadora, String numComputadora) {
         this.idAlumno = idAlumno;
         this.minutosSeleccionado = minutosSeleccionado;
@@ -22,6 +28,30 @@ public class ApartadoDTO {
     }
 
     public ApartadoDTO() {
+    }
+
+    public Long getIdComputadora() {
+        return idComputadora;
+    }
+
+    public void setIdComputadora(Long idComputadora) {
+        this.idComputadora = idComputadora;
+    }
+
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public Long getIdApartadoPorDia() {
+        return idApartadoPorDia;
+    }
+
+    public void setIdApartadoPorDia(Long idApartadoPorDia) {
+        this.idApartadoPorDia = idApartadoPorDia;
     }
 
     

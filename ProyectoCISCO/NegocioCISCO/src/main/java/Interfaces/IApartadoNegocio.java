@@ -13,7 +13,7 @@ import ExcepcionNegocio.NegocioException;
  * @author Usuario
  */
 public interface IApartadoNegocio {
-    public void registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException;
+    public ApartadoEntidad registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException;
     
     public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
     

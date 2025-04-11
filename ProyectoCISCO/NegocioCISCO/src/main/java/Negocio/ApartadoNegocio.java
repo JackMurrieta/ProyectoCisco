@@ -41,7 +41,7 @@ public class ApartadoNegocio implements IApartadoNegocio{
     }
 
     @Override
-    public void registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException {
+    public ApartadoEntidad registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException {
         ComputadoraEntidad pcEntity;
         try {
             pcEntity = pcDAO.obtenerComputadoraPorNum(apartadoDTO.getNumComputadora());
@@ -57,7 +57,7 @@ public class ApartadoNegocio implements IApartadoNegocio{
         //Se crea Apartdo
         ApartadoEntidad apartadoEntity = new ApartadoEntidad(horaInicio,apartadoDTO.getMinutosSeleccionado() ,alumnoEntity, pcEntity, apdEntity);
         try {
-            apartadoDAO.registrarApartado(apartadoEntity);
+            return apartadoDAO.registrarApartado(apartadoEntity);
         } catch (PersistenciaException ex) {
             throw new NegocioException(ex.getMessage());
         }

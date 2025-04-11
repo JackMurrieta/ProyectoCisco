@@ -10,12 +10,15 @@ import DAOs.ApartadoPorDiaDAO;
 import DAOs.ComputadoraDAO;
 import DTOs.AlumnoDTO;
 import DTOs.ApartadoConDTO;
+import DTOs.ApartadoDTO;
 import Entidades.AlumnoEntidad;
 import Entidades.ApartadoEntidad;
 import Entidades.ApartadoPorDiaEntidad;
 import Entidades.ComputadoraEntidad;
+import ExcepcionNegocio.NegocioException;
 import Interfaces.IAlumnoNegocio;
 import Negocio.AlumnoNegocio;
+import Negocio.ApartadoNegocio;
 import Programa1.FrmEquiposComputo;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -25,6 +28,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -105,21 +110,25 @@ public class JPanelBtnPCApartados extends JPanel {
         int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar apartado", JOptionPane.YES_NO_OPTION);
 
         if (respuesta == JOptionPane.YES_OPTION) {
-            Long idApartadoPorDia = 1L;
-
-            ApartadoConDTO apartadoDTO = new ApartadoConDTO();
-            apartadoDTO.setIdComputadora(idComputadoraSeleccionada);
-            apartadoDTO.setIdAlumno(idAlumno);
-            apartadoDTO.setIdApartadoPorDia(idApartadoPorDia);
-            apartadoDTO.setHoraInicio(horaSeleccionada);
-
-            ApartadoDAO apartadoDAO = new ApartadoDAO();
-            ApartadoEntidad apartadoEntidad = apartadoDAO.registrarApartadoo(apartadoDTO);
-
-            if (apartadoEntidad != null) {
-                JOptionPane.showMessageDialog(this, "El apartado se ha registrado exitosamente.");
-            } else {
-                JOptionPane.showMessageDialog(this, "Hubo un error al registrar el apartado.");
+            try {
+                Long idApartadoPorDia = 1L;
+                
+                ApartadoDTO apartadoDTO = new ApartadoDTO();
+                apartadoDTO.setIdComputadora(idComputadoraSeleccionada);
+                apartadoDTO.setIdAlumno(idAlumno);
+                apartadoDTO.setIdApartadoPorDia(idApartadoPorDia);
+                apartadoDTO.setHoraInicio(horaSeleccionada);
+                
+                ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
+                ApartadoEntidad apartadoEntidad = apartadoNegocio.registrarApartado(apartadoDTO);
+                
+                if (apartadoEntidad != null) {
+                    JOptionPane.showMessageDialog(this, "El apartado se ha registrado exitosamente.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Hubo un error al registrar el apartado.");
+                }
+            } catch (NegocioException ex) {
+                JOptionPane.showMessageDialog(this,ex.getMessage());
             }
         } else {
             JOptionPane.showMessageDialog(this, "El apartado ha sido cancelado.");
