@@ -10,19 +10,43 @@ package DTOs;
  */
 public class ApartadoDTO {
     private Long idAlumno;
+    private int minutosSeleccionado;
+    private String ipComputadora;
     private String numComputadora;
 
-    public ApartadoDTO(Long idAlumno, String num) {
+    public ApartadoDTO(Long idAlumno, int minutosSeleccionado, String ipComputadora, String numComputadora) {
         this.idAlumno = idAlumno;
-        this.numComputadora = num;
+        this.minutosSeleccionado = minutosSeleccionado;
+        this.ipComputadora = ipComputadora;
+        this.numComputadora = numComputadora;
     }
 
+    public ApartadoDTO() {
+    }
+
+    
     public Long getIdAlumno() {
         return idAlumno;
     }
 
     public void setIdAlumno(Long idAlumno) {
         this.idAlumno = idAlumno;
+    }
+
+    public int getMinutosSeleccionado() {
+        return minutosSeleccionado;
+    }
+
+    public void setMinutosSeleccionado(int minutosSeleccionado) {
+        this.minutosSeleccionado = minutosSeleccionado;
+    }
+
+    public String getIpComputadora() {
+        return ipComputadora;
+    }
+
+    public void setIpComputadora(String ipComputadora) {
+        this.ipComputadora = ipComputadora;
     }
 
     public String getNumComputadora() {
@@ -33,8 +57,6 @@ public class ApartadoDTO {
         this.numComputadora = numComputadora;
     }
 
-    public ApartadoDTO() {
-    }
-    
+
     
 }

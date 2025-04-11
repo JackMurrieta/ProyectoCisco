@@ -5,6 +5,7 @@
 package Entidades;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,6 +32,15 @@ public class ApartadoEntidad implements Serializable {
         
     @Column(name= "horaInicio", nullable = false)
     private LocalTime horaInicio;
+    
+    @Column(name = "minutosSeleccionado", nullable = false)
+    private Duration minutosSeleccionado;
+    
+    @Column(name="horaFin", nullable = true)
+    private LocalTime horaFin;
+    
+    @Column(name= "minutosUsados", nullable = true)
+    private Duration minutosUsados;
     
 //    IdEstudiante: entero FK Requerido
     @ManyToOne

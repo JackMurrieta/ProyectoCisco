@@ -35,7 +35,7 @@ public class ComputadoraEntidad implements Serializable {
     @Column(name="direccionIp", length =40, unique = true, nullable= false)
     private String direccionIp;
     
-    @Column(name = "numComputadora", length = 3, unique = true, nullable = false)
+    @Column(name = "numComputadora", length = 3, nullable = false)
     private String numComputadora;
     
     @Column(name = "estatus", nullable = false)
