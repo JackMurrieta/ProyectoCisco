@@ -135,26 +135,26 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
 
     AlumnoEntidad alumno = alumnoNegocio.obtenerAlumnoPorContrasenia(contraseniaIngresada);
 
-    if (alumno != null) {
-        Long idAlumno = alumno.getId();
-
-       
-        ApartadoDAO apartadoDAO= new ApartadoDAO();
-        ApartadoEntidad apartado = apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
-
-        if (apartado != null && apartado.getComputadora() != null) {
-
-            ComputadoraEntidad computadora = apartado.getComputadora();
-            frmEquipoDesbloqueado frmEquipo = new frmEquipoDesbloqueado(computadora);
-            frmEquipo.setVisible(true);
-
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, "El alumno no tiene un apartado activo o no se encontró la computadora asociada.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Contraseña incorrecta o alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+//    if (alumno != null) {
+//        Long idAlumno = alumno.getId();
+//
+//       
+//        ApartadoDAO apartadoDAO= new ApartadoDAO();
+//        ApartadoEntidad apartado = apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
+//
+//        if (apartado != null && apartado.getComputadora() != null) {
+//
+//            ComputadoraEntidad computadora = apartado.getComputadora();
+//            frmEquipoDesbloqueado frmEquipo = new frmEquipoDesbloqueado(computadora);
+//            frmEquipo.setVisible(true);
+//
+//            this.dispose();
+//        } else {
+//            JOptionPane.showMessageDialog(this, "El alumno no tiene un apartado activo o no se encontró la computadora asociada.", "Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    } else {
+//        JOptionPane.showMessageDialog(this, "Contraseña incorrecta o alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+//    }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**

@@ -4,6 +4,7 @@
  */
 package DTOs;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 /**
@@ -18,6 +19,11 @@ public class ApartadoDTO {
     private LocalTime horaInicio;
     private Long idApartadoPorDia;
     private Long idComputadora;
+    private LocalDate fechaHoy;
+
+    //CONSTRUCTOR VACIO
+    public ApartadoDTO() {
+    }
 
     
     public ApartadoDTO(Long idAlumno, int minutosSeleccionado, String ipComputadora, String numComputadora) {
@@ -27,9 +33,14 @@ public class ApartadoDTO {
         this.numComputadora = numComputadora;
     }
 
-    public ApartadoDTO() {
+    public LocalDate getFechaHoy() {
+        return fechaHoy;
     }
 
+    public void setFechaHoy(LocalDate fechaHoy) {
+        this.fechaHoy = fechaHoy;
+    }
+    
     public Long getIdComputadora() {
         return idComputadora;
     }

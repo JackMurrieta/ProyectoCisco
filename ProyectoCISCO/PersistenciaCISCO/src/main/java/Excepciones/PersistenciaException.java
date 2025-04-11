@@ -16,6 +16,10 @@ public class PersistenciaException extends Exception {
     public PersistenciaException(String message) {
         super(message);
     }
+
+    public PersistenciaException(String string, Exception e) {
+        super(string, e);
+    }
     
     
 }

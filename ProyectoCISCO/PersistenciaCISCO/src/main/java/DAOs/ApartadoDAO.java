@@ -5,10 +5,13 @@
 package DAOs;
 
 import Entidades.ApartadoEntidad;
+import Entidades.ComputadoraEntidad;
 import Excepciones.PersistenciaException;
 import InterfazDAOs.IApartadoDAO;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
@@ -28,82 +31,87 @@ public class ApartadoDAO implements IApartadoDAO {
 
         apartado.setHoraInicio(LocalTime.now());
         EntityManager em = emf.createEntityManager();
-        try {
 
+        validarNoSePuedeApartarEquipoNoLiberado(apartado);
+
+        try {
             em.getTransaction().begin();
             em.persist(apartado);
             em.getTransaction().commit();
             System.out.println("Apartado guardado exitosamente.");
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersistenciaException("Error al apartar equipo ");
+            throw new PersistenciaException("Error al apartar equipo: " + e.getMessage(), e);
         } finally {
             em.close();
         }
+
         return apartado;
+    }
+    
+    
+    public void validarNoSePuedeApartarEquipoNoLiberado(ApartadoEntidad apartado) throws PersistenciaException {
+        ComputadoraEntidad computadora = apartado.getComputadora();
+        List<ApartadoEntidad> apartadosEnComputadora = computadora.getApartados();
+
+        for (ApartadoEntidad apartadoEntidad : apartadosEnComputadora) {
+            if (apartadoEntidad.getHoraFin() == null) {
+                throw new PersistenciaException("No se puede apartar el equipo porque ya tiene un apartado activo y no se ha liberado.");
+            }
+        }
     }
 
     @Override
-    public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno) {
+    public ApartadoEntidad obtenerApartadoPorAlumnoFechaApartado(Long idAlumno, LocalDate fecha, LocalTime horaInicio) {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<ApartadoEntidad> query = em.createQuery(
-                    "SELECT a FROM ApartadoEntidad a WHERE a.alumno.id = :idAlumno",
+                    "SELECT a FROM ApartadoEntidad a "
+                    + "WHERE a.alumno.id = :idAlumno "
+                    + "AND a.apartadoPorDia.fechaApartado = :fechaApartado "
+                    + "AND a.horaInicio = :horaInicio",
                     ApartadoEntidad.class
             );
             query.setParameter("idAlumno", idAlumno);
-            return query.getSingleResult();
-        } catch (NoResultException e) {
-            return null;
+            query.setParameter("fechaApartado", fecha);
+            query.setParameter("horaInicio", horaInicio);
+
+            List<ApartadoEntidad> resultados = query.getResultList();
+            return resultados.isEmpty() ? null : resultados.get(0);
         } finally {
             em.close();
         }
     }
 
-//    public ApartadoEntidad registrarApartadoo(ApartadoConDTO apartadoDTO) {
-//        EntityManager em = Persistence.createEntityManagerFactory("CISCO_PU").createEntityManager();
-//        EntityTransaction tx = em.getTransaction();
-//
-//        try {
-//            tx.begin();
-//
-//            // Obtener las entidades completas a partir de los IDs
-//            AlumnoEntidad alumnoEntidad = em.find(AlumnoEntidad.class, apartadoDTO.getIdAlumno());
-//            ComputadoraEntidad computadoraEntidad = em.find(ComputadoraEntidad.class, apartadoDTO.getIdComputadora());
-//            ApartadoPorDiaEntidad apartadoPorDiaEntidad = em.find(ApartadoPorDiaEntidad.class, apartadoDTO.getIdApartadoPorDia());
-//
-//            if (alumnoEntidad == null || computadoraEntidad == null || apartadoPorDiaEntidad == null) {
-//                return null;  // Si no se encuentra alguna de las entidades, retornamos null
-//            }
-//
-//            // Crear la entidad ApartadoEntidad a partir del DTO
-//            ApartadoEntidad apartadoEntidad = new ApartadoEntidad();
-//            apartadoEntidad.setComputadora(computadoraEntidad); // Asignamos la entidad completa
-//            apartadoEntidad.setAlumno(alumnoEntidad); // Asignamos la entidad completa
-//            apartadoEntidad.setApartadoPorDia(apartadoPorDiaEntidad); // Asignamos la entidad completa
-//            apartadoEntidad.setHoraInicio(apartadoDTO.getHoraInicio()); // Asignamos la hora del DTO
-//
-//            // Persistir la entidad
-//            em.persist(apartadoEntidad);
-//
-//            tx.commit();
-//
-//            return apartadoEntidad;  // Retorna el objeto persistido, con ID generado por la base de datos
-//        } catch (Exception e) {
-//            tx.rollback();
-//            e.printStackTrace();
-//            return null;  // En caso de error, retornamos null
-//        } finally {
-//            em.close();
-//        }
-//    }
-//
+    public ApartadoEntidad obtenerApartadoPorAlumnoFechaHoy(Long idAlumno, LocalDate fecha) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            TypedQuery<ApartadoEntidad> query = em.createQuery(
+                    "SELECT a FROM ApartadoEntidad a "
+                    + "WHERE a.alumno.id = :idAlumno AND a.apartadoPorDia.fechaApartado = :fechaApartado "
+                    + "ORDER BY a.horaInicio DESC", // por si hay más de un apartado en el mismo día
+                    ApartadoEntidad.class
+            );
+            query.setParameter("idAlumno", idAlumno);
+            query.setParameter("fechaApartado", fecha);
+            query.setMaxResults(1);
+            List<ApartadoEntidad> resultados = query.getResultList();
+            return resultados.isEmpty() ? null : resultados.get(0);
+        } finally {
+            em.close();
+        }
+
+
+    }
     @Override
     public void editarApartadoLiberado(ApartadoEntidad apartado) throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
 
         try {
-            ApartadoEntidad apartadoEncontrado = obtenerApartadoPorAlumno(apartado.getAlumno().getId());
+            ApartadoEntidad apartadoEncontrado = obtenerApartadoPorAlumnoFechaApartado
+            (apartado.getAlumno().getId(),
+            apartado.getApartadoPorDia().getFechaApartado(),
+            apartado.getHoraInicio());
 
             if (apartadoEncontrado == null) {
                 throw new PersistenciaException("El alumno no tiene un apartado activo");

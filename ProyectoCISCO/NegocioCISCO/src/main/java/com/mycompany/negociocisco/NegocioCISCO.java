@@ -60,10 +60,13 @@ public class NegocioCISCO {
             System.out.println("apartado Exitoso");
             System.out.println(apartadoEntidad.toString());
             
+            //Excepcion
+            ApartadoEntidad apartadoError = apartadoNegocio.registrarApartado(apartado);
+            
             //REALIZAR VALIDACION QUE NO SE PUEDE APARTAR EL MISMO EQUIPO SI NO HA SIDO LIBERADO
             //CHECAR POR QUE NO JALA
-            apartadoNegocio.editarApartadoLiberado(apartado);
-            System.out.println("Apartado Liberado");
+//            apartadoNegocio.editarApartadoLiberado(apartado);
+//            System.out.println("Apartado Liberado");
             
 //        //PROBAR CRUD COMPUTADORAS
 //        ComputadoraDAO pcDAO = new ComputadoraDAO();
@@ -154,9 +157,9 @@ public class NegocioCISCO {
 //            Logger.getLogger(NegocioCISCO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         } catch (PersistenciaException ex) {
-            Logger.getLogger(NegocioCISCO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());
         } catch (NegocioException ex) {
-            Logger.getLogger(NegocioCISCO.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(ex.getMessage());;
         }
     }
 }
