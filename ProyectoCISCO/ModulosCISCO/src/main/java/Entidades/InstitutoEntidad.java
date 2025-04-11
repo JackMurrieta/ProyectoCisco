@@ -92,5 +92,13 @@ public class InstitutoEntidad implements Serializable {
     public String toString() {
         return "Entidades.InstitutoEntidad[ id=" + id + " ]";
     }
+
+    public void setNombreOficial(String nombreOficial) {
+        this.nombreOficial = nombreOficial;
+    }
+
+    public void setNombreAbreviado(String nombreAbreviado) {
+        this.nombreAbreviado = nombreAbreviado;
+    }
     
 }
