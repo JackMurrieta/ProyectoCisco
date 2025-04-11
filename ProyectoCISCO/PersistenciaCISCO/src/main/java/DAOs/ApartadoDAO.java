@@ -148,4 +148,20 @@ public class ApartadoDAO implements IApartadoDAO {
         return (int) Duration.between(horaInicio, horaFin).toMinutes();
     }
 
+    
+    public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno) {
+    EntityManager em = emf.createEntityManager();
+    try {
+        TypedQuery<ApartadoEntidad> query = em.createQuery(
+            "SELECT a FROM ApartadoEntidad a WHERE a.alumno.id = :idAlumno", 
+            ApartadoEntidad.class
+        );
+        query.setParameter("idAlumno", idAlumno);
+        return query.getSingleResult();
+    } catch (NoResultException e) {
+        return null;
+    } finally {
+        em.close();
+    }
+}
 }
