@@ -16,6 +16,7 @@ public class AlumnoDTO {
     private String contrasenia;
     private boolean estatus;
     private String carreraNombre; 
+    private Integer carreraTiempo;
 
     public AlumnoDTO(Long id, String nombre, String apellidoP, String apellidoM, boolean estatus, String carreraNombre) {
         this.id = id;
@@ -27,6 +28,25 @@ public class AlumnoDTO {
         this.carreraNombre = carreraNombre;
     }
 
+    public AlumnoDTO(Long id, String nombre, String apellidoP, String apellidoM, boolean estatus, String carreraNombre, Integer carreraTiempo) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidoP = apellidoP;
+        this.apellidoM = apellidoM;
+        this.estatus = estatus;
+        this.carreraNombre = carreraNombre;
+        this.carreraTiempo = carreraTiempo;
+    }
+
+    
+    public int getCarreraTiempo() {
+        return carreraTiempo;
+    }
+
+    public void setCarreraTiempo(int carreraTiempo) {
+        this.carreraTiempo = carreraTiempo;
+    }
+    
     public Long getId() {
         return id;
     }
