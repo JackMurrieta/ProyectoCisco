@@ -11,6 +11,7 @@ import DAOs.ComputadoraDAO;
 import DTOs.AlumnoDTO;
 import DTOs.ApartadoConDTO;
 import DTOs.ApartadoDTO;
+import DTOs.ComputadoraDTO;
 import Entidades.AlumnoEntidad;
 import Entidades.ApartadoEntidad;
 import Entidades.ApartadoPorDiaEntidad;
@@ -19,6 +20,7 @@ import ExcepcionNegocio.NegocioException;
 import Interfaces.IAlumnoNegocio;
 import Negocio.AlumnoNegocio;
 import Negocio.ApartadoNegocio;
+import Negocio.ComputadoraNegocio;
 import Programa1.FrmEquiposComputo;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -48,11 +50,13 @@ public class JPanelBtnPCApartados extends JPanel {
     private String numero;
     private Long idComputadora; // Añadido para identificar la computadora
     private IAlumnoNegocio alumnoNegocio;
+    private ComputadoraNegocio pcNegocio;
     private FrmEquiposComputo frmEquiposComputo;
 
     public JPanelBtnPCApartados(Color color, String numero, Long idComputadora, FrmEquiposComputo frmEquiposComputo) {
         this.numero = numero;
         this.color = color;
+        this.pcNegocio = new ComputadoraNegocio();
         this.idComputadora = idComputadora;
         this.frmEquiposComputo = frmEquiposComputo;
         this.alumnoNegocio = new AlumnoNegocio(new AlumnoDAO());
@@ -97,7 +101,7 @@ public class JPanelBtnPCApartados extends JPanel {
 
     private void btnPCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPCActionPerformed
 
-        LocalTime horaSeleccionada = frmEquiposComputo.obtenerHoraSeleccionada();
+        Integer minutosSeleccionados = frmEquiposComputo.obtenerMinutosSeleccionados();
         Long idComputadoraSeleccionada = this.idComputadora;
         Long idAlumno = frmEquiposComputo.obtenerIdAlumno();
         String nombreAlumno = frmEquiposComputo.obtenerNombreAlumno();
@@ -105,21 +109,23 @@ public class JPanelBtnPCApartados extends JPanel {
         String mensaje = "¿Deseas confirmar el apartado con los siguientes datos?\n\n"
                 + "Alumno: " + nombreAlumno + "\n"
                 + "Número de equipo: " + idComputadoraSeleccionada + "\n"
-                + "Hora: " + horaSeleccionada;
+                + "Minutos Seleccionados: " + minutosSeleccionados;
 
         int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar apartado", JOptionPane.YES_NO_OPTION);
 
         if (respuesta == JOptionPane.YES_OPTION) {
             try {
-                Long idApartadoPorDia = 1L;
+                ComputadoraDTO pcDTO = pcNegocio.obtenerComputadora(numero);
                 
                 ApartadoDTO apartadoDTO = new ApartadoDTO();
                 apartadoDTO.setIdComputadora(idComputadoraSeleccionada);
                 apartadoDTO.setIdAlumno(idAlumno);
-                apartadoDTO.setIdApartadoPorDia(idApartadoPorDia);
-                apartadoDTO.setHoraInicio(horaSeleccionada);
+                apartadoDTO.setMinutosSeleccionado(minutosSeleccionados);
+                apartadoDTO.setIdComputadora(pcDTO.getIdComputadora());
+                apartadoDTO.setNumComputadora(pcDTO.getNumComputadora());
                 
                 ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
+                
                 ApartadoEntidad apartadoEntidad = apartadoNegocio.registrarApartado(apartadoDTO);
                 
                 if (apartadoEntidad != null) {
