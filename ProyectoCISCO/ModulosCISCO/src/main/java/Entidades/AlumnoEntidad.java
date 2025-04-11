@@ -56,7 +56,7 @@ public class AlumnoEntidad implements Serializable {
     private List<ApartadoEntidad> apartados = new ArrayList<>();
     
     //Relacion con bloqueos
-    @OneToMany(mappedBy = "alumno", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BloqueoEntidad> bloqueos = new ArrayList<>();
 
     public AlumnoEntidad() {

@@ -50,7 +50,7 @@ public class ComputadoraEntidad implements Serializable {
     private LaboratorioEntidad laboratorio;
     
     //relacion con apartados
-    @OneToMany(mappedBy = "computadora", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "computadora", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ApartadoEntidad> apartados = new ArrayList<>();
 
     //Relacion con carreras
