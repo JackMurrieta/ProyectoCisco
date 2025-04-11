@@ -8,7 +8,10 @@ import DAOs.InstitutoDAO;
 import DTOs.LaboratorioDTO;
 import Entidades.InstitutoEntidad;
 import Entidades.LaboratorioEntidad;
+import Excepciones.PersistenciaException;
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -34,10 +37,14 @@ public class LaboratorioAdapter {
     
     }
     public LaboratorioEntidad convertirEntidad(LaboratorioDTO labDTO){
-        InstitutoEntidad instituto = institutoDAO.obtenerPorID(idInstituto);
-        LaboratorioEntidad labEntidad = new LaboratorioEntidad(labDTO.getNombreLab(), labDTO.getContrasena(), 
-                labDTO.getHoraInicio(), labDTO.getHoraFin(), instituto);
-        return labEntidad;
+        try {
+            InstitutoEntidad instituto = institutoDAO.obtenerPorID(idInstituto);
+            LaboratorioEntidad labEntidad = new LaboratorioEntidad(labDTO.getNombreLab(), labDTO.getContrasena(),
+                    labDTO.getHoraInicio(), labDTO.getHoraFin(), instituto);
+            return labEntidad;
+        } catch (PersistenciaException ex) {
+            return null;
+        }
     }
     
 }

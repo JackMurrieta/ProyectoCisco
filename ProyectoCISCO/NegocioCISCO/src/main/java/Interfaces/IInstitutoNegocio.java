@@ -5,13 +5,14 @@
 package Interfaces;
 
 import DTOs.InstitutoDTO;
+import ExcepcionNegocio.NegocioException;
 
 /**
  *
  * @author Jack Murrieta
  */
 public interface IInstitutoNegocio {
-    public InstitutoDTO obtenerInstituto(String instituto);
-    public InstitutoDTO obtenerInstitutoPorID(Long idInstituto);
+    public InstitutoDTO obtenerInstituto(String instituto)throws NegocioException;
+    public InstitutoDTO obtenerInstitutoPorID(Long idInstituto)throws NegocioException;
     
 }

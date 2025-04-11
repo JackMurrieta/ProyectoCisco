@@ -58,7 +58,7 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
     }
 
     @Override
-    public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha)throws PersistenciaException {
+    public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha){
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<ApartadoPorDiaEntidad> query = em.createQuery(

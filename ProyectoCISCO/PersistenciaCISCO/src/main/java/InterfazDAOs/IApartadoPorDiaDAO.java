@@ -16,6 +16,6 @@ public interface IApartadoPorDiaDAO {
     
    public ApartadoPorDiaEntidad registrarApartadoPorDia(ApartadoPorDiaEntidad entidad)throws PersistenciaException;
     
-   public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha) throws PersistenciaException;
+   public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha);
     
 }

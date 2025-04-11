@@ -7,8 +7,11 @@ package Negocio;
 import DAOs.InstitutoDAO;
 import DTOs.InstitutoDTO;
 import Entidades.InstitutoEntidad;
+import ExcepcionNegocio.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IInstitutoNegocio;
 import InterfazDAOs.IInstitutoDAO;
+
 
 /**
  *
@@ -22,8 +25,13 @@ public class InstitutoNegocio implements IInstitutoNegocio {
     }
 
     @Override
-    public InstitutoDTO obtenerInstituto(String nombre) {
-        InstitutoEntidad instEntidad = institutoDAO.obtenerInstitutoPorNombre(nombre);
+    public InstitutoDTO obtenerInstituto(String nombre) throws NegocioException {
+        InstitutoEntidad instEntidad;
+        try {
+            instEntidad = institutoDAO.obtenerInstitutoPorNombre(nombre);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         InstitutoDTO instDTO;
         if(instEntidad.getNombreAbreviado()==null){
             return instDTO = new InstitutoDTO(instEntidad.getId(),instEntidad.getNombreOficial());
@@ -34,8 +42,13 @@ public class InstitutoNegocio implements IInstitutoNegocio {
     }
 
     @Override
-    public InstitutoDTO obtenerInstitutoPorID(Long idInstituto) {
-        InstitutoEntidad instEntidad = institutoDAO.obtenerPorID(idInstituto);
+    public InstitutoDTO obtenerInstitutoPorID(Long idInstituto) throws NegocioException {
+        InstitutoEntidad instEntidad;
+        try {
+            instEntidad = institutoDAO.obtenerPorID(idInstituto);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         InstitutoDTO instDTO;
         if (instEntidad.getNombreAbreviado() == null) {
             return instDTO = new InstitutoDTO(instEntidad.getId(), instEntidad.getNombreOficial());
@@ -43,8 +56,5 @@ public class InstitutoNegocio implements IInstitutoNegocio {
             return instDTO = new InstitutoDTO(instEntidad.getId(), instEntidad.getNombreOficial(), instEntidad.getNombreAbreviado());
         }
     }
-
-
-    
     
 }

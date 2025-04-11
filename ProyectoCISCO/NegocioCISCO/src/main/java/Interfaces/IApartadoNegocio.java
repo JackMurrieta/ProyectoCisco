@@ -6,15 +6,17 @@ package Interfaces;
 
 import DTOs.ApartadoDTO;
 import Entidades.ApartadoEntidad;
+import ExcepcionNegocio.NegocioException;
 
 /**
  *
  * @author Usuario
  */
 public interface IApartadoNegocio {
-    public void registrarApartado(ApartadoDTO apartadoDTO);
+    public void registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException;
     
-    ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
+    public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
     
+    public void editarApartadoLiberado(ApartadoDTO apartado)throws NegocioException;
     
 }

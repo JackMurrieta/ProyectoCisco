@@ -16,10 +16,10 @@ public interface ILaboratorioNegocio {
     
     public void guardarLabortorio(LaboratorioDTO labDTO)throws NegocioException;
     public boolean validarDatosLab(LaboratorioDTO labDTO)throws NegocioException;
-    public LaboratorioDTO obtenerLabPorId(Long idLab);
+    public LaboratorioDTO obtenerLabPorId(Long idLab)throws NegocioException;
     public List<LaboratorioDTO> obtenerListaLabInstituto();
-    public LaboratorioDTO obtenerLabPorNombre(String nombre);
-    public boolean validarPasswordEncriptada(String nombreLab,String password);
+    public LaboratorioDTO obtenerLabPorNombre(String nombre)throws NegocioException;
+    public boolean validarPasswordEncriptada(String nombreLab,String password)throws NegocioException;
     
     List<LaboratorioDTO> obtenerLaboratoriosTabla();
     

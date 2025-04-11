@@ -11,6 +11,9 @@ import DTOs.ComputadoraDTO;
 import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
 import Entidades.LaboratorioEntidad;
+import Excepciones.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,24 +25,32 @@ public class ComputadoraAdapter {
     }
     
     public ComputadoraEntidad ConvertirDtoLeer(ComputadoraDTO pcDTO){
-        LaboratorioDAO labDAO = new LaboratorioDAO();
-        LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
-        
-        ComputadoraEntidad pcEntity = new ComputadoraEntidad
-        (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad);
-        
-        return pcEntity;
+        try {
+            LaboratorioDAO labDAO = new LaboratorioDAO();
+            LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
+            
+            ComputadoraEntidad pcEntity = new ComputadoraEntidad
+                (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad);
+            
+            return pcEntity;
+        } catch (PersistenciaException ex) {
+            return null;
+        }
     }
     
     public ComputadoraEntidad convertirDtoHacer(ComputadoraDTO pcDTO){
-        LaboratorioDAO labDAO = new LaboratorioDAO();
-        LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
-        
-        CarreraEntidad carrera =convertirCarrera(pcDTO.getIdCarrera());
-        //DEBE DE DEVOLVER ENTIDAD 
-        ComputadoraEntidad pcEntity = new ComputadoraEntidad
-        (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad, carrera);
-        return pcEntity;
+        try {
+            LaboratorioDAO labDAO = new LaboratorioDAO();
+            LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(pcDTO.getIdLab());
+            
+            CarreraEntidad carrera =convertirCarrera(pcDTO.getIdCarrera());
+            //DEBE DE DEVOLVER ENTIDAD
+            ComputadoraEntidad pcEntity = new ComputadoraEntidad
+                (pcDTO.getDireccionIp(), pcDTO.getNumComputadora(), pcDTO.isEstatus(), pcDTO.getTipo(), labEntidad, carrera);
+            return pcEntity;
+        } catch (PersistenciaException ex) {
+            return null;
+        }
     }
     
     public CarreraEntidad convertirCarrera(Long idCarrera){

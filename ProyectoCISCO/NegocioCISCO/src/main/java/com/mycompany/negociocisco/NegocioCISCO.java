@@ -35,18 +35,18 @@ public class NegocioCISCO {
 
     public static void main(String[] args) {
         
-        //PROBAR CRUD COMPUTADORAS
-        ComputadoraDAO pcDAO = new ComputadoraDAO();
-        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("002");
-        ComputadoraEntidad pcEntity1 = pcDAO.obtenerComputadoraPorNum("003");
-        ComputadoraEntidad pcEntity2 = pcDAO.obtenerComputadoraPorNum("004");
+//        //PROBAR CRUD COMPUTADORAS
+//        ComputadoraDAO pcDAO = new ComputadoraDAO();
+//        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("002");
+//        ComputadoraEntidad pcEntity1 = pcDAO.obtenerComputadoraPorNum("003");
+//        ComputadoraEntidad pcEntity2 = pcDAO.obtenerComputadoraPorNum("004");
+//
+//        System.out.println(pcEntity);
+//        System.out.println("Antes de editar:");
+//        System.out.println(pcEntity);
+//
+//        CarreraDAO carreraDAO = new CarreraDAO();
 
-        System.out.println(pcEntity);
-        System.out.println("Antes de editar:");
-        System.out.println(pcEntity);
-        
-        CarreraDAO carreraDAO = new CarreraDAO();
-        
         //DTOS de Computadoras
         
         

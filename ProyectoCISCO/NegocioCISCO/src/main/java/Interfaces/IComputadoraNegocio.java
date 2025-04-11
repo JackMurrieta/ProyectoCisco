@@ -21,21 +21,14 @@ public interface IComputadoraNegocio {
     
    public void guardarComputadora(ComputadoraDTO pc) throws NegocioException;
     
-    public void eliminarComputadora(Long id);
+    public void eliminarComputadora(Long id)throws NegocioException;
     //editarComputadora
     public void editarComputadora(ComputadoraDTO pc)throws NegocioException;
     //obtener computadras en una DTO
-    public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id);
+    public List<ComputadoraDTO> obtenerComputadorasPorLaboratorio(Long id)throws NegocioException;
     
-    public ComputadoraDTO obtenerComputadora(String numComputadora);
+    public ComputadoraDTO obtenerComputadora(String numComputadora)throws NegocioException;
     
-    public ComputadoraDTO obtenerComputadoraPorId(Long id);
-    
-    //MetodosISoftwareEnComputadora
-    //agregarComputadoraConSOftware
-    //eliminarSoftwareEncomputadora
-    
-    
-    
+    public ComputadoraDTO obtenerComputadoraPorId(Long id)throws NegocioException;
     
 }

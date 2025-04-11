@@ -14,8 +14,12 @@ import Entidades.AlumnoEntidad;
 import Entidades.ApartadoEntidad;
 import Entidades.ApartadoPorDiaEntidad;
 import Entidades.ComputadoraEntidad;
+import ExcepcionNegocio.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.IApartadoNegocio;
 import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,20 +41,44 @@ public class ApartadoNegocio implements IApartadoNegocio{
     }
 
     @Override
-    public void registrarApartado(ApartadoDTO apartadoDTO) {
-        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum(apartadoDTO.getNumComputadora());
+    public void registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException {
+        ComputadoraEntidad pcEntity;
+        try {
+            pcEntity = pcDAO.obtenerComputadoraPorNum(apartadoDTO.getNumComputadora());
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         AlumnoEntidad alumnoEntity = alumnoDAO.obtenerAlumnoEntidad(apartadoDTO.getIdAlumno());
         ApartadoPorDiaDTO apdDTO = new ApartadoPorDiaDTO(pcEntity.getLaboratorio().getId());
+        //Ya esta validado el crear apartadoPorDias
         ApartadoPorDiaEntidad apdEntity = apdNegocio.registrarApartadoPorDia(apdDTO);
         
         LocalTime horaInicio = LocalTime.now();
-        ApartadoEntidad apartadoEntity = new ApartadoEntidad(horaInicio, alumnoEntity, pcEntity, apdEntity);
-        apartadoDAO.registrarApartado(apartadoEntity);
+        //Se crea Apartdo
+        ApartadoEntidad apartadoEntity = new ApartadoEntidad(horaInicio,apartadoDTO.getMinutosSeleccionado() ,alumnoEntity, pcEntity, apdEntity);
+        try {
+            apartadoDAO.registrarApartado(apartadoEntity);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         
     }
     @Override
     public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno){
         return apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
+    }
+
+    @Override
+    public void editarApartadoLiberado(ApartadoDTO apartado)throws NegocioException {
+        ApartadoEntidad existente = obtenerApartadoPorAlumno(apartado.getIdAlumno());
+        //ettear Hora Por la hora Actual que es la finalizada
+        LocalTime horaFin = LocalTime.now();
+        existente.setHoraFin(horaFin);
+        try {
+            apartadoDAO.editarApartadoLiberado(existente);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
     
 }

@@ -12,10 +12,10 @@ import Excepciones.PersistenciaException;
  * @author Usuario
  */
 public interface IApartadoDAO {
-    public ApartadoEntidad registrarApartado(ApartadoEntidad apartado)throws PersistenciaException;
-    
+    public ApartadoEntidad registrarApartado(ApartadoEntidad apartado) throws PersistenciaException;
+
     public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
-    
-   public void editarApartadoLiberado(ApartadoEntidad apartado) throws PersistenciaException;
-    
+
+    public void editarApartadoLiberado(ApartadoEntidad apartado) throws PersistenciaException;
+
 }

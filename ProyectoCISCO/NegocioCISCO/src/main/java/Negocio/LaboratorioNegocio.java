@@ -9,11 +9,13 @@ import DAOs.LaboratorioDAO;
 import DTOs.LaboratorioDTO;
 import Entidades.LaboratorioEntidad;
 import ExcepcionNegocio.NegocioException;
+import Excepciones.PersistenciaException;
 import Interfaces.ILaboratorioNegocio;
 import InterfazDAOs.ILaboratorioDAO;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  *
@@ -41,7 +43,11 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
     public void guardarLabortorio(LaboratorioDTO labDTO)throws NegocioException {
         if(validarDatosLab(labDTO)){
             LaboratorioEntidad labEntidad = convertidor.convertirEntidad(labDTO);
-            labDAO.agregarLaboratorioPorInstituto(labEntidad);
+            try {
+                labDAO.agregarLaboratorioPorInstituto(labEntidad);
+            } catch (PersistenciaException ex) {
+                throw new NegocioException(ex.getMessage());
+            }
         }
     }
 
@@ -81,8 +87,13 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
     }
 
     @Override
-    public LaboratorioDTO obtenerLabPorId(Long idLab) {
-        LaboratorioEntidad labEntidad = labDAO.obtenerLabPorId(idLab);
+    public LaboratorioDTO obtenerLabPorId(Long idLab)throws NegocioException {
+        LaboratorioEntidad labEntidad;
+        try {
+            labEntidad = labDAO.obtenerLabPorId(idLab);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         return convertidor.convertirDTO(labEntidad);
         
     }
@@ -97,13 +108,22 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
         }
         return labsDTO;
     }
-    public LaboratorioDTO obtenerLabPorNombre(String nombre){
-        LaboratorioEntidad labEntidad = labDAO.obtenerPorNombre(nombre);
-        return convertidor.convertirDTO(labEntidad);
+    
+    public LaboratorioDTO obtenerLabPorNombre(String nombre) throws NegocioException{
+        try {
+            LaboratorioEntidad labEntidad = labDAO.obtenerPorNombre(nombre);
+            return convertidor.convertirDTO(labEntidad);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
-    public boolean validarPasswordEncriptada(String nombreLab,String password){
-        LaboratorioEntidad labEntity = labDAO.obtenerPorNombre(nombreLab);
-        return labDAO.verificarContrasena(labEntity, password);
+    public boolean validarPasswordEncriptada(String nombreLab,String password) throws NegocioException{
+        try {
+            LaboratorioEntidad labEntity = labDAO.obtenerPorNombre(nombreLab);
+            return labDAO.verificarContrasena(labEntity, password);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         
     }
     

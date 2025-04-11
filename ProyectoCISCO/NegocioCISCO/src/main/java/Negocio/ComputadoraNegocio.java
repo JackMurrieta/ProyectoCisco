@@ -7,7 +7,6 @@ package Negocio;
 import Adaptadores.ComputadoraAdapter;
 import DAOs.CarreraDAO;
 import DAOs.ComputadoraDAO;
-import DTOs.CarreraDTO;
 import DTOs.ComputadoraDTO;
 import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
@@ -17,8 +16,6 @@ import Interfaces.IComputadoraNegocio;
 import InterfazDAOs.IComputadoraDAO;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -57,7 +54,7 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         }
     }
     
-    private ComputadoraDTO validarExistencia(ComputadoraDTO pcDto){
+    private ComputadoraDTO validarExistencia(ComputadoraDTO pcDto) throws NegocioException{
         if(pcDto.getIdComputadora() != null){
             ComputadoraDTO  pcExistente= obtenerComputadora(pcDto.getNumComputadora());
             return pcExistente;
@@ -104,8 +101,12 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
    
     
     @Override
-    public void eliminarComputadora(Long id) {
-        pcDAO.eliminarComputadora(id);
+    public void eliminarComputadora(Long id)throws NegocioException {
+        try {
+            pcDAO.eliminarComputadora(id);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
 
     //Checar editar Metodo
@@ -114,7 +115,12 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         validarDireccionIp(pc.getDireccionIp());
         validarNumComputadora(pc.getNumComputadora());
         
-        ComputadoraEntidad pcEntity = pcDAO.obtenerPorIdComputadora(pc.getIdComputadora());
+        ComputadoraEntidad pcEntity;
+        try {
+            pcEntity = pcDAO.obtenerPorIdComputadora(pc.getIdComputadora());
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         //Obtener Carrera
         CarreraEntidad carreraEntity = null;
         
@@ -128,7 +134,11 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         pcEntity.setTipo(pc.getTipo());
         pcEntity.setCarrera(carreraEntity);
         
-        pcDAO.editarComputadora(pcEntity);
+        try {
+            pcDAO.editarComputadora(pcEntity);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
     }
     
     
@@ -145,22 +155,29 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
     }
 
     @Override
-    public ComputadoraDTO obtenerComputadora(String numComputadora) {
+    public ComputadoraDTO obtenerComputadora(String numComputadora) throws NegocioException {
         try {
             validarNumComputadora(numComputadora);
             return convertidor.convertirDTO(pcDAO.obtenerComputadoraPorNum(numComputadora));
             
             
         } catch (NegocioException ex) {
-            Logger.getLogger(ComputadoraNegocio.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+            
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
         }
-        return null;
         
     }
 
     @Override
-    public ComputadoraDTO obtenerComputadoraPorId(Long id) {
-        ComputadoraEntidad pcEntity = pcDAO.obtenerPorIdComputadora(id);
+    public ComputadoraDTO obtenerComputadoraPorId(Long id) throws NegocioException {
+        ComputadoraEntidad pcEntity;
+        try {
+            pcEntity = pcDAO.obtenerPorIdComputadora(id);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException(ex.getMessage());
+        }
         ComputadoraDTO pcEncontrada = convertidor.convertirDTO(pcEntity);
         return pcEncontrada; 
     }
