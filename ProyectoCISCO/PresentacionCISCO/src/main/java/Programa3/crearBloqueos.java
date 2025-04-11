@@ -8,9 +8,11 @@ import DAOs.BloqueoDAO;
 import DTOs.BloqueoConAlumnoDTO;
 import Interfaces.IBloqueoNegocio;
 import Negocio.BloqueoNegocio;
+import java.awt.Window;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -131,25 +133,27 @@ public class crearBloqueos extends javax.swing.JPanel {
 
     private void btnBloquearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBloquearActionPerformed
         try {
-        // Obtener los valores de los campos de texto
+    
         Long idAlumno = Long.parseLong(jTFidAlumno.getText().trim());
         LocalDate fechaInicio = LocalDate.now(); 
         LocalDate fechaFin = LocalDate.parse(jTFfechaFin.getText().trim());
         String motivo = jTFmotivo.getText().trim();
 
           jTFfechaInicio.setText(fechaInicio.toString());
-        // Crear un DTO con los datos del formulario
         BloqueoConAlumnoDTO dto = new BloqueoConAlumnoDTO();
         dto.setIdAlumno(idAlumno);
         dto.setFechaInicio(fechaInicio);
         dto.setFechaFin(fechaFin);
         dto.setMotivo(motivo);
 
-        // Llamar al método de negocio para registrar el bloqueo
+
         bloqueoNegocio.registrarBloqueo(dto);
 
-        // Mostrar mensaje de éxito
         JOptionPane.showMessageDialog(this, "Bloqueo registrado correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+             Window window = SwingUtilities.getWindowAncestor(this);
+        if (window != null) {
+            window.dispose();
+        }
         
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Error en el formato del ID de Alumno", "Error", JOptionPane.ERROR_MESSAGE);
