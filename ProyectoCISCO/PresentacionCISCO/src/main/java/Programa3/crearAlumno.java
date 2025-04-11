@@ -30,7 +30,7 @@ public class crearAlumno extends javax.swing.JPanel {
     private ICarreraNegocio carreraNegocio;
     private Map<String, Long> carrerasMap = new HashMap<>();
     private Long idAlumnoEditando = null;
-
+ 
     public crearAlumno() {
         initComponents();
         this.carreraNegocio = new CarreraNegocio(new CarreraDAO());
@@ -255,16 +255,16 @@ public class crearAlumno extends javax.swing.JPanel {
             String apellidoM = jTFapellidoMaterno.getText().trim();
             String contrasenia = JTFcontrasenia1.getText().trim();
             String confirmarContrasenia = jTFcontrasenia2.getText().trim();
-            
-            if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || contrasenia.isEmpty()  || confirmarContrasenia.isEmpty() ) {
+
+            if (nombre.isEmpty() || apellidoP.isEmpty() || apellidoM.isEmpty() || contrasenia.isEmpty() || confirmarContrasenia.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Por favor, llena todos los campos.");
                 return;
             }
-            
+
             if (!contrasenia.equals(confirmarContrasenia)) {
-            JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
-            return;
-        }
+                JOptionPane.showMessageDialog(this, "Las contraseñas no coinciden");
+                return;
+            }
 
             String estatusSeleccionado = (String) jComboBox1.getSelectedItem();
             boolean estatus = estatusSeleccionado.equalsIgnoreCase("Activo");
@@ -287,9 +287,19 @@ public class crearAlumno extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Alumno editado correctamente.");
                 idAlumnoEditando = null;
 
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
+
             } else {
                 alumnoNegocio.registrarAlumno(dto);
                 JOptionPane.showMessageDialog(this, "Alumno guardado correctamente.");
+
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
 
             }
 

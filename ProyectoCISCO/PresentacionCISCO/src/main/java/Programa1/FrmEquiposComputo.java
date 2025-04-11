@@ -154,7 +154,7 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     private List<ComputadoraDTO> obtenerListaDeComputadoras() {
         ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio();
         List<ComputadoraDTO> computadorasApartado = new ArrayList<>();
-        List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(1L);
+        List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(2L);
         for (ComputadoraDTO computadoraDTO : pcsBd) {
             if(computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")){
                 computadorasApartado.add(computadoraDTO);

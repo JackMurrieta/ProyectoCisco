@@ -176,10 +176,18 @@ public class crearCarrera extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Carrera editada correctamente.");
                 idCarreraEditando = null;
 
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
+
             } else {
                 carreraNegocio.guardarCarrera(dto);
                 JOptionPane.showMessageDialog(this, "Carrera guardado correctamente.");
-
+                Window window = SwingUtilities.getWindowAncestor(this);
+                if (window != null) {
+                    window.dispose();
+                }
             }
 
         } catch (Exception e) {
@@ -197,13 +205,11 @@ public class crearCarrera extends javax.swing.JPanel {
         if (nuevoColor != null) {
             colorSeleccionado = nuevoColor;
 
-         
             String colorHex = String.format("#%06X", (0xFFFFFF & nuevoColor.getRGB()));
 
-         
             jTFcolor.setText(colorHex);
-            jTFcolor.setBackground(nuevoColor); 
-            jTFcolor.setForeground(Color.WHITE); 
+            jTFcolor.setBackground(nuevoColor);
+            jTFcolor.setForeground(Color.WHITE);
         }
     }//GEN-LAST:event_btnElegirColorActionPerformed
     public void cargarDatosCarrera(CarreraDTO carrera) {
