@@ -31,14 +31,16 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     private Image imagenFondo;
     private Color colorPCRecomendado;
     private AlumnoDTO alumno;
+    private List<ComputadoraDTO> computadoras;
 
     /**
      * Creates new form FrmApartarEquipo
      *
      * @param color
      */
-    public FrmEquiposComputo(AlumnoDTO alumno) {
+    public FrmEquiposComputo(AlumnoDTO alumno,List<ComputadoraDTO> computadoras) {
         this.alumno = alumno;
+        this.computadoras = computadoras;
         initComponents();
         this.setTitle("Numero Equipo De Computo");
         this.imagenFondo = new ImageIcon(getClass().getResource("/FondoCISCO.jpeg")).getImage();
@@ -158,7 +160,7 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
         List<ComputadoraDTO> computadorasApartado = new ArrayList<>();
         //Aqui esta el harcodeo
         
-        List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(1L);
+        List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(com);
         for (ComputadoraDTO computadoraDTO : pcsBd) {
             if(computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")){
                 computadorasApartado.add(computadoraDTO);
