@@ -7,6 +7,7 @@ package DAOs;
 import DTOs.LaboratorioDTO;
 import Entidades.InstitutoEntidad;
 import Entidades.LaboratorioEntidad;
+import Excepciones.PersistenciaException;
 import InterfazDAOs.ILaboratorioDAO;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -33,21 +34,21 @@ public class LaboratorioDAO implements ILaboratorioDAO {
     }
 
     @Override
-    public LaboratorioEntidad obtenerLabPorId(Long id) {
+    public LaboratorioEntidad obtenerLabPorId(Long id)throws PersistenciaException{
         EntityManager em = emf.createEntityManager();
         try {
             LaboratorioEntidad lab = em.find(LaboratorioEntidad.class, id);
             if (lab != null) {
                 return lab;
             } else {
-                throw new PersistenceException("Laboratorio no encontrado con ID: " + id);
+                throw new PersistenciaException("Laboratorio no encontrado con ID: " + id);
             }
         } finally {
             em.close();
         }
     }
 
-    public LaboratorioEntidad obtenerPorNombre(String nombre){
+    public LaboratorioEntidad obtenerPorNombre(String nombre)throws PersistenciaException{
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<LaboratorioEntidad> query = em.createQuery(
@@ -57,14 +58,14 @@ public class LaboratorioDAO implements ILaboratorioDAO {
             query.setParameter("nombre", nombre);
             return query.getSingleResult();
         } catch (PersistenceException e) {
-            throw new PersistenceException("Laboratorio no encontrado");
+            throw new PersistenciaException("Laboratorio no encontrado");
         } finally {
             em.close();
         }
     }
 
     @Override
-    public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad) {
+    public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad)throws PersistenciaException {
 
         EntityManager em = emf.createEntityManager();
         try {
@@ -80,7 +81,7 @@ public class LaboratorioDAO implements ILaboratorioDAO {
             System.out.println("Laboratorio guardado exitosamente.");
         } catch (Exception e) {
             em.getTransaction().rollback();
-            throw new PersistenceException("Error al guardar el Laboratorio: " + e.getMessage());
+            throw new PersistenciaException("Error al guardar el Laboratorio: " + e.getMessage());
         } finally {
             em.close();
         }
@@ -104,6 +105,9 @@ public class LaboratorioDAO implements ILaboratorioDAO {
         }
         return laboratorios;
     }
+    
+
+//METODOS CRUD LAB
     
     // Método auxiliar para encriptar una contraseña usando SHA-256
     public String encriptarPassword(String password) {

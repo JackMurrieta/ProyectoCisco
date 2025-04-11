@@ -5,12 +5,13 @@
 package InterfazDAOs;
 
 import Entidades.InstitutoEntidad;
+import Excepciones.PersistenciaException;
 
 /**
  *
  * @author Jack Murrieta
  */
 public interface IInstitutoDAO {
-    public InstitutoEntidad obtenerInstitutoPorNombre(String nombre);
-    public InstitutoEntidad obtenerPorID(Long id);
+    public InstitutoEntidad obtenerInstitutoPorNombre(String nombre) throws PersistenciaException;
+    public InstitutoEntidad obtenerPorID(Long id)throws PersistenciaException;
 }

@@ -14,7 +14,7 @@ import java.time.LocalDate;
  */
 public interface IApartadoPorDiaDAO {
     
-    public ApartadoPorDiaEntidad registrarApartadoPorDia(ApartadoPorDiaEntidad entidad);
+   public ApartadoPorDiaEntidad registrarApartadoPorDia(ApartadoPorDiaEntidad entidad)throws PersistenciaException;
     
    public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha) throws PersistenciaException;
     

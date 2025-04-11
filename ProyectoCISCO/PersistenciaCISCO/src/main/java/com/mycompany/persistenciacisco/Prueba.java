@@ -23,18 +23,17 @@ public class Prueba {
      */
     public static void main(String[] args) {
         InstitutoDAO institutoDAO = new InstitutoDAO();
-        InstitutoEntidad institutoEntity =institutoDAO.obtenerInstitutoPorNombre("ITSON");
+        InstitutoEntidad institutoEntity = institutoDAO.obtenerInstitutoPorNombre("ITSON");
         String password = "1234";
         LocalTime horaInicio = LocalTime.of(8, 0);
         LocalTime horaFin = LocalTime.of(22, 0);
-        
+
         LaboratorioDAO labDAO = new LaboratorioDAO();
         LaboratorioEntidad labEntidad = labDAO.obtenerPorNombre("CISCO");
-       
+
 //        labDAO.agregarLaboratorioPorInstituto(labEntidad);
         boolean resultado = labDAO.verificarContrasena(labEntidad, "1234");
         System.out.println(resultado);
     }
-    }
-    
+}
 

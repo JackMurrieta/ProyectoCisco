@@ -5,7 +5,6 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.time.Duration;
 import java.time.LocalTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,13 +33,13 @@ public class ApartadoEntidad implements Serializable {
     private LocalTime horaInicio;
     
     @Column(name = "minutosSeleccionado", nullable = false)
-    private Duration minutosSeleccionado;
+    private int minutosSeleccionado;
     
     @Column(name="horaFin", nullable = true)
     private LocalTime horaFin;
     
     @Column(name= "minutosUsados", nullable = true)
-    private Duration minutosUsados;
+    private int minutosUsados;
     
 //    IdEstudiante: entero FK Requerido
     @ManyToOne
@@ -57,37 +56,28 @@ public class ApartadoEntidad implements Serializable {
     @JoinColumn(name="idApartadoPorDia", referencedColumnName = "idApartadoPorDia", nullable = false)
     private ApartadoPorDiaEntidad apartadoPorDia;
 
+    
+
+    //CONSTRUCTORES 
     public ApartadoEntidad() {
     }
+    
+    //DAR DE ALTA UN APARTADO CONSTRUCTOR 
 
-    public ApartadoEntidad(LocalTime horaInicio, AlumnoEntidad alumno, ComputadoraEntidad computadora, ApartadoPorDiaEntidad apartadoPorDia) {
+    public ApartadoEntidad(LocalTime horaInicio, int minutosSeleccionado, AlumnoEntidad alumno, ComputadoraEntidad computadora, ApartadoPorDiaEntidad apartadoPorDia) {
         this.horaInicio = horaInicio;
+        this.minutosSeleccionado = minutosSeleccionado;
         this.alumno = alumno;
         this.computadora = computadora;
         this.apartadoPorDia = apartadoPorDia;
     }
-
-    public LocalTime getHoraInicio() {
-        return horaInicio;
-    }
-
-    public void setHoraInicio(LocalTime horaInicio) {
-        this.horaInicio = horaInicio;
+    
+    //CONSTRUCTOR LIBERAR EQUIPO
+    public ApartadoEntidad(int minutosUsados, AlumnoEntidad alumno) {
+        this.minutosUsados = minutosUsados;
+        this.alumno = alumno;
     }
     
-
-    public AlumnoEntidad getAlumno() {
-        return alumno;
-    }
-
-    public ComputadoraEntidad getComputadora() {
-        return computadora;
-    }
-
-    public ApartadoPorDiaEntidad getApartadoPorDia() {
-        return apartadoPorDia;
-    }
-
     
     public Long getId() {
         return id;
@@ -97,18 +87,65 @@ public class ApartadoEntidad implements Serializable {
         this.id = id;
     }
 
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(LocalTime horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public int getMinutosSeleccionado() {
+        return minutosSeleccionado;
+    }
+
+    public void setMinutosSeleccionado(int minutosSeleccionado) {
+        this.minutosSeleccionado = minutosSeleccionado;
+    }
+
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
+
+    public void setHoraFin(LocalTime horaFin) {
+        this.horaFin = horaFin;
+    }
+
+    public int getMinutosUsados() {
+        return minutosUsados;
+    }
+
+    public void setMinutosUsados(int minutosUsados) {
+        this.minutosUsados = minutosUsados;
+    }
+
+    public AlumnoEntidad getAlumno() {
+        return alumno;
+    }
+
     public void setAlumno(AlumnoEntidad alumno) {
         this.alumno = alumno;
+    }
+
+    public ComputadoraEntidad getComputadora() {
+        return computadora;
     }
 
     public void setComputadora(ComputadoraEntidad computadora) {
         this.computadora = computadora;
     }
 
+    public ApartadoPorDiaEntidad getApartadoPorDia() {
+        return apartadoPorDia;
+    }
+
     public void setApartadoPorDia(ApartadoPorDiaEntidad apartadoPorDia) {
         this.apartadoPorDia = apartadoPorDia;
     }
     
+    
+
+  
     
 
     @Override

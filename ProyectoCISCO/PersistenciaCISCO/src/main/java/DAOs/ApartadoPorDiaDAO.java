@@ -5,6 +5,7 @@
 package DAOs;
 
 import Entidades.ApartadoPorDiaEntidad;
+import Excepciones.PersistenciaException;
 import InterfazDAOs.IApartadoPorDiaDAO;
 import java.time.LocalDate;
 import javax.persistence.EntityManager;
@@ -26,9 +27,17 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
     
 
     @Override
-    public ApartadoPorDiaEntidad registrarApartadoPorDia(ApartadoPorDiaEntidad entidad) {
+    public ApartadoPorDiaEntidad registrarApartadoPorDia(ApartadoPorDiaEntidad entidad)throws PersistenciaException {
         //Horas de laboratorio
+        //Valida si existe un apartado con esa Hora
+        if(obtenerApartadoPorFechaActual(entidad.getFechaApartado()) != null){
+            return null;
+        }
         entidad.setFechaApartado(LocalDate.now());
+        
+//Hora del laboratorio
+        entidad.setHoraInicio(entidad.getLaboratorio().getHoraInicio());
+        entidad.setHoraFin(entidad.getLaboratorio().getHoraFin());
 
         EntityManager em = emf.createEntityManager();
 
@@ -40,7 +49,7 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback(); 
             }
-            e.printStackTrace(); 
+            throw new PersistenciaException("No se registro ApartadoPorDia");
         } finally {
             em.close(); 
         }
@@ -49,7 +58,7 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
     }
 
     @Override
-    public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha) {
+    public ApartadoPorDiaEntidad obtenerApartadoPorFechaActual(LocalDate fecha)throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<ApartadoPorDiaEntidad> query = em.createQuery(
@@ -59,14 +68,14 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
             query.setParameter("fecha", fecha);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            return null; // o puedes lanzar una excepción personalizada si prefieres
+            return null;
         } finally {
             em.close();
         }
     }
    
 
-    public ApartadoPorDiaEntidad obtenerApartadoPorDiaPorId(Long id) {
+    public ApartadoPorDiaEntidad obtenerApartadoPorDiaPorId(Long id)throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
         try {
             // Usamos una consulta para obtener el ApartadoPorDiaEntidad por su id
@@ -77,8 +86,7 @@ public class ApartadoPorDiaDAO implements IApartadoPorDiaDAO {
             query.setParameter("id", id);
             return query.getSingleResult();  // Retorna el único resultado
         } catch (NoResultException e) {
-            // En caso de que no se encuentre, retornamos null o puedes lanzar una excepción si prefieres
-            return null;
+            throw new PersistenciaException("No se encuentra ese ID apartado por dia en la bd");
         } finally {
             em.close();
         }

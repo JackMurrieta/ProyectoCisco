@@ -46,7 +46,7 @@ public class ComputadoraDAO implements IComputadoraDAO {
     }
 
     @Override
-    public void eliminarComputadora(Long id) {
+    public void eliminarComputadora(Long id)throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         ComputadoraEntidad pc = em.find(ComputadoraEntidad.class,id);
@@ -55,20 +55,20 @@ public class ComputadoraDAO implements IComputadoraDAO {
             em.getTransaction().commit();
             em.close();
         }else{
-            throw new PersistenceException("Computadora no encontrada");
+            throw new PersistenciaException("Computadora no encontrada");
         }
 
     }
 
     @Override
-    public ComputadoraEntidad obtenerPorIdComputadora(Long id) {
+    public ComputadoraEntidad obtenerPorIdComputadora(Long id)throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
         ComputadoraEntidad pc = null;
 
         try {
             pc = em.find(ComputadoraEntidad.class, id);
             if (pc == null) {
-                throw new PersistenceException("Computadora no encontrada con ID: " + id);
+                throw new PersistenciaException("Computadora no encontrada con ID: " + id);
             }
             return pc;
         } finally {
@@ -96,7 +96,7 @@ public class ComputadoraDAO implements IComputadoraDAO {
 
     //Hacer metodo por columna Num
     @Override
-    public ComputadoraEntidad obtenerComputadoraPorNum(String num) {
+    public ComputadoraEntidad obtenerComputadoraPorNum(String num) throws PersistenciaException{
         EntityManager em = emf.createEntityManager();
         try {
             TypedQuery<ComputadoraEntidad> query = em.createQuery(
@@ -106,16 +106,16 @@ public class ComputadoraDAO implements IComputadoraDAO {
             query.setParameter("num", num);
             return query.getSingleResult();
         } catch (PersistenceException e) {
-            throw new PersistenceException("Computadora no encontrada");
+            throw new PersistenciaException("Computadora no encontrada");
         } finally {
             em.close();
         }
     }
 
     @Override
-    public void editarComputadora(ComputadoraEntidad pcEntidad) {  
+    public void editarComputadora(ComputadoraEntidad pcEntidad) throws PersistenciaException {
         if (pcEntidad.getId() == null) {
-            throw new IllegalArgumentException("La computadora a editar debe tener un ID válido.");
+            throw new PersistenciaException("La computadora a editar debe tener un ID válido.");
         }
 
         EntityManager em = emf.createEntityManager();
@@ -137,8 +137,6 @@ public class ComputadoraDAO implements IComputadoraDAO {
                 em.getTransaction().rollback();
                 throw new PersistenciaException("Computadora no encontrada");
             }
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(ComputadoraDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             em.close();
         }

@@ -6,6 +6,7 @@ package InterfazDAOs;
 
 import DTOs.LaboratorioDTO;
 import Entidades.LaboratorioEntidad;
+import Excepciones.PersistenciaException;
 import java.util.List;
 
 /**
@@ -14,13 +15,15 @@ import java.util.List;
  */
 public interface ILaboratorioDAO {
     
-    public LaboratorioEntidad obtenerLabPorId(Long id);
+    public LaboratorioEntidad obtenerLabPorId(Long id)throws PersistenciaException;
     
-    public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad);
+    public void agregarLaboratorioPorInstituto(LaboratorioEntidad labEntidad)throws PersistenciaException;
     
     public List<LaboratorioEntidad> laboratoriosEnInstitutos(Long id);
     
-    public LaboratorioEntidad obtenerPorNombre(String nombre);
+    public LaboratorioEntidad obtenerPorNombre(String nombre)throws PersistenciaException;
+    
+    //METODOS LAB CRUD
     public boolean verificarContrasena(LaboratorioEntidad lab, String passwordIngresada);
     
     public List<LaboratorioDTO> obtenerLaboratoriosTabla();

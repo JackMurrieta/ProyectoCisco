@@ -5,6 +5,7 @@
 package DAOs;
 
 import Entidades.InstitutoEntidad;
+import Excepciones.PersistenciaException;
 import InterfazDAOs.IInstitutoDAO;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -23,7 +24,7 @@ public class InstitutoDAO implements IInstitutoDAO{
     }
 
     @Override
-    public InstitutoEntidad obtenerInstitutoPorNombre(String nombre) {
+    public InstitutoEntidad obtenerInstitutoPorNombre(String nombre)throws PersistenciaException {
         EntityManager em = emf.createEntityManager();
 
         try {
@@ -34,19 +35,19 @@ public class InstitutoDAO implements IInstitutoDAO{
             query.setParameter("nombre", nombre);
             return query.getSingleResult();
         } catch (PersistenceException e) {
-            throw new PersistenceException("Instituto no encontrado");
+            throw new PersistenciaException("Instituto no encontrado");
         } finally {
             em.close();
         }
     }
     
-    public InstitutoEntidad obtenerPorID(Long id){
+    public InstitutoEntidad obtenerPorID(Long id)throws PersistenciaException{
         EntityManager em = emf.createEntityManager();
         InstitutoEntidad instituto = em.find(InstitutoEntidad.class, id);
         if (instituto != null) {
             return instituto;
         } else {
-            throw new PersistenceException("Instituto no encontrado");
+            throw new PersistenciaException("Instituto no encontrado");
         }
         
     }

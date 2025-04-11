@@ -5,14 +5,17 @@
 package InterfazDAOs;
 
 import Entidades.ApartadoEntidad;
+import Excepciones.PersistenciaException;
 
 /**
  *
  * @author Usuario
  */
 public interface IApartadoDAO {
-    public ApartadoEntidad registrarApartado(ApartadoEntidad apartado);
+    public ApartadoEntidad registrarApartado(ApartadoEntidad apartado)throws PersistenciaException;
     
-     public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
+    public ApartadoEntidad obtenerApartadoPorAlumno(Long idAlumno);
+    
+   public void editarApartadoLiberado(ApartadoEntidad apartado) throws PersistenciaException;
     
 }
