@@ -15,11 +15,13 @@ import DTOs.ComputadoraDTO;
 import DTOs.InstitutoDTO;
 import DTOs.LaboratorioDTO;
 import Entidades.AlumnoEntidad;
+import Entidades.ApartadoEntidad;
 import Entidades.CarreraEntidad;
 import Entidades.ComputadoraEntidad;
 import Entidades.InstitutoEntidad;
 import Entidades.LaboratorioEntidad;
 import ExcepcionNegocio.NegocioException;
+import Excepciones.PersistenciaException;
 import Negocio.ApartadoNegocio;
 import Negocio.ComputadoraNegocio;
 import Negocio.InstitutoNegocio;
@@ -35,6 +37,34 @@ public class NegocioCISCO {
 
     public static void main(String[] args) {
         
+        try {
+            //                NEGOCIO APARTADO Y APARTADOS POR DIA
+            
+            LaboratorioDAO labDAO = new LaboratorioDAO();
+            LaboratorioEntidad labEntity = labDAO.obtenerLabPorId(5L);
+            Long idLab = labEntity.getId();
+            System.out.println(labEntity.toString());
+            System.out.println(idLab);
+            
+            //NEGOCIO COMPUTADORAS
+            ComputadoraDAO pcDAO = new ComputadoraDAO();
+            ComputadoraNegocio pcNegocio = new ComputadoraNegocio();
+            ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("001");
+            
+            AlumnoDAO aDAO =new AlumnoDAO();
+            AlumnoEntidad alumnoEntity = aDAO.obtenerAlumnoEntidad(1L);
+            
+            ApartadoDTO apartado = new ApartadoDTO(alumnoEntity.getId(), 30, pcEntity.getDireccionIp(), pcEntity.getNumComputadora());
+            ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
+            ApartadoEntidad apartadoEntidad = apartadoNegocio.registrarApartado(apartado);
+            System.out.println("apartado Exitoso");
+            System.out.println(apartadoEntidad.toString());
+            
+            //REALIZAR VALIDACION QUE NO SE PUEDE APARTAR EL MISMO EQUIPO SI NO HA SIDO LIBERADO
+            //CHECAR POR QUE NO JALA
+            apartadoNegocio.editarApartadoLiberado(apartado);
+            System.out.println("Apartado Liberado");
+            
 //        //PROBAR CRUD COMPUTADORAS
 //        ComputadoraDAO pcDAO = new ComputadoraDAO();
 //        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("002");
@@ -47,10 +77,10 @@ public class NegocioCISCO {
 //
 //        CarreraDAO carreraDAO = new CarreraDAO();
 
-        //DTOS de Computadoras
-        
-        
-        
+//DTOS de Computadoras
+
+
+
 //        System.out.println(carrera.toString());
 //       
 //        if (pcEntity != null) {
@@ -59,7 +89,7 @@ public class NegocioCISCO {
 //            pcEntity.setTipo("PC Gamer");
 //            pcEntity.setEstatus(true);
 //            pcEntity.setCarrera(null);
-//            
+//
 //
 //            // Llamar al método para actualizar en la BD
 //            pcDAO.editarComputadora(pcEntity);
@@ -73,9 +103,9 @@ public class NegocioCISCO {
 //        System.out.println("Eliminaar PC");
 //        pcDAO.eliminarComputadora(pcEntity.getId());
 //        System.out.println("Eliminado");
-    
-        
-        
+
+
+
 //        InstitutoDAO institutoDAO = new InstitutoDAO();
 //        InstitutoEntidad institutoEntidad = institutoDAO.obtenerInstitutoPorNombre("ITSON");
 //        InstitutoNegocio institutoNegocio = new InstitutoNegocio();
@@ -84,30 +114,11 @@ public class NegocioCISCO {
 //        InstitutoDTO uniDTO2 = institutoNegocio.obtenerInstitutoPorID(1L);
 //        System.out.println(uniDTO.toString());
 //        System.out.println(uniDTO2.toString());
+//
 //        
-//        
-//        NEGOCIO APARTADO Y APARTADOS POR DIA 
 
-//        LaboratorioDAO labDAO = new LaboratorioDAO();
-//        LaboratorioEntidad labEntity = labDAO.obtenerLabPorId(1L);
-//        Long idLab = labEntity.getId();
-//        System.out.println(labEntity.toString());
-//        System.out.println(idLab);
-//        
-//        //NEGOCIO COMPUTADORAS
-//        ComputadoraDAO pcDAO = new ComputadoraDAO();
-//        ComputadoraNegocio pcNegocio = new ComputadoraNegocio();
-//        ComputadoraEntidad pcEntity = pcDAO.obtenerComputadoraPorNum("030");
-//        
-//        AlumnoDAO aDAO =new AlumnoDAO();
-//        AlumnoEntidad alumnoEntity = aDAO.obtenerAlumnoEntidad(1L);
-//        
-//        ApartadoDTO apartado = new ApartadoDTO(alumnoEntity.getId(), pcEntity.getNumComputadora());
-//        ApartadoNegocio apartadoNegocio = new ApartadoNegocio();
-//        apartadoNegocio.registrarApartado(apartado);
-//        System.out.println("apartado Exitoso");
-//        
-        //SOLO CON LAB
+
+//SOLO CON LAB
 //        
 //        ComputadoraDTO pc1 = new ComputadoraDTO("192.168.123.5", "005", true, labEntity.getId());
 //        ComputadoraDTO pc2 = new  ComputadoraDTO("192.168.123.2", "010", true, labEntity.getId());
@@ -137,10 +148,15 @@ public class NegocioCISCO {
 //        ComputadoraEntidad pcEntity1 = new ComputadoraEntidad("192.168.123.10", "2", true, labEntity);
 //        pcDAO.guardarComputadora(pcEntity1);
 //        pcDAO.guardarComputadora(pcEntity);
-//       
+//
         
 //        } catch (NegocioException ex) {
 //            Logger.getLogger(NegocioCISCO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(NegocioCISCO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NegocioException ex) {
+            Logger.getLogger(NegocioCISCO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

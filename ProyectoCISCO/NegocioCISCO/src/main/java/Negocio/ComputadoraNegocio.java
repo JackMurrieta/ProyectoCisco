@@ -69,6 +69,7 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         if (!direccionIp.matches(patronIPv4)) {
             throw new NegocioException("La dirección IP no tiene un formato valido.");
         }
+        //VALIDAR SI Y EXISTE A IP SI NO TIRAR EXCEPCION
     }
     
     private void validarNumComputadora(String numComputadora) throws NegocioException{

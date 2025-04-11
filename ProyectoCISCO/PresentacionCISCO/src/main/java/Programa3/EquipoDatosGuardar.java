@@ -177,6 +177,7 @@ public class EquipoDatosGuardar extends javax.swing.JPanel {
         CarreraDTO cDTO= ControlNavegacion.ControlNavegacion.buscarCarreraPorNombre(carreraNombre);
         System.out.println(cDTO.toString());
         ComputadoraDTO pcDTO = new ComputadoraDTO(ip, numPC, estatus, tipo, cDTO.getId(),idLab);
+        //VALIDAR SI LA IP EXISTE SI NO TIRAR EXCEPCION
         ControlNavegacion.ControlNavegacion.guardarEquipo(pcDTO);
  
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed

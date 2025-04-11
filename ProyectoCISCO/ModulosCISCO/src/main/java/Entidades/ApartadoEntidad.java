@@ -170,7 +170,9 @@ public class ApartadoEntidad implements Serializable {
 
     @Override
     public String toString() {
-        return "Entidades.ApartadoEntidad[ id=" + id + " ]";
+        return "ApartadoEntidad{" + "id=" + id + ", horaInicio=" + horaInicio + ", minutosSeleccionado=" + minutosSeleccionado + ", horaFin=" + horaFin + ", minutosUsados=" + minutosUsados + ", alumno=" + alumno + ", computadora=" + computadora + ", apartadoPorDia=" + apartadoPorDia + '}';
     }
+
+    
     
 }

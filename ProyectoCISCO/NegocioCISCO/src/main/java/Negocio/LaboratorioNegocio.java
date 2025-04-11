@@ -55,32 +55,36 @@ public class LaboratorioNegocio implements ILaboratorioNegocio {
     public boolean validarDatosLab(LaboratorioDTO labDTO)throws NegocioException {
         validarNombre(labDTO.getNombreLab());
         validarHoras(labDTO.getHoraInicio(), labDTO.getHoraFin());
+        validarPassword(labDTO);
         return true;
-        
     }
-    private void validarNombre(String nombre) throws NegocioException{
+    private void validarPassword(LaboratorioDTO labDTO) throws NegocioException {
+        if (labDTO.getContrasena() == null || labDTO.getContrasena().isEmpty()) {
+            throw new NegocioException("La contraseña está vacía.");
+        }
+    }
+    private void validarNombre(String nombre) throws NegocioException {
         if (nombre == null || nombre.isEmpty()) {
             throw new NegocioException("El nombre del laboratorio no puede ser nulo o vacío.");
         }
-        // Validar que no sobrepase los 100 caracteres
+
         if (nombre.length() > 100) {
             throw new NegocioException("El nombre del laboratorio no puede exceder los 100 caracteres.");
         }
-        //validar que no exista
-        List<LaboratorioDTO> labDTO = obtenerListaLabInstituto();
-        for (LaboratorioDTO laboratorioDTO : labDTO) {
-            if(laboratorioDTO.getNombreLab().equalsIgnoreCase(nombre)){
-                throw new NegocioException("Nombre del Laboratorio Ya existe");
+
+        // Verificar si ya existe un laboratorio con ese nombre
+        List<LaboratorioDTO> labDTOList = obtenerListaLabInstituto();
+        for (LaboratorioDTO laboratorioDTO : labDTOList) {
+            if (laboratorioDTO.getNombreLab().equalsIgnoreCase(nombre)) {
+                throw new NegocioException("El nombre del laboratorio ya existe.");
             }
         }
     }
     private void validarHoras(LocalTime horaInicio, LocalTime horaFin) throws NegocioException{
-        // Validar que las horas no sean nulas
         if (horaInicio == null || horaFin == null) {
             throw new NegocioException("Las horas de inicio y fin no pueden ser nulas.");
         }
 
-        // Validar que la hora de inicio no sea mayor que la hora de fin
         if (horaInicio.isAfter(horaFin)) {
             throw new NegocioException("La hora de inicio no puede ser mayor que la hora de fin.");
         }

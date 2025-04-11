@@ -114,6 +114,7 @@ public class ControlNavegacion {
             //Poner JOPTION
             ex.printStackTrace();
             mostrarMensajeError(ex);
+            return;
         }
         try {
             labNegocio.guardarLabortorio(labDTO);
@@ -122,6 +123,7 @@ public class ControlNavegacion {
             //PONERJOPTION
             ex.printStackTrace();
             mostrarMensajeError(ex);
+            return;
         }
         actualizarListaLab();
     }
