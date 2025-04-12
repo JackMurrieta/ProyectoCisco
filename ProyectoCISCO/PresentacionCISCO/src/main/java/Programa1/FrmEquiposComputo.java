@@ -7,6 +7,7 @@ package Programa1;
 import DAOs.LaboratorioDAO;
 import DTOs.AlumnoDTO;
 import DTOs.ComputadoraDTO;
+import DTOs.LaboratorioDTO;
 import Entidades.LaboratorioEntidad;
 import Excepciones.PersistenciaException;
 import Negocio.ComputadoraNegocio;
@@ -37,7 +38,7 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     private Color colorPCRecomendado;
     private AlumnoDTO alumno;
     private List<ComputadoraDTO> computadoras;
-    private LaboratorioEntidad laboratorioEntidad;
+    private  List<LaboratorioDTO> laboratorios;
 
     /**
      * Creates new form FrmApartarEquipo
@@ -45,48 +46,36 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
      * @param color
      */
     public FrmEquiposComputo(AlumnoDTO alumno) {
-        try {
-            this.alumno = alumno;
-            this.computadoras = computadoras;
-            LaboratorioDAO labDAO = new LaboratorioDAO();
-            laboratorioEntidad = labDAO.obtenerPorNombre("CISCO");
-            initComponents();
-            this.setTitle("Numero Equipo De Computo");
-            this.imagenFondo = new ImageIcon(getClass().getResource("/FondoCISCO.jpeg")).getImage();
-            
-            spnnerTiempo.setModel(new javax.swing.SpinnerNumberModel(1, 1, alumno.getCarreraTiempo(), 1)); // valor inicial, mínimo, máximo, paso
-            
-            JPanel jPanel1 = new javax.swing.JPanel() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
-                }
-            };
-            
-            getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-            getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 800));
-            
-            this.setLocationRelativeTo(null);
-            this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            pack();
-            
-            List<ComputadoraDTO> listaComputadoras = obtenerListaDeComputadoras();
-            
-            JPanelColumnasPcApartadas panelColumnas = new JPanelColumnasPcApartadas(listaComputadoras, this);
-            
-            JScrollPane scroll = new JScrollPane(panelColumnas);
-            scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-            scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-            
-            panelComputadoras.removeAll();
-            panelComputadoras.setLayout(new BorderLayout());
-            panelComputadoras.add(scroll, BorderLayout.CENTER);
-            panelComputadoras.revalidate();
-            panelComputadoras.repaint();
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(FrmEquiposComputo.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.alumno = alumno;
+        this.computadoras = computadoras;
+        LaboratorioDAO labDAO = new LaboratorioDAO();
+        this.laboratorios = labDAO.obtenerLaboratoriosTabla();
+        initComponents();
+        this.setTitle("Numero Equipo De Computo");
+        this.imagenFondo = new ImageIcon(getClass().getResource("/FondoCISCO.jpeg")).getImage();
+        spnnerTiempo.setModel(new javax.swing.SpinnerNumberModel(1, 1, alumno.getCarreraTiempo(), 1)); // valor inicial, mínimo, máximo, paso
+        JPanel jPanel1 = new javax.swing.JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 800));
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        List<ComputadoraDTO> listaComputadoras = obtenerListaDeComputadoras();
+        JPanelColumnasPcApartadas panelColumnas = new JPanelColumnasPcApartadas(listaComputadoras, this);
+        JScrollPane scroll = new JScrollPane(panelColumnas);
+        scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        panelComputadoras.removeAll();
+        panelComputadoras.setLayout(new BorderLayout());
+        panelComputadoras.add(scroll, BorderLayout.CENTER);
+        panelComputadoras.revalidate();
+        panelComputadoras.repaint();
     }
 
     @SuppressWarnings("unchecked")
@@ -171,13 +160,15 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
         ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio();
         List<ComputadoraDTO> computadorasApartado = new ArrayList<>();
         //Aqui esta el harcodeo
-        
-        List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(laboratorioEntidad.getId());
-        for (ComputadoraDTO computadoraDTO : pcsBd) {
-            if(computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")){
-                computadorasApartado.add(computadoraDTO);
+        for (LaboratorioDTO laboratorio : laboratorios) {
+
+            List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(laboratorio.getId());
+            for (ComputadoraDTO computadoraDTO : pcsBd) {
+                if (computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")) {
+                    computadorasApartado.add(computadoraDTO);
+                }
+
             }
-            
         }
         return computadorasApartado;
     }
