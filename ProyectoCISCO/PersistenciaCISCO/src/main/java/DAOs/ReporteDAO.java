@@ -6,6 +6,7 @@ package DAOs;
 
 import DTOs.ReporteUsoLaboratorioDTO;
 import Entidades.LaboratorioEntidad;
+import InterfazDAOs.IReporteDAO;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ import javax.persistence.TypedQuery;
  *
  * @author Oribiel
  */
-public class ReporteDAO {
+public class ReporteDAO implements IReporteDAO {
 
     private EntityManagerFactory fabrica;
     private EntityManager entityManager;
