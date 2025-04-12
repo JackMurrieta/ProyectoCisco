@@ -144,7 +144,8 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
             Long idAlumno = alumno.getId();
 
             ApartadoDAO apartadoDAO = new ApartadoDAO();
-            ApartadoEntidad apartado = apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
+            LocalDate diaHoy = LocalDate.now();
+            ApartadoEntidad apartado = apartadoDAO.obtenerApartadoPorAlumnoFechaHoy(idAlumno, diaHoy);
 
             if (apartado != null && apartado.getComputadora() != null) {
 
