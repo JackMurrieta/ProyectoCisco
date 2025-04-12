@@ -108,14 +108,16 @@ public class JPanelBtnPCApartados extends JPanel {
 
         String mensaje = "¿Deseas confirmar el apartado con los siguientes datos?\n\n"
                 + "Alumno: " + nombreAlumno + "\n"
-                + "Número de equipo: " + idComputadoraSeleccionada + "\n"
+                + "id de equipo: " + idComputadoraSeleccionada + "\n"
+                + "Número de equipo: " + numero + "\n"
                 + "Minutos Seleccionados: " + minutosSeleccionados;
 
         int respuesta = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar apartado", JOptionPane.YES_NO_OPTION);
 
         if (respuesta == JOptionPane.YES_OPTION) {
             try {
-                ComputadoraDTO pcDTO = pcNegocio.obtenerComputadora(numero);
+                //METODO A VALIDAR 
+                ComputadoraDTO pcDTO = pcNegocio.obtenerComputadoraPorId(idComputadoraSeleccionada);
                 
                 ApartadoDTO apartadoDTO = new ApartadoDTO();
                 apartadoDTO.setIdComputadora(idComputadoraSeleccionada);

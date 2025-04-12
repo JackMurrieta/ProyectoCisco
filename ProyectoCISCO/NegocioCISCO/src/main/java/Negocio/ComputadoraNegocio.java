@@ -149,8 +149,9 @@ public class ComputadoraNegocio implements IComputadoraNegocio {
         List<ComputadoraDTO> computadorasDTO = new ArrayList<>();
         for (ComputadoraEntidad pcEntidad : computadorasBD) {
             ComputadoraDTO pcDTO = convertidor.convertirDTO(pcEntidad);
-            computadorasDTO.add(pcDTO);
-            
+            if (pcDTO != null) {
+                computadorasDTO.add(pcDTO);
+            }
         }
         return computadorasDTO;
     }

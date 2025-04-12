@@ -62,7 +62,10 @@ public class ComputadoraAdapter {
     
     //convertir De entidad a DTO
     public ComputadoraDTO convertirDTO(ComputadoraEntidad pcEntidad){
-        
+ 
+        if (pcEntidad == null || pcEntidad.getLaboratorio() == null) {
+            return null; // o lanza una excepción controlada
+        }
         if (pcEntidad.getCarrera() == null) {
             String color = null;
             

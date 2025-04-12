@@ -159,17 +159,24 @@ public class FrmEquiposComputo extends javax.swing.JFrame {
     private List<ComputadoraDTO> obtenerListaDeComputadoras() {
         ComputadoraNegocio computadoraNegocio = new ComputadoraNegocio();
         List<ComputadoraDTO> computadorasApartado = new ArrayList<>();
-        //Aqui esta el harcodeo
+
         for (LaboratorioDTO laboratorio : laboratorios) {
-
             List<ComputadoraDTO> pcsBd = computadoraNegocio.obtenerComputadorasPorLaboratorio(laboratorio.getId());
-            for (ComputadoraDTO computadoraDTO : pcsBd) {
-                if (computadoraDTO.isEstatus() == true || computadoraDTO.getTipo().equalsIgnoreCase("Hacer apartados")) {
-                    computadorasApartado.add(computadoraDTO);
-                }
 
+            // Validamos que la lista no sea nula ni vacía
+            if (pcsBd != null && !pcsBd.isEmpty()) {
+                for (ComputadoraDTO computadoraDTO : pcsBd) {
+                    // Validamos que el objeto no sea nulo antes de usarlo
+                    if (computadoraDTO != null
+                            && (computadoraDTO.isEstatus()
+                            || "Hacer apartados".equalsIgnoreCase(computadoraDTO.getTipo()))) {
+
+                        computadorasApartado.add(computadoraDTO);
+                    }
+                }
             }
         }
+
         return computadorasApartado;
     }
 

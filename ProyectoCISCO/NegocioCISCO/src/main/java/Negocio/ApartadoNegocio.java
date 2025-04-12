@@ -45,7 +45,7 @@ public class ApartadoNegocio implements IApartadoNegocio{
     public ApartadoEntidad registrarApartado(ApartadoDTO apartadoDTO)throws NegocioException {
         ComputadoraEntidad pcEntity;
         try {
-            pcEntity = pcDAO.obtenerComputadoraPorNum(apartadoDTO.getNumComputadora());
+            pcEntity = pcDAO.obtenerPorIdComputadora(apartadoDTO.getIdComputadora());
         } catch (PersistenciaException ex) {
             throw new NegocioException("Error al obtener computadora: " + ex.getMessage(), ex);
         }

@@ -9,11 +9,16 @@ import DAOs.ApartadoDAO;
 import Entidades.AlumnoEntidad;
 import Entidades.ApartadoEntidad;
 import Entidades.ComputadoraEntidad;
+import Excepciones.PersistenciaException;
 import Interfaces.IAlumnoNegocio;
 import Interfaces.IApartadoNegocio;
 import Negocio.AlumnoNegocio;
 import Negocio.ApartadoNegocio;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -131,30 +136,39 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
 
-    String contraseniaIngresada = jTFcontrasenia.getText().trim();
+        String contraseniaIngresada = jTFcontrasenia.getText().trim();
 
-    AlumnoEntidad alumno = alumnoNegocio.obtenerAlumnoPorContrasenia(contraseniaIngresada);
+        AlumnoEntidad alumno = alumnoNegocio.obtenerAlumnoPorContrasenia(contraseniaIngresada);
 
-    if (alumno != null) {
-        Long idAlumno = alumno.getId();
+        if (alumno != null) {
+            Long idAlumno = alumno.getId();
 
-       
-        ApartadoDAO apartadoDAO= new ApartadoDAO();
-        ApartadoEntidad apartado = apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
+            ApartadoDAO apartadoDAO = new ApartadoDAO();
+            ApartadoEntidad apartado = apartadoDAO.obtenerApartadoPorAlumno(idAlumno);
 
-        if (apartado != null && apartado.getComputadora() != null) {
+            if (apartado != null && apartado.getComputadora() != null) {
 
-            ComputadoraEntidad computadora = apartado.getComputadora();
-            frmEquipoDesbloqueado frmEquipo = new frmEquipoDesbloqueado(computadora);
-            frmEquipo.setVisible(true);
+                try {
+                    ComputadoraEntidad computadora = apartado.getComputadora();
+                    LocalTime horaFin = LocalTime.now();
+                    apartado.setHoraFin(horaFin);
 
-            this.dispose();
+                    apartadoDAO.editarApartadoLiberado(apartado);
+                    JOptionPane.showMessageDialog(this,"Equipo Liberado Exitosamente");
+
+                    frmEquipoDesbloqueado frmEquipo = new frmEquipoDesbloqueado(computadora);
+                    frmEquipo.setVisible(true);
+
+                    this.dispose();
+                } catch (PersistenciaException ex) {
+                    JOptionPane.showMessageDialog(this, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "El alumno no tiene un apartado activo o no se encontró la computadora asociada.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "El alumno no tiene un apartado activo o no se encontró la computadora asociada.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Contraseña incorrecta o alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Contraseña incorrecta o alumno no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
