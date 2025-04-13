@@ -35,6 +35,10 @@ public class GenerarPDF extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         btnCrearPDF = new javax.swing.JButton();
+        jTFfechaInicio = new javax.swing.JTextField();
+        jTFfechaFin = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -48,21 +52,48 @@ public class GenerarPDF extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Inicio");
+
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Fin");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(254, 254, 254)
-                .addComponent(btnCrearPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(163, Short.MAX_VALUE)
+                .addComponent(jTFfechaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67)
+                .addComponent(jTFfechaFin, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(243, 243, 243))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(btnCrearPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(225, 225, 225)
+                        .addComponent(jLabel1)
+                        .addGap(245, 245, 245)
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(241, Short.MAX_VALUE)
+                .addContainerGap(97, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTFfechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(jTFfechaFin))
+                .addGap(56, 56, 56)
                 .addComponent(btnCrearPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(99, 99, 99))
+                .addGap(108, 108, 108))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -78,21 +109,30 @@ public class GenerarPDF extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPDFActionPerformed
-       // Por ahora puedes poner fechas fijas o usar un selector de fechas
-    LocalDate inicio = LocalDate.of(2025, 4, 1);
-    LocalDate fin = LocalDate.of(2025, 4, 10);
+        // Por ahora puedes poner fechas fijas o usar un selector de fechas
+        // Obtén las fechas ingresadas desde los JTextField (se asume formato "yyyy-MM-dd")
+        String fechaInicioStr = jTFfechaInicio.getText().trim();
+        String fechaFinStr = jTFfechaFin.getText().trim();
 
-    IReporteNegocio negocio = new ReporteNegocio();
-    List<ReporteUsoLaboratorioDTO> datos = negocio.generarReporte(inicio, fin);
+        // Parsea las fechas a LocalDate
+        LocalDate inicio = LocalDate.parse(fechaInicioStr);
+        LocalDate fin = LocalDate.parse(fechaFinStr);
 
-    Utilerias.GeneradorReportePDF.generarPDF(datos, "ReporteLaboratorio.pdf");
+        IReporteNegocio negocio = new ReporteNegocio();
+        List<ReporteUsoLaboratorioDTO> datos = negocio.generarReporte(inicio, fin);
 
-    JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
+        Utilerias.GeneradorReportePDF.generarPDF(datos, "ReporteLaboratorio.pdf", inicio, fin);
+
+        JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
     }//GEN-LAST:event_btnCrearPDFActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearPDF;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField jTFfechaFin;
+    private javax.swing.JTextField jTFfechaInicio;
     // End of variables declaration//GEN-END:variables
 }

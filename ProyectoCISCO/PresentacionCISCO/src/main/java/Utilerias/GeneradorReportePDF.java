@@ -21,14 +21,16 @@ import DTOs.ReporteUsoLaboratorioDTO;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.util.List;
+
 /**
  *
  * @author Oribiel
  */
 public class GeneradorReportePDF {
-   public static void generarPDF(List<ReporteUsoLaboratorioDTO> datos, String nombreArchivo) {
+
+    public static void generarPDF(List<ReporteUsoLaboratorioDTO> datos, String nombreArchivo,  LocalDate fechaInicio, LocalDate fechaFin) {
         try {
-            Document doc = new Document(); 
+            Document doc = new Document();
             PdfWriter.getInstance(doc, new FileOutputStream(nombreArchivo));
             doc.open();
 
@@ -38,6 +40,7 @@ public class GeneradorReportePDF {
             titulo.setAlignment(Element.ALIGN_CENTER);
             doc.add(titulo);
 
+            doc.add(new Paragraph("Periodo: " + fechaInicio.toString() + " a " + fechaFin.toString()));
             doc.add(new Paragraph("Fecha de generación: " + LocalDate.now()));
             doc.add(new Paragraph(" "));
 
