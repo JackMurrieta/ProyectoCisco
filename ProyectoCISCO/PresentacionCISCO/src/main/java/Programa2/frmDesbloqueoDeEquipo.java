@@ -47,7 +47,6 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         labelBienvenido = new javax.swing.JLabel();
-        labelNumEquipo = new javax.swing.JLabel();
         labelAlumnoQueAparto = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
@@ -58,11 +57,8 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
         labelBienvenido.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelBienvenido.setText("Bienvenido");
 
-        labelNumEquipo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        labelNumEquipo.setText("Num");
-
         labelAlumnoQueAparto.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        labelAlumnoQueAparto.setText("Alumno que aparto");
+        labelAlumnoQueAparto.setText("Desbloquear equipo");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Contrasenia");
@@ -86,9 +82,7 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(labelBienvenido)
-                .addGap(83, 83, 83)
-                .addComponent(labelNumEquipo)
-                .addGap(50, 50, 50))
+                .addGap(186, 186, 186))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel3)
@@ -102,10 +96,8 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(labelBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(labelNumEquipo))
+                .addGap(17, 17, 17)
+                .addComponent(labelBienvenido, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(labelAlumnoQueAparto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,7 +109,7 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
                         .addComponent(jTFcontrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(37, 37, 37)
                 .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -215,6 +207,5 @@ public class frmDesbloqueoDeEquipo extends javax.swing.JFrame {
     private javax.swing.JPasswordField jTFcontrasenia;
     private javax.swing.JLabel labelAlumnoQueAparto;
     private javax.swing.JLabel labelBienvenido;
-    private javax.swing.JLabel labelNumEquipo;
     // End of variables declaration//GEN-END:variables
 }
