@@ -7,6 +7,7 @@ package Programa3;
 import DTOs.ReporteUsoLaboratorioDTO;
 import Interfaces.IReporteNegocio;
 import Negocio.ReporteNegocio;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -142,10 +143,13 @@ public class GenerarPDF extends javax.swing.JPanel {
 
         IReporteNegocio negocio = new ReporteNegocio();
         List<ReporteUsoLaboratorioDTO> datos = negocio.generarReporte(inicio, fin);
+        
+        String rutaEscritorio = System.getProperty("user.home") + File.separator + "Desktop";
+        String nombreArchivo = rutaEscritorio + File.separator + "ReporteLaboratorio.pdf";
 
-        Utilerias.GeneradorReportePDF.generarPDF(datos, "ReporteLaboratorio.pdf", inicio, fin);
+        Utilerias.GeneradorReportePDF.generarPDF(datos, nombreArchivo, inicio, fin);
 
-        JOptionPane.showMessageDialog(this, "PDF generado correctamente.");
+        JOptionPane.showMessageDialog(this, "PDF generado correctamente en el escritorio.");
 
     } catch (Exception e) {
         e.printStackTrace();

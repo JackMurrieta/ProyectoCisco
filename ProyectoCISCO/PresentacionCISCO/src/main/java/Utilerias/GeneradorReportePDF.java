@@ -73,7 +73,7 @@ public class GeneradorReportePDF {
 
             doc.add(tabla);
             doc.close();
-            System.out.println("✅ PDF generado correctamente: " + nombreArchivo);
+            System.out.println("PDF generado correctamente: " + nombreArchivo);
 
         } catch (Exception e) {
             e.printStackTrace();
